@@ -11,4 +11,12 @@ script:
   - |
     set -e
     composer update --prefer-stable --no-interaction --no-suggest
-    resources/publish-docs.sh
+    resources/build-docs.sh
+deploy:
+  provider: pages
+  local_dir: site
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  on:
+    branch: gh-pages

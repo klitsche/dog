@@ -1,7 +1,3 @@
----
-title: Dog
----
-
 # 🐶 Dog
 
 Dog is a slim source code documentation generator for PHP libraries.
@@ -38,7 +34,7 @@ srcPath       | string  | src/                                   | Relative or a
 srcFileFilter | string  | /.*\.php$/                             | Regular expression to filter paths and files.
 printerClass  | string  | \Klitsche\Dog\Printer\Markdown\Printer | FQCN for template printer class
 outputPath    | string  | docs/api/                              | Relative or absolute path to output directory
-debug: true   | boolean | false                                  | enable / disable debug mode
+debug         | boolean | false                                  | enable / disable debug mode
 
 Generate documentation:
 
