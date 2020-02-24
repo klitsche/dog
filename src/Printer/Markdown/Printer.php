@@ -255,21 +255,16 @@ class Printer implements PrinterInterface
                     $this->config->getOutputPath() . '/' . dirname($fileName),
                     $this->config->getOutputPath() . '/' . dirname($this->currentFileName)
                 );
-                fputs(STDERR, $this->config->getOutputPath() . '/' . $fileName . PHP_EOL);
-                fputs(STDERR, $this->config->getOutputPath() . '/' . $this->currentFileName . PHP_EOL);
-                fputs(STDERR, $link . basename($fileName) . PHP_EOL);
-                fputs(STDERR, '---' . PHP_EOL);
 
                 return sprintf('[%s](%s)', $element->getFqsen(), $link . basename($fileName));
                 break;
             default:
-                return $element->getFqsen();
+                return (string) $element->getFqsen();
         }
     }
 
     private function resolveFqsen(Fqsen $fqsen): ?ElementInterface
     {
-        fputs(STDERR, '' . $fqsen . PHP_EOL);
         foreach ($this->project->getFiles() as $file) {
             foreach ($file->getClasses() as $class) {
                 if ($class->getFqsen() == $fqsen) {
@@ -297,7 +292,6 @@ class Printer implements PrinterInterface
                 }
             }
             foreach ($file->getInterfaces() as $element) {
-                fputs(STDERR, '' . $fqsen . ' > ' . $element->getFqsen() . PHP_EOL);
                 if ($element->getFqsen() == $fqsen) {
                     return $element;
                 }
