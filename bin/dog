@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Klitsche\Dog\Config;
+use Klitsche\Dog\Dog;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+try {
+    $configFile = '.dog.yml';
+    $config     = new Config($configFile);
+    $dog        = new Dog($config);
+    $dog->run();
+} catch (\Throwable $exception) {
+    echo sprintf('Error: %s', $exception->getMessage()) . PHP_EOL;
+    var_dump($exception->getTraceAsString());
+}

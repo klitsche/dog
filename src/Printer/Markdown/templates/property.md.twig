@@ -1,0 +1,31 @@
+### {{ property.name }}
+
+{{ property.docblock.summary|raw }}
+
+```php
+{{ property.static ? 'static ' }}
+{{- property.visibility ? ' '~property.visibility }}
+{{- property.type ? ' '~property.type :  ' '~property.docblock.var.type }}
+{{- ' '~property.name }}
+{{- property.default ? ' = '~property.default|raw }}
+```
+
+{{ property.docblock.description|raw }}
+
+{% if property.static %}* This property is **static**.{% endif %}
+{% if property.docblock.tags.deprecated %}* **Deprecated:** this property is **deprecated**. {{ property.docblock.tags.deprecated.description }}
+{% endif %}
+
+{% if property.tags.see is not empty or property.tags.link is not empty %}
+__See Also:__
+
+{% for see in property.tags.see %}
+
+- [{% if see.description %}{{ see.description|raw }} {% else %} {{ see.reference }} {% endif %}]({{ see.reference }})
+{% endfor %}
+{% for link in property.tags.link %}
+-[{% if link.description and link.description != link.link %}{{ link.description|raw }}{% else %} {{ link.reference }} {% endif %}]({{ link.link }})
+{% endfor %}
+
+{% endif %}
+

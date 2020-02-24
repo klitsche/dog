@@ -1,0 +1,29 @@
+{
+    "name": "klitsche/dog",
+    "type": "library",
+    "description": "Source code documentation generator for PHP libraries",
+    "keywords": [],
+    "homepage": "https://klitsche.de",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dirk Adler",
+            "email": "dirx@klitsche.de"
+        }
+    ],
+    "require": {
+        "phpdocumentor/reflection": " ~4.0",
+        "twig/twig": "^3.0",
+        "symfony/filesystem": "^5.0",
+        "symfony/yaml": "^5.0",
+        "beberlei/assert": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Klitsche\\Dog\\": "src"
+        }
+    },
+    "bin": [
+        "bin/dog"
+    ]
+}

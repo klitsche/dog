@@ -1,0 +1,63 @@
+---
+title: {{ class.name }}
+---
+
+# Class {{ class.fqsen }}
+
+{{ class.docblock.summary|raw }}
+
+{{ class.docblock.description|raw }}
+
+{% if class.parent %}extends **{{ linkFqsen(class.parent) }}**
+{% endif %}
+{% for interface in class.interfaces %}
+implements **{{ linkFqsen(interface) }}**
+{% endfor %}
+{% for usedTrait in class.usedTraits %}
+uses **{{ linkFqsen(usedTrait) }}**
+{% endfor %}
+
+{% if class.docblock.tagsByName('deprecated') is not empty %}⚠️ _This class is **deprecated**. {{ class.docblock.tagsByName('deprecated')|first.description|raw }}_
+{% endif %}
+
+{% if class.docblock.tagsByName('see') is not empty or class.docblock.tagsByName('link') is not empty %}
+See also:
+
+{% for see in class.docblock.tagsByName('see') -%}
+* [{{ see.reference }}]({{ see.reference }})
+{%- endfor %}
+{% for link in class.docblock.tagsByName('link') ~%}
+* [{% if link.description and link.description != link.link %}{{ link.description|raw }}{% else %} {{ link.reference }} {% endif %}]({{ link.link }})
+{%- endfor %}
+
+{% endif %}
+
+{%  if class.constants|filter(i => i.visibility == 'public') is not empty %}
+## Constants
+
+{% for constant in class.constants|sort((a,b) => a.name <=> b.name) %}
+    {%- if constant.visibility == 'public' -%}
+        {%- include 'constant.md.twig' -%}
+    {%- endif -%}
+{% endfor %}
+{% endif %}
+
+{% if class.properties|filter(i => i.visibility == 'public') is not empty %}
+## Properties
+
+{% for property in class.properties|sort((a,b) => a.name <=> b.name) %}
+    {%- if property.visibility == 'public' -%}
+        {%- include 'property.md.twig' -%}
+    {%- endif -%}
+{% endfor %}
+{% endif %}
+
+{% if class.methods|filter(i => i.visibility == 'public') is not empty %}
+## Methods
+
+{% for method in class.methods|sort((a,b) => a.name <=> b.name) %}
+    {%- if method.visibility == 'public' -%}
+        {%- include 'method.md.twig' -%}
+    {%- endif -%}
+{% endfor %}
+{% endif %}

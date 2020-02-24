@@ -1,0 +1,61 @@
+site_name: Dog
+site_author: Dirk Adler
+
+docs_dir: docs
+use_directory_urls: false
+
+theme:
+  name: 'material'
+  palette:
+    primary: 'white'
+#  logo: 'img/dog.png'
+  logo:
+    icon: 'code'
+#  favicon: 'img/favicon.ico'
+  feature:
+#    tabs: true
+  include_sidebar: true
+
+repo_name: 'klitsche/dog'
+repo_url: 'https://github.com/klitsche/dog'
+
+# enabled extensions
+markdown_extensions:
+  - markdown.extensions.admonition
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.smarty
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.highlight:
+      # fixes copy paste support
+      css_class: codehilite
+      # disables use of <?php
+      extend_pygments_lang:
+        - name: php
+          lang: php
+          options:
+            startinline: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+copyright: Copyright &copy; klitsche.de / Dirk Adler
+
+plugins:
+  - search

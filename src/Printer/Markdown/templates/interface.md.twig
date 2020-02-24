@@ -1,0 +1,48 @@
+---
+title: {{ interface.name }}
+---
+
+# Interface {{ interface.fqsen }}
+
+{{ interface.docblock.summary|raw }}
+
+{{ interface.docblock.description|raw }}
+
+{% for parent in interface.parents %}
+extends **{{ linkFqsen(parent) }}**
+{% endfor %}
+
+{% if interface.docblock.tagsByName('deprecated') is not empty %}⚠️ _This class is **deprecated**. {{ interface.docblock.tagsByName('deprecated')|first.description|raw }}_
+{% endif %}
+
+{% if interface.docblock.tagsByName('see') is not empty or interface.docblock.tagsByName('link') is not empty %}
+See also:
+
+{% for see in interface.docblock.tagsByName('see') -%}
+* [{{ see.reference }}]({{ see.reference }})
+{%- endfor %}
+{% for link in interface.docblock.tagsByName('link') ~%}
+* [{% if link.description and link.description != link.link %}{{ link.description|raw }}{% else %} {{ link.reference }} {% endif %}]({{ link.link }})
+{%- endfor %}
+
+{% endif %}
+
+{%  if interface.constants|filter(i => i.visibility == 'public') is not empty %}
+## Constants
+
+{% for constant in interface.constants %}
+    {%- if constant.visibility == 'public' -%}
+        {%- include 'constant.md.twig' -%}
+    {%- endif -%}
+{% endfor %}
+{% endif %}
+
+{% if interface.methods|filter(i => i.visibility == 'public') is not empty %}
+## Methods
+
+{% for method in interface.methods %}
+    {%- if method.visibility == 'public' -%}
+        {%- include 'method.md.twig' -%}
+    {%- endif -%}
+{% endfor %}
+{% endif %}

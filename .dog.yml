@@ -1,0 +1,6 @@
+title: 'Overview'
+srcPath: 'src/'
+srcFileFilter: '/.*\.php$/'
+printerClass: '\Klitsche\Dog\Printer\Markdown\Printer'
+outputPath: 'docs/api'
+debug: true

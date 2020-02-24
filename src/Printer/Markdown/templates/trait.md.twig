@@ -1,0 +1,63 @@
+---
+title: {{ trait.name }}
+---
+
+# Trait {{ trait.fqsen }}
+
+{{ trait.docblock.summary|raw }}
+
+{{ trait.docblock.description|raw }}
+
+{% if trait.parent %}extends **{{ linkFqsen(trait.parent) }}**
+{% endif %}
+{% for interface in trait.interfaces %}
+implements **{{ linkFqsen(interface) }}**
+{% endfor %}
+{% for usedTrait in trait.usedTraits %}
+uses **{{ linkFqsen(usedTrait) }}**
+{% endfor %}
+
+{% if trait.docblock.tagsByName('deprecated') is not empty %}⚠️ _This class is **deprecated**. {{ trait.docblock.tagsByName('deprecated')|first.description|raw }}_
+{% endif %}
+
+{% if trait.docblock.tagsByName('see') is not empty or trait.docblock.tagsByName('link') is not empty %}
+See also:
+
+{% for see in trait.docblock.tagsByName('see') -%}
+* [{{ see.reference }}]({{ see.reference }})
+{%- endfor %}
+{% for link in trait.docblock.tagsByName('link') ~%}
+* [{% if link.description and link.description != link.link %}{{ link.description|raw }}{% else %} {{ link.reference }} {% endif %}]({{ link.link }})
+{%- endfor %}
+
+{% endif %}
+
+{%  if trait.constants|filter(i => i.visibility == 'public') is not empty %}
+## Constants
+
+{% for constant in trait.constants %}
+    {%- if constant.visibility == 'public' -%}
+        {%- include 'constant.md.twig' -%}
+    {%- endif -%}
+{% endfor %}
+{% endif %}
+
+{% if trait.properties|filter(i => i.visibility == 'public') is not empty %}
+## Properties
+
+{% for property in trait.properties %}
+    {%- if property.visibility == 'public' -%}
+        {%- include 'property.md.twig' -%}
+    {%- endif -%}
+{% endfor %}
+{% endif %}
+
+{% if trait.methods|filter(i => i.visibility == 'public') is not empty %}
+## Methods
+
+{% for method in trait.methods %}
+    {%- if method.visibility != 'protected' -%}
+        {%- include 'method.md.twig' -%}
+    {%- endif -%}
+{% endfor %}
+{% endif %}

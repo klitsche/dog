@@ -1,0 +1,14 @@
+language: php
+php:
+  - 7.4
+sudo: true
+cache:
+  directories:
+    - $HOME/.composer/cache
+services:
+  - docker
+script:
+  - |
+    set -e
+    composer update --prefer-stable --no-interaction --no-suggest
+    resources/publish-docs.sh
