@@ -15,11 +15,12 @@ class File implements ElementInterface
      * @var Php\File
      */
     private Php\File $file;
-    private $owner;
 
-    public function __construct($owner, Php\File $file)
+    private ElementInterface $owner;
+
+    public function __construct(ElementInterface $owner, Php\File $file)
     {
-        $this->file  = $file;
+        $this->file = $file;
         $this->owner = $owner;
     }
 

@@ -17,12 +17,13 @@ class Constant implements ElementInterface
      * @var Php\Constant
      */
     private Php\Constant $constant;
-    private $owner;
 
-    public function __construct($owner, Php\Constant $constant)
+    private ElementInterface $owner;
+
+    public function __construct(ElementInterface $owner, Php\Constant $constant)
     {
         $this->constant = $constant;
-        $this->owner    = $owner;
+        $this->owner = $owner;
     }
 
     public function getOwner(): ?ElementInterface

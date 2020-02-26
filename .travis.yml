@@ -11,6 +11,8 @@ script:
   - |
     set -e
     composer update --prefer-stable --no-interaction --no-suggest
+    vendor/bin/ecs check src tests
+    vendor/bin/phpunit --coverage-text
     resources/build-docs.sh
 deploy:
   provider: pages

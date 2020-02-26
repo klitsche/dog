@@ -16,9 +16,10 @@ class Trait_ implements ElementInterface
      * @var Php\Trait_
      */
     private Php\Trait_ $trait;
-    private $owner;
 
-    public function __construct($owner, Php\Trait_ $trait)
+    private ElementInterface $owner;
+
+    public function __construct(ElementInterface $owner, Php\Trait_ $trait)
     {
         $this->trait = $trait;
         $this->owner = $owner;
@@ -76,8 +77,8 @@ class Trait_ implements ElementInterface
     private function findMethodTag(Php\Method $method): ?DocBlock\Tags\Method
     {
         foreach ($this->getDocBlockTags() as $tag) {
-            if ($tag instanceOf DocBlock\Tags\Method &&
-                $tag->getMethodName() == $method->getName()) {
+            if ($tag instanceof DocBlock\Tags\Method &&
+                $tag->getMethodName() === $method->getName()) {
                 return $tag;
             }
         }
@@ -116,8 +117,8 @@ class Trait_ implements ElementInterface
     private function findPropertyTag(Php\Property $property): ?DocBlock\Tags\Property
     {
         foreach ($this->getDocBlockTags() as $tag) {
-            if ($tag instanceOf DocBlock\Tags\Property &&
-                $tag->getVariableName() == $property->getName()) {
+            if ($tag instanceof DocBlock\Tags\Property &&
+                $tag->getVariableName() === $property->getName()) {
                 return $tag;
             }
         }
@@ -126,28 +127,10 @@ class Trait_ implements ElementInterface
     }
 
     /**
-     * @return Constant[]
-     */
-    public function getConstants(): array
-    {
-        $constants = [];
-        foreach ($this->trait->getConstants() as $constant) {
-            $constants[] = new Constant($this, $constant);
-        }
-
-        return $constants;
-    }
-
-    /**
      * @return Fqsen[]
      */
     public function getUsedTraits(): array
     {
-        $usedTraits = [];
-        foreach ($this->trait->getUsedTraits() as $usedTrait) {
-            $usedTraits[] = new Trait_($this, $usedTrait);
-        }
-
-        return $usedTraits;
+        return $this->trait->getUsedTraits();  // todo resolve to Trait_
     }
 }

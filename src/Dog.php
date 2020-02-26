@@ -5,12 +5,6 @@ declare(strict_types=1);
 namespace Klitsche\Dog;
 
 use Klitsche\Dog\Elements\Project;
-use phpDocumentor\Reflection\File\LocalFile;
-use phpDocumentor\Reflection\Php\ProjectFactory;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use RecursiveRegexIterator;
-use RegexIterator;
 
 class Dog
 {
@@ -21,35 +15,30 @@ class Dog
         $this->config = $config;
     }
 
-    public function run()
+    public function run(): void
     {
-        $printer = $this->createPrinter();
-        $printer->print($this->createProject());
+        $files = $this->collectFiles();
+        $project = $this->analyzeFiles($files);
+        $this->generateDocumentation($project);
     }
 
-    private function createPrinter(): PrinterInterface
+    private function collectFiles(): array
+    {
+        $collector = new FilesCollector($this->config->getSrcPath(), $this->config->getSrcFileFilter());
+        return $collector->getFiles();
+    }
+
+    private function analyzeFiles(array $files): Project
+    {
+        $analyzer = new FilesAnalyzer();
+        return $analyzer->analyze($files);
+    }
+
+    private function generateDocumentation(Project $project): void
     {
         /** @var PrinterInterface $printerClass */
         $printerClass = $this->config->getPrinterClass();
-
-        return $printerClass::create($this->config);
-    }
-
-    private function createProject(): Project
-    {
-        $projectFactory = ProjectFactory::createInstance();
-
-        $directory = new RecursiveDirectoryIterator($this->config->getSrcPath());
-        $iterator  = new RecursiveIteratorIterator($directory);
-        $files     = new RegexIterator(
-            $iterator, $this->config->getSrcFileFilter(), RecursiveRegexIterator::GET_MATCH
-        );
-
-        $projectFiles = [];
-        foreach ($files as $file) {
-            $projectFiles[] = new LocalFile($file[0]);
-        }
-
-        return new Project($projectFactory->create($this->config->getTitle(), $projectFiles));
+        $printer = $printerClass::create($this->config);
+        $printer->print($project);
     }
 }

@@ -16,9 +16,10 @@ class Class_ implements ElementInterface
      * @var Php\Class_
      */
     private Php\Class_ $class;
-    private $owner;
 
-    public function __construct($owner, Php\Class_ $class)
+    private ElementInterface $owner;
+
+    public function __construct(ElementInterface $owner, Php\Class_ $class)
     {
         $this->class = $class;
         $this->owner = $owner;
@@ -91,8 +92,8 @@ class Class_ implements ElementInterface
     private function findMethodTag(Php\Method $method): ?DocBlock\Tags\Method
     {
         foreach ($this->getDocBlockTags() as $tag) {
-            if ($tag instanceOf DocBlock\Tags\Method &&
-                $tag->getMethodName() == $method->getName()) {
+            if ($tag instanceof DocBlock\Tags\Method &&
+                $tag->getMethodName() === $method->getName()) {
                 return $tag;
             }
         }
@@ -131,8 +132,8 @@ class Class_ implements ElementInterface
     private function findPropertyTag(Php\Property $property): ?DocBlock\Tags\Property
     {
         foreach ($this->getDocBlockTags() as $tag) {
-            if ($tag instanceOf DocBlock\Tags\Property &&
-                $tag->getVariableName() == $property->getName()) {
+            if ($tag instanceof DocBlock\Tags\Property &&
+                $tag->getVariableName() === $property->getName()) {
                 return $tag;
             }
         }
@@ -166,11 +167,6 @@ class Class_ implements ElementInterface
      */
     public function getUsedTraits(): array
     {
-        $usedTraits = [];
-        foreach ($this->class->getUsedTraits() as $usedTrait) {
-            $usedTraits[] = new Trait_($this, $usedTrait);
-        }
-
-        return $usedTraits;
+        return $this->class->getUsedTraits();  // todo resolve to Trait_
     }
 }

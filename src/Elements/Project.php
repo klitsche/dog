@@ -132,10 +132,57 @@ class Project implements ElementInterface
     public function getNamespaces(): array
     {
         $namespaces = [];
-//        foreach ($this->project->getNamespaces() as $namespace) {
-//            // todo: resolve namespace to other elements
-//            yield;
-//        }
+        foreach ($this->project->getNamespaces() as $namespace) {
+            $namespace[] = new Namespace_($this, $namespace);
+        }
         return $namespaces;
+    }
+
+    public function getByFqsen(Fqsen $fqsen): ?ElementInterface
+    {
+        foreach ($this->getFiles() as $file) {
+            foreach ($file->getClasses() as $class) {
+                if ((string) $class->getFqsen() === (string) $fqsen) {
+                    return $class;
+                }
+                foreach ($class->getConstants() as $element) {
+                    if ((string) $element->getFqsen() === (string) $fqsen) {
+                        return $element;
+                    }
+                }
+                foreach ($class->getProperties() as $element) {
+                    if ((string) $element->getFqsen() === (string) $fqsen) {
+                        return $element;
+                    }
+                }
+                foreach ($class->getMethods() as $element) {
+                    if ((string) $element->getFqsen() === (string) $fqsen) {
+                        return $element;
+                    }
+                }
+            }
+            foreach ($file->getConstants() as $element) {
+                if ((string) $element->getFqsen() === (string) $fqsen) {
+                    return $element;
+                }
+            }
+            foreach ($file->getInterfaces() as $element) {
+                if ((string) $element->getFqsen() === (string) $fqsen) {
+                    return $element;
+                }
+            }
+            foreach ($file->getTraits() as $element) {
+                if ((string) $element->getFqsen() === (string) $fqsen) {
+                    return $element;
+                }
+            }
+            foreach ($file->getFunctions() as $element) {
+                if ((string) $element->getFqsen() === (string) $fqsen) {
+                    return $element;
+                }
+            }
+        }
+
+        return null;
     }
 }

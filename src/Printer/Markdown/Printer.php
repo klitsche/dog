@@ -16,6 +16,8 @@ use Klitsche\Dog\Elements\Trait_;
 use Klitsche\Dog\PrinterInterface;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Reference;
 use phpDocumentor\Reflection\Fqsen;
+use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\Types\Object_;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -24,32 +26,34 @@ use Twig\TwigFunction;
 class Printer implements PrinterInterface
 {
     private Environment $twig;
+
     private Project $project;
+
     private Config $config;
+
     private Filesystem $filesystem;
+
     private ?string $currentFileName;
 
     public function __construct(Config $config, Environment $twig)
     {
-        $this->config          = $config;
-        $this->twig            = $twig;
-        $this->filesystem      = new Filesystem();
+        $this->config = $config;
+        $this->twig = $twig;
+        $this->filesystem = new Filesystem();
         $this->currentFileName = null;
     }
 
     public static function create(Config $config): self
     {
         $loader = new FilesystemLoader(__DIR__ . '/templates');
-        $twig   = new Environment(
+        $twig = new Environment(
             $loader,
             [
-                'cache' => sys_get_temp_dir() . '/' . md5($config->getOutputPath()),
+                'cache' => sys_get_temp_dir() . '/dog-' . md5($config->getOutputPath()),
             ]
         );
 
-        $printer = new static($config, $twig);
-
-        return $printer;
+        return new static($config, $twig);
     }
 
     public function print(Project $project): void
@@ -64,6 +68,7 @@ class Printer implements PrinterInterface
         $this->twig->addFunction(new TwigFunction('link', [$this, 'functionLink']));
         $this->twig->addFunction(new TwigFunction('linkFqsen', [$this, 'functionLinkFqsen']));
         $this->twig->addFunction(new TwigFunction('linkReference', [$this, 'functionLinkReference']));
+        $this->twig->addFunction(new TwigFunction('linkType', [$this, 'functionLinkType']));
 
         $this->renderIndex();
         $this->renderClasses();
@@ -73,21 +78,25 @@ class Printer implements PrinterInterface
         $this->renderConstants();
     }
 
-    private function renderIndex()
+    private function renderIndex(): void
     {
         $this->renderFile(
             'index.md.twig',
             'index.md',
             [
                 'project' => $this->project,
-                'config'  => $this->config,
+                'config' => $this->config,
             ]
         );
     }
 
-    private function renderFile($template, $fileName, $context)
+    private function renderFile($template, $fileName, $context): void
     {
         $this->currentFileName = $fileName;
+
+        if ($this->config->isDebugEnabled()) {
+            fputs(STDERR, 'print ' . $fileName . PHP_EOL);
+        }
 
         $template = $this->twig->load($template);
         $this->saveFile(
@@ -98,8 +107,7 @@ class Printer implements PrinterInterface
         $this->currentFileName = null;
     }
 
-
-    private function saveFile(string $fileName, string $content)
+    private function saveFile(string $fileName, string $content): void
     {
         $this->filesystem->mkdir(dirname($this->config->getOutputPath() . '/' . $fileName));
         file_put_contents(
@@ -108,22 +116,22 @@ class Printer implements PrinterInterface
         );
     }
 
-    private function renderClasses()
+    private function renderClasses(): void
     {
         foreach ($this->project->getClasses() as $class) {
             $this->renderClass($class);
         }
     }
 
-    private function renderClass(Class_ $class)
+    private function renderClass(Class_ $class): void
     {
         $this->renderFile(
             'class.md.twig',
             $this->fileName($class),
             [
                 'project' => $this->project,
-                'class'   => $class,
-                'config'  => $this->config,
+                'class' => $class,
+                'config' => $this->config,
             ]
         );
     }
@@ -139,9 +147,7 @@ class Printer implements PrinterInterface
             case Method::class:
                 $fqsen = trim((string) $element->getOwner()->getFqsen(), '\\()');
                 $fqsen = str_replace('::', '.md#', $fqsen);
-                $fqsen = str_replace('\\', '/', $fqsen);
-
-                return $fqsen;
+                return str_replace('\\', '/', $fqsen);
                 break;
             case Function_::class:
                 return 'functions.md#' . str_replace('\\', '_', trim((string) $element->getFqsen(), '\\()'));
@@ -154,47 +160,47 @@ class Printer implements PrinterInterface
         }
     }
 
-    private function renderInterfaces()
+    private function renderInterfaces(): void
     {
         foreach ($this->project->getInterfaces() as $interface) {
             $this->renderInterface($interface);
         }
     }
 
-    private function renderInterface(Interface_ $interface)
+    private function renderInterface(Interface_ $interface): void
     {
         $this->renderFile(
             'interface.md.twig',
             $this->fileName($interface),
             [
-                'project'   => $this->project,
+                'project' => $this->project,
                 'interface' => $interface,
-                'config'    => $this->config,
+                'config' => $this->config,
             ]
         );
     }
 
-    private function renderTraits()
+    private function renderTraits(): void
     {
         foreach ($this->project->getTraits() as $trait) {
             $this->renderTrait($trait);
         }
     }
 
-    private function renderTrait(Trait_ $trait)
+    private function renderTrait(Trait_ $trait): void
     {
         $this->renderFile(
-            'traits.md.twig',
+            'trait.md.twig',
             $this->fileName($trait),
             [
                 'project' => $this->project,
-                'trait'   => $trait,
-                'config'  => $this->config,
+                'trait' => $trait,
+                'config' => $this->config,
             ]
         );
     }
 
-    private function renderFunctions()
+    private function renderFunctions(): void
     {
         $functions = $this->project->getFunctions();
 
@@ -206,14 +212,14 @@ class Printer implements PrinterInterface
             'functions.md.twig',
             'functions.md',
             [
-                'project'   => $this->project,
+                'project' => $this->project,
                 'functions' => $functions,
-                'config'    => $this->config,
+                'config' => $this->config,
             ]
         );
     }
 
-    private function renderConstants()
+    private function renderConstants(): void
     {
         $constants = $this->project->getConstants();
 
@@ -225,16 +231,20 @@ class Printer implements PrinterInterface
             'constants.md.twig',
             'constants.md',
             [
-                'project'   => $this->project,
+                'project' => $this->project,
                 'constants' => $constants,
-                'config'    => $this->config,
+                'config' => $this->config,
             ]
         );
     }
 
     public function functionLinkFqsen(Fqsen $fqsen): string
     {
-        return $this->functionLink($this->resolveFqsen($fqsen));
+        $element = $this->resolveFqsen($fqsen);
+        if ($element === null) {
+            return (string) $fqsen;
+        }
+        return $this->functionLink($element);
     }
 
     public function functionLink(?ElementInterface $element): string
@@ -265,50 +275,7 @@ class Printer implements PrinterInterface
 
     private function resolveFqsen(Fqsen $fqsen): ?ElementInterface
     {
-        foreach ($this->project->getFiles() as $file) {
-            foreach ($file->getClasses() as $class) {
-                if ($class->getFqsen() == $fqsen) {
-                    return $class;
-                }
-                foreach ($class->getConstants() as $element) {
-                    if ($element->getFqsen() == $fqsen) {
-                        return $element;
-                    }
-                }
-                foreach ($class->getProperties() as $element) {
-                    if ($element->getFqsen() == $fqsen) {
-                        return $element;
-                    }
-                }
-                foreach ($class->getMethods() as $element) {
-                    if ($element->getFqsen() == $fqsen) {
-                        return $element;
-                    }
-                }
-            }
-            foreach ($file->getConstants() as $element) {
-                if ($element->getFqsen() == $fqsen) {
-                    return $element;
-                }
-            }
-            foreach ($file->getInterfaces() as $element) {
-                if ($element->getFqsen() == $fqsen) {
-                    return $element;
-                }
-            }
-            foreach ($file->getTraits() as $element) {
-                if ($element->getFqsen() == $fqsen) {
-                    return $element;
-                }
-            }
-            foreach ($file->getFunctions() as $element) {
-                if ($element->getFqsen() == $fqsen) {
-                    return $element;
-                }
-            }
-        }
-
-        return null;
+        return $this->project->getByFqsen($fqsen);
     }
 
     public function functionLinkReference(Reference $reference, string $text = '')
@@ -319,5 +286,17 @@ class Printer implements PrinterInterface
         }
 
         return sprintf('[%s](%s)', $text ?: (string) $reference, (string) $reference);
+    }
+
+    public function functionLinkType(Type $type): string
+    {
+        if ($type instanceof Object_) {
+            $element = $this->resolveFqsen($type->getFqsen());
+            if ($element !== null) {
+                return $this->functionLink($element);
+            }
+        }
+
+        return (string) $type;
     }
 }

@@ -16,12 +16,13 @@ class Interface_ implements ElementInterface
      * @var Php\Interface_
      */
     private Php\Interface_ $interface;
-    private $owner;
 
-    public function __construct($owner, Php\Interface_ $interface)
+    private ElementInterface $owner;
+
+    public function __construct(ElementInterface $owner, Php\Interface_ $interface)
     {
         $this->interface = $interface;
-        $this->owner     = $owner;
+        $this->owner = $owner;
     }
 
     public function getOwner(): ?ElementInterface
@@ -76,8 +77,8 @@ class Interface_ implements ElementInterface
     private function findMethodTag(Php\Method $method): ?DocBlock\Tags\Method
     {
         foreach ($this->getDocBlockTags() as $tag) {
-            if ($tag instanceOf DocBlock\Tags\Method &&
-                $tag->getMethodName() == $method->getName()) {
+            if ($tag instanceof DocBlock\Tags\Method &&
+                $tag->getMethodName() === $method->getName()) {
                 return $tag;
             }
         }
@@ -118,17 +119,5 @@ class Interface_ implements ElementInterface
         }
 
         return $parents;
-    }
-
-    private function findPropertyTag(Php\Property $property): ?DocBlock\Tags\Property
-    {
-        foreach ($this->getDocBlockTags() as $tag) {
-            if ($tag instanceOf DocBlock\Tags\Property &&
-                $tag->getVariableName() == $property->getName()) {
-                return $tag;
-            }
-        }
-
-        return null;
     }
 }

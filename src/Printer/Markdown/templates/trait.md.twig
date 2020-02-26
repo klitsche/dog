@@ -32,16 +32,6 @@ See also:
 
 {% endif %}
 
-{%  if trait.constants|filter(i => i.visibility == 'public') is not empty %}
-## Constants
-
-{% for constant in trait.constants %}
-    {%- if constant.visibility == 'public' -%}
-        {%- include 'constant.md.twig' -%}
-    {%- endif -%}
-{% endfor %}
-{% endif %}
-
 {% if trait.properties|filter(i => i.visibility == 'public') is not empty %}
 ## Properties
 

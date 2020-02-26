@@ -16,14 +16,16 @@ use phpDocumentor\Reflection\Types\Void_;
 class Method implements ElementInterface
 {
     private ?Php\Method $method;
-    private ?DocBlock\Tags\Method $tag;
-    private $owner;
 
-    public function __construct($owner, ?Php\Method $method, ?DocBlock\Tags\Method $tag)
+    private ?DocBlock\Tags\Method $tag;
+
+    private ElementInterface $owner;
+
+    public function __construct(ElementInterface $owner, ?Php\Method $method, ?DocBlock\Tags\Method $tag)
     {
         $this->method = $method;
-        $this->tag    = $tag;
-        $this->owner  = $owner;
+        $this->tag = $tag;
+        $this->owner = $owner;
     }
 
     public function getOwner(): ?ElementInterface
@@ -49,7 +51,7 @@ class Method implements ElementInterface
         $arguments = [];
         if ($this->method !== null) {
             foreach ($this->method->getArguments() as $argument) {
-                $arguments[$this->method->getName()] = new Argument($this, $argument, $this->findParamTag($argument));
+                $arguments[] = new Argument($this, $argument, $this->findParamTag($argument));
             }
             // todo: add extra params? nope > might be just dirty docs in most cases...
 //            foreach ($this->method->getDocBlock()->getTags() as $tag) {
@@ -60,11 +62,12 @@ class Method implements ElementInterface
 //                    $arguments[$tag->getVariableName()] = new Argument(null, $tag);
 //                }
 //            }
+//            fputs(STDERR, var_export($arguments, true));
             return $arguments;
         }
         if ($this->tag !== null) {
             foreach ($this->tag->getArguments() as $argument) {
-                $arguments[$argument['name']] = new Argument(
+                $arguments[] = new Argument(
                     $this,
                     null,
                     new DocBlock\Tags\Param(
@@ -86,8 +89,8 @@ class Method implements ElementInterface
             return null;
         }
         foreach ($this->method->getDocBlock()->getTags() as $tag) {
-            if ($tag instanceOf DocBlock\Tags\Param) {
-                if ($tag->getVariableName() == $argument->getName()) {
+            if ($tag instanceof DocBlock\Tags\Param) {
+                if ($tag->getVariableName() === $argument->getName()) {
                     return $tag;
                 }
             }

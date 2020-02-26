@@ -13,15 +13,17 @@ use phpDocumentor\Reflection\Type;
 class Property implements ElementInterface
 {
     private ?Php\Property $property;
+
     private ?DocBlock\Tags\Property $tag;
-    private $owner;
+
+    private ElementInterface $owner;
 
     // todo: add support for read/write property
-    public function __construct($owner, ?Php\Property $property, ?DocBlock\Tags\Property $tag)
+    public function __construct(ElementInterface $owner, ?Php\Property $property, ?DocBlock\Tags\Property $tag)
     {
         $this->property = $property;
-        $this->tag      = $tag;
-        $this->owner    = $owner;
+        $this->tag = $tag;
+        $this->owner = $owner;
     }
 
     public function getOwner(): ?ElementInterface

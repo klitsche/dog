@@ -32,7 +32,7 @@ See also:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 {% for argument in method.arguments %}
-| `{{ argument.name }}` | **{{ argument.type|raw }}** | {{ argument.description|split('\n')|join(' ')|raw }} |
+| `{{ argument.name }}` | **{{ linkType(argument.type) }}** | {{ argument.description|split('\n')|join(' ')|raw }} |
 {% endfor %}
 
 {% endif %}{# method.arguments is not empty #}

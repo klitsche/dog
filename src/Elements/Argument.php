@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
+use Klitsche\Dog\ElementInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Php;
 use phpDocumentor\Reflection\Type;
@@ -11,17 +12,19 @@ use phpDocumentor\Reflection\Type;
 class Argument
 {
     private ?Php\Argument $argument;
-    private ?DocBlock\Tags\Param $tag;
-    private $owner;
 
-    public function __construct($owner, ?Php\Argument $argument, ?DocBlock\Tags\Param $tag)
+    private ?DocBlock\Tags\Param $tag;
+
+    private ElementInterface $owner;
+
+    public function __construct(ElementInterface $owner, ?Php\Argument $argument, ?DocBlock\Tags\Param $tag)
     {
         $this->argument = $argument;
-        $this->tag      = $tag;
-        $this->owner    = $owner;
+        $this->tag = $tag;
+        $this->owner = $owner;
     }
 
-    public function getOwner()
+    public function getOwner(): ?ElementInterface
     {
         return $this->owner;
     }

@@ -3,17 +3,13 @@
 
 declare(strict_types=1);
 
-use Klitsche\Dog\Config;
-use Klitsche\Dog\Dog;
+use Klitsche\Dog\Cli\GenerateCommand;
+use Symfony\Component\Console\Application;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-try {
-    $configFile = '.dog.yml';
-    $config     = new Config($configFile);
-    $dog        = new Dog($config);
-    $dog->run();
-} catch (\Throwable $exception) {
-    echo sprintf('Error: %s', $exception->getMessage()) . PHP_EOL;
-    var_dump($exception->getTraceAsString());
-}
+$application = new Application('dog', 'dev-master');
+$command = new GenerateCommand();
+$application->add($command);
+$application->setDefaultCommand($command->getName(), true);
+$application->run();

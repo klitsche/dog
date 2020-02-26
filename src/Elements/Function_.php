@@ -17,12 +17,13 @@ class Function_ implements ElementInterface
      * @var Php\Function_
      */
     private Php\Function_ $function;
-    private $owner;
 
-    public function __construct($owner, Php\Function_ $function)
+    private ElementInterface $owner;
+
+    public function __construct(ElementInterface $owner, Php\Function_ $function)
     {
         $this->function = $function;
-        $this->owner    = $owner;
+        $this->owner = $owner;
     }
 
     public function getOwner(): ?ElementInterface
@@ -50,8 +51,8 @@ class Function_ implements ElementInterface
         }
 
         foreach ($this->function->getDocBlock()->getTags() as $tag) {
-            if ($tag instanceOf DocBlock\Tags\Param) {
-                if ($tag->getVariableName() == $argument->getName()) {
+            if ($tag instanceof DocBlock\Tags\Param) {
+                if ($tag->getVariableName() === $argument->getName()) {
                     return $tag;
                 }
             }

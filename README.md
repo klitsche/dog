@@ -1,7 +1,7 @@
 # 🐶 Dog
 
 Dog is a slim source code documentation generator for PHP libraries.
-It´s a thin layer around [phpDocumentator/reflection](https://github.com/phpDocumentor/reflection) and [twig](https://github.com/twigphp/Twig).
+It´s a thin layer around [phpdocumentor/reflection](https://github.com/phpDocumentor/reflection) and [twig](https://github.com/twigphp/Twig).
 
 **WIP**
 
@@ -10,14 +10,14 @@ It´s a thin layer around [phpDocumentator/reflection](https://github.com/phpDoc
 * Easily generates source code documentation
 * Looks into code and phpdoc
 * Outputs markdown (e.g together with [mkdocs](https://www.mkdocs.org/) and [mkdocs-material](https://github.com/squidfunk/mkdocs-material))
-* Provides support custom printer logic & easy templating
+* Provides support for custom printer logic & easy templating
 * Analyzes source code PHP ^5.2
 
 ## Runtime Requirements
 
 * PHP ^7.4
 
-## Usage
+## Getting started
 
 Add to your project:
 
@@ -30,15 +30,19 @@ Available config parameters:
 Parameter     | Type    | Default Value                          | Description
 ---           | ---     | ---                                    | ---
 title         | string  | Api Reference                          | Title of you project, usable in templates
-srcPath       | string  | src/                                   | Relative or absolute path to source directory
+srcPath       | string  | src                                    | Relative or absolute path to source directory
 srcFileFilter | string  | /.*\.php$/                             | Regular expression to filter paths and files.
 printerClass  | string  | \Klitsche\Dog\Printer\Markdown\Printer | FQCN for template printer class
-outputPath    | string  | docs/api/                              | Relative or absolute path to output directory
+outputPath    | string  | docs/api                               | Relative or absolute path to output directory
 debug         | boolean | false                                  | enable / disable debug mode
 
 Generate documentation:
 
     vendor/bin/dog
+
+## Documentation
+
+https://github.com/klitsche/dog
 
 ## Todos
 
