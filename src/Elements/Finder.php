@@ -46,11 +46,13 @@ class Finder
         ];
 
         foreach ($elements as $element) {
-            yield $element;
+            if ($element instanceof ElementInterface) {
+                yield $element;
 
-            foreach ($methods as $method) {
-                if (method_exists($element, $method) === true) {
-                    yield from $this->walk($element->{$method}());
+                foreach ($methods as $method) {
+                    if (method_exists($element, $method) === true) {
+                        yield from $this->walk($element->{$method}());
+                    }
                 }
             }
         }
