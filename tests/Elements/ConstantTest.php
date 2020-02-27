@@ -55,7 +55,7 @@ class ConstantTest extends TestCase
         $this->assertSame(8, $constant->getLocation()->getLineNumber());
     }
 
-    public function testGlobalClassConstantWithoutTag()
+    public function testGlobalClassConstantWithoutTag(): void
     {
         /** @var Constant $constant */
         $constant = $this->project->getByFqsen(new Fqsen('\GlobalClass::WITHOUT_TAG'));
@@ -67,7 +67,7 @@ class ConstantTest extends TestCase
         $this->assertSame(5, $constant->getLocation()->getLineNumber());
     }
 
-    public function testGlobalClassConstantWithTag()
+    public function testGlobalClassConstantWithTag(): void
     {
         /** @var Constant $constant */
         $constant = $this->project->getByFqsen(new Fqsen('\GlobalClass::WITH_TAG'));
@@ -80,7 +80,7 @@ class ConstantTest extends TestCase
         $this->assertSame(10, $constant->getLocation()->getLineNumber());
     }
 
-    public function testGetOwner()
+    public function testGetOwner(): void
     {
         /** @var Constant $constant */
         $constant = $this->project->getByFqsen(new Fqsen('\GlobalClass::WITHOUT_TAG'));

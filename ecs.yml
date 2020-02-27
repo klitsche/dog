@@ -10,4 +10,4 @@ parameters:
     PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer: ~
     PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer: ~
   exclude_files:
-    - 'tests/Dummy'
+    - 'tests/Dummy/*'
