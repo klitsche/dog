@@ -1,5 +1,7 @@
 # 🐶 Dog
 
+[![Build Status](https://travis-ci.org/klitsche/dog.svg?branch=master)](https://travis-ci.org/klitsche/dog)
+
 Dog is a slim source code documentation generator for PHP libraries.
 It´s a thin layer around [phpdocumentor/reflection](https://github.com/phpDocumentor/reflection) and [twig](https://github.com/twigphp/Twig).
 
@@ -46,9 +48,9 @@ https://github.com/klitsche/dog
 
 ## Todos
 
+* [x] Add code style checks
+* [x] Add travis
 * [ ] Add tests
-* [ ] Add code style checks
-* [ ] Add travis
 * [ ] Add direct support for [proposed tags](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc-tags.md)
 * [ ] Add cmd interface for dog bin
 * [ ] Add documentation (mkdocs, github page)
