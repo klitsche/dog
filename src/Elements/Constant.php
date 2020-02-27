@@ -36,8 +36,6 @@ class Constant implements ElementInterface
         return $this->constant;
     }
 
-//    public function getOwner(); // todo: reference to file or class or namespace?
-
     public function getName(): ?string
     {
         return $this->constant->getName();

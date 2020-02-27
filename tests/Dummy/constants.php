@@ -1,22 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
-const GLOBAL_CONSTANT_NOTAG_STRING = 'text';
-const GLOBAL_CONSTANT_NOTAG_INT = 1234;
-const GLOBAL_CONSTANT_NOTAG_BOOL = true;
+const GLOBAL_CONSTANT_WITHOUT_TAG = 'text';
 
 /**
- * @var string
+ * @var int Some Description
  */
-const GLOBAL_CONSTANT_TAG_STRING = 'text';
-
-/**
- * @var string
- */
-const GLOBAL_CONSTANT_TAG_INT = 1234;
-
-/**
- * @var string
- */
-const GLOBAL_CONSTANT_TAG_BOOL = true;
+const GLOBAL_CONSTANT_WITH_TAG = 1234;
