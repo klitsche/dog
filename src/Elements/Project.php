@@ -14,10 +14,15 @@ class Project implements ElementInterface
      * @var Php\Project
      */
     private Php\Project $project;
+    /**
+     * @var Finder
+     */
+    private Finder $finder;
 
     public function __construct(Php\Project $project)
     {
         $this->project = $project;
+        $this->finder = new Finder($this);
     }
 
     public function getPhp(): Php\Project
@@ -140,49 +145,6 @@ class Project implements ElementInterface
 
     public function getByFqsen(Fqsen $fqsen): ?ElementInterface
     {
-        foreach ($this->getFiles() as $file) {
-            foreach ($file->getClasses() as $class) {
-                if ((string) $class->getFqsen() === (string) $fqsen) {
-                    return $class;
-                }
-                foreach ($class->getConstants() as $element) {
-                    if ((string) $element->getFqsen() === (string) $fqsen) {
-                        return $element;
-                    }
-                }
-                foreach ($class->getProperties() as $element) {
-                    if ((string) $element->getFqsen() === (string) $fqsen) {
-                        return $element;
-                    }
-                }
-                foreach ($class->getMethods() as $element) {
-                    if ((string) $element->getFqsen() === (string) $fqsen) {
-                        return $element;
-                    }
-                }
-            }
-            foreach ($file->getConstants() as $element) {
-                if ((string) $element->getFqsen() === (string) $fqsen) {
-                    return $element;
-                }
-            }
-            foreach ($file->getInterfaces() as $element) {
-                if ((string) $element->getFqsen() === (string) $fqsen) {
-                    return $element;
-                }
-            }
-            foreach ($file->getTraits() as $element) {
-                if ((string) $element->getFqsen() === (string) $fqsen) {
-                    return $element;
-                }
-            }
-            foreach ($file->getFunctions() as $element) {
-                if ((string) $element->getFqsen() === (string) $fqsen) {
-                    return $element;
-                }
-            }
-        }
-
-        return null;
+        return $this->finder->byFqsen($fqsen);
     }
 }

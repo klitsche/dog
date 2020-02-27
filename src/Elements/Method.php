@@ -126,7 +126,13 @@ class Method implements ElementInterface
             return $this->method->getFqsen();
         }
         if ($this->tag !== null) {
-            return new Fqsen($this->tag->getMethodName()); // todo: get namespace from owner
+            return new Fqsen(
+                sprintf(
+                    '%s::%s()',
+                    (string) $this->getOwner()->getFqsen(),
+                    (string) $this->tag->getMethodName()
+                )
+            );
         }
 
         return null;

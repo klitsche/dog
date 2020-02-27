@@ -64,7 +64,7 @@ class ConstantTest extends TestCase
         $this->assertSame(null, $constant->getDescription());
         $this->assertSame('\'text\'', $constant->getValue());
         $this->assertSame('public', (string) $constant->getVisibility());
-        $this->assertSame(5, $constant->getLocation()->getLineNumber());
+        $this->assertSame(12, $constant->getLocation()->getLineNumber());
     }
 
     public function testGlobalClassConstantWithTag(): void
@@ -77,7 +77,7 @@ class ConstantTest extends TestCase
         $this->assertSame('Some Description', $constant->getDescription());
         $this->assertSame('1234', $constant->getValue());
         $this->assertSame('public', (string) $constant->getVisibility());
-        $this->assertSame(10, $constant->getLocation()->getLineNumber());
+        $this->assertSame(17, $constant->getLocation()->getLineNumber());
     }
 
     public function testGetOwner(): void
