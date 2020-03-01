@@ -48,8 +48,6 @@ class FileTest extends TestCase
     {
         $files = $this->project->getFiles();
 
-        print_r($files[__DIR__ . '/../Dummy/constants.php']);
-
         $this->assertInstanceOf(
             DocBlock::class,
             $files[__DIR__ . '/../Dummy/constants.php']->getDocBlock()

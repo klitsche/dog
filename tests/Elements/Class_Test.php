@@ -71,7 +71,6 @@ class Class_Test extends TestCase
         $interfaces = $element->getInterfaces();
 
         $this->assertCount(2, $interfaces);
-        print_r($interfaces);
         $this->assertSame(
             '\Klitsche\Dog\Dummy\Namespaced\BaseInterface',
             (string) $interfaces['\Klitsche\Dog\Dummy\Namespaced\BaseInterface']
