@@ -2,18 +2,29 @@ language: php
 php:
   - 7.4
 sudo: true
+env:
+  global:
+    - CC_TEST_REPORTER_ID=06f21fc365ca955657e0b5b6ce2f5c84533cb4e2de87ba0f3d0b016aaf40a1de
 cache:
   directories:
     - $HOME/.composer/cache
 services:
   - docker
+before_script:
+  - |
+    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter;
+    chmod +x ./cc-test-reporter;
+    ./cc-test-reporter before-build;
 script:
   - |
-    set -e
-    composer update --prefer-stable --no-interaction --no-suggest
-    vendor/bin/ecs check src tests
-    vendor/bin/phpunit --coverage-text
-    resources/build-docs.sh
+    set -e;
+    composer update --prefer-stable --no-interaction --no-suggest;
+    vendor/bin/ecs check src tests;
+    vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml;
+    resources/build-docs.sh;
+after_script:
+  - |
+    if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi;
 deploy:
   provider: pages
   local_dir: site
