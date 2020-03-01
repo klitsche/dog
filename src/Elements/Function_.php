@@ -80,13 +80,7 @@ class Function_ implements ElementInterface
             return $tag->getType();
         }
         if ($this->function !== null) {
-            $type = $this->function->getReturnType();
-            // todo: quirky > default should be void in case there is no docblock
-            if ($type instanceof Mixed_) {
-                return new Void_();
-            }
-
-            return $type;
+            return $this->function->getReturnType();
         }
 
         return null;

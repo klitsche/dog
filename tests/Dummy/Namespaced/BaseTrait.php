@@ -1,20 +1,25 @@
 <?php
 
+namespace Klitsche\Dog\Dummy\Namespaced;
+
 /**
- * Class Summary
+ * Trait Summary
  *
- * Class description
+ * Trait description
  *
  * @method float withTagOnly(string $param1, $param2) Some method description
+ * @property string $propertyTagOnly Some property description
  */
-abstract class GlobalClass
+trait BaseTrait
 {
-    const WITHOUT_TAG = 'text';
+    static public $propertyWithoutValue;
 
     /**
-     * @var int Some Description
+     * @var string Some property description
      */
-    const WITH_TAG = 1234;
+    protected $propertyWithValueAndDoc = 'text';
+
+    private int $propertyWithValueAndType = 1234;
 
     function withoutTypeWithoutDoc($param1, $param2)
     {
@@ -34,9 +39,11 @@ abstract class GlobalClass
      *
      * @param string $param1 Some param1 description
      * @param int $param2 Some param2 description
-     * @param bool ...$param3 Some param3 description
+     * @param bool[] $param3 Some param3 description
      *
      * @return float Some Return Description
      */
-    abstract static function withoutTypeWithDoc($param1, $param2, ...$param3);
+    public function withoutTypeWithDoc($param1, $param2, ...$param3): float
+    {
+    }
 }

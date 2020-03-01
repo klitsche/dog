@@ -11,7 +11,6 @@ use phpDocumentor\Reflection\Location;
 use phpDocumentor\Reflection\Php;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\Mixed_;
-use phpDocumentor\Reflection\Types\Void_;
 
 class Method implements ElementInterface
 {
@@ -53,16 +52,6 @@ class Method implements ElementInterface
             foreach ($this->method->getArguments() as $argument) {
                 $arguments[] = new Argument($this, $argument, $this->findParamTag($argument));
             }
-            // todo: add extra params? nope > might be just dirty docs in most cases...
-//            foreach ($this->method->getDocBlock()->getTags() as $tag) {
-//                if ($tag instanceOf DocBlock\Tags\Param) {
-//                    if (array_key_exists($tag->getVariableName(), $arguments)) {
-//                        continue;
-//                    }
-//                    $arguments[$tag->getVariableName()] = new Argument(null, $tag);
-//                }
-//            }
-//            fputs(STDERR, var_export($arguments, true));
             return $arguments;
         }
         if ($this->tag !== null) {
@@ -72,7 +61,7 @@ class Method implements ElementInterface
                     null,
                     new DocBlock\Tags\Param(
                         $argument['name'],
-                        $argument['type']
+                        $argument['type'],
                     )
                 );
             }
@@ -157,9 +146,9 @@ class Method implements ElementInterface
         }
         if ($this->method !== null) {
             $type = $this->method->getReturnType();
-            // todo: quirky > default should be void in case there is no docblock
-            if ($type instanceof Mixed_) {
-                return new Void_();
+            if ($type instanceof Mixed_ &&
+                in_array($this->getName(), ['__construct', '__destruct'], true) === true) {
+                return null;
             }
 
             return $type;
@@ -217,6 +206,11 @@ class Method implements ElementInterface
     {
         if ($this->method !== null) {
             return $this->method->isFinal();
+        }
+        if ($this->tag !== null) {
+            if ($this->getOwner() instanceof Class_) {
+                return $this->getOwner()->isFinal();
+            }
         }
 
         return false;

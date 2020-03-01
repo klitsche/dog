@@ -4,7 +4,7 @@ function withoutTypeWithoutDoc($param1, $param2)
 {
 }
 
-function withoutDoc(string $param1, int $param2, bool ...$param3): float
+function withTypeWithoutDoc(string $param1, int $param2, bool ...$param3): float
 {
 }
 
@@ -12,7 +12,7 @@ function withoutDoc(string $param1, int $param2, bool ...$param3): float
  * Some method description
  *
  * @link http://example.org link desc
- * @see withoutDoc()
+ * @see withTypeWithoutDoc()
  *
  * @deprecated ^0.99 deprecation note
  *
@@ -22,6 +22,6 @@ function withoutDoc(string $param1, int $param2, bool ...$param3): float
  *
  * @return float Some Return Description
  */
-function withoutTypeWithDoc($param1, $param2, ...$param3): float
+function withoutTypeWithDoc($param1, $param2, ...$param3)
 {
 }

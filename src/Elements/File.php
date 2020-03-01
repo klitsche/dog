@@ -40,8 +40,8 @@ class File implements ElementInterface
     public function getConstants(): array
     {
         $constants = [];
-        foreach ($this->file->getConstants() as $constant) {
-            $constants[] = new Constant($this, $constant);
+        foreach ($this->file->getConstants() as $fqsen => $constant) {
+            $constants[$fqsen] = new Constant($this, $constant);
         }
 
         return $constants;
@@ -53,8 +53,8 @@ class File implements ElementInterface
     public function getFunctions(): array
     {
         $functions = [];
-        foreach ($this->file->getFunctions() as $function) {
-            $functions[] = new Function_($this, $function);
+        foreach ($this->file->getFunctions() as $fqsen => $function) {
+            $functions[$fqsen] = new Function_($this, $function);
         }
 
         return $functions;
@@ -66,8 +66,8 @@ class File implements ElementInterface
     public function getClasses(): array
     {
         $classes = [];
-        foreach ($this->file->getClasses() as $class) {
-            $classes[] = new Class_($this, $class);
+        foreach ($this->file->getClasses() as $fqsen => $class) {
+            $classes[$fqsen] = new Class_($this, $class);
         }
 
         return $classes;
@@ -79,8 +79,8 @@ class File implements ElementInterface
     public function getInterfaces(): array
     {
         $interfaces = [];
-        foreach ($this->file->getInterfaces() as $interface) {
-            $interfaces[] = new Interface_($this, $interface);
+        foreach ($this->file->getInterfaces() as $fqsen => $interface) {
+            $interfaces[$fqsen] = new Interface_($this, $interface);
         }
 
         return $interfaces;
@@ -92,8 +92,8 @@ class File implements ElementInterface
     public function getTraits(): array
     {
         $traits = [];
-        foreach ($this->file->getTraits() as $trait) {
-            $traits[] = new Trait_($this, $trait);
+        foreach ($this->file->getTraits() as $fqsen => $trait) {
+            $traits[$fqsen] = new Trait_($this, $trait);
         }
 
         return $traits;

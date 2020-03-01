@@ -131,6 +131,6 @@ class Trait_ implements ElementInterface
      */
     public function getUsedTraits(): array
     {
-        return $this->trait->getUsedTraits();  // todo resolve to Trait_
+        return $this->trait->getUsedTraits();
     }
 }

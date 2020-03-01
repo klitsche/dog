@@ -64,12 +64,6 @@ class Interface_ implements ElementInterface
         foreach ($this->interface->getMethods() as $method) {
             $methods[$method->getName()] = new Method($this, $method, $this->findMethodTag($method));
         }
-        foreach ($this->getDocBlockTags() as $tag) {
-            if ($tag instanceof DocBlock\Tags\Method &&
-                array_key_exists($tag->getMethodName(), $methods) === false) {
-                $methods[$tag->getMethodName()] = new Method($this, null, $tag);
-            }
-        }
 
         return $methods;
     }
@@ -113,11 +107,6 @@ class Interface_ implements ElementInterface
      */
     public function getParents(): array
     {
-        $parents = [];
-        foreach ($this->interface->getParents() as $parent) {
-            $parents[] = $parent; // todo resolve interfaces?
-        }
-
-        return $parents;
+        return $this->interface->getParents();
     }
 }

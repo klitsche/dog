@@ -75,7 +75,9 @@ class Argument
     public function getDescription(): ?string
     {
         if ($this->tag !== null) {
-            return (string) $this->tag->getDescription();
+            return $this->tag->getDescription()
+                ? (string) $this->tag->getDescription()
+                : null;
         }
 
         return null;

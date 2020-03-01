@@ -52,8 +52,8 @@ class Project implements ElementInterface
     {
         $classes = [];
         foreach ($this->getFiles() as $file) {
-            foreach ($file->getClasses() as $class) {
-                $classes[] = $class;
+            foreach ($file->getClasses() as $fqsen => $class) {
+                $classes[$fqsen] = $class;
             }
         }
 
@@ -66,8 +66,8 @@ class Project implements ElementInterface
     public function getFiles(): array
     {
         $files = [];
-        foreach ($this->project->getFiles() as $file) {
-            $files[] = new File($this, $file);
+        foreach ($this->project->getFiles() as $filePath => $file) {
+            $files[$filePath] = new File($this, $file);
         }
 
         return $files;
@@ -80,8 +80,8 @@ class Project implements ElementInterface
     {
         $interfaces = [];
         foreach ($this->getFiles() as $file) {
-            foreach ($file->getInterfaces() as $interface) {
-                $interfaces[] = $interface;
+            foreach ($file->getInterfaces() as $fqsen => $interface) {
+                $interfaces[$fqsen] = $interface;
             }
         }
 
@@ -95,8 +95,8 @@ class Project implements ElementInterface
     {
         $traits = [];
         foreach ($this->getFiles() as $file) {
-            foreach ($file->getTraits() as $trait) {
-                $traits[] = $trait;
+            foreach ($file->getTraits() as $fqsen => $trait) {
+                $traits[$fqsen] = $trait;
             }
         }
 
@@ -110,8 +110,8 @@ class Project implements ElementInterface
     {
         $functions = [];
         foreach ($this->getFiles() as $file) {
-            foreach ($file->getFunctions() as $function) {
-                $functions[] = $function;
+            foreach ($file->getFunctions() as $fqsen => $function) {
+                $functions[$fqsen] = $function;
             }
         }
 
@@ -125,8 +125,8 @@ class Project implements ElementInterface
     {
         $constants = [];
         foreach ($this->getFiles() as $file) {
-            foreach ($file->getConstants() as $constant) {
-                $constants[] = $constant;
+            foreach ($file->getConstants() as $fqsen => $constant) {
+                $constants[$fqsen] = $constant;
             }
         }
 
@@ -137,8 +137,8 @@ class Project implements ElementInterface
     public function getNamespaces(): array
     {
         $namespaces = [];
-        foreach ($this->project->getNamespaces() as $namespace) {
-            $namespace[] = new Namespace_($this, $namespace);
+        foreach ($this->project->getNamespaces() as $fqsen => $namespace) {
+            $namespace[$fqsen] = new Namespace_($this, $namespace);
         }
         return $namespaces;
     }

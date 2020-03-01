@@ -167,6 +167,6 @@ class Class_ implements ElementInterface
      */
     public function getUsedTraits(): array
     {
-        return $this->class->getUsedTraits();  // todo resolve to Trait_
+        return $this->class->getUsedTraits();
     }
 }

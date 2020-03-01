@@ -7,6 +7,7 @@ namespace Klitsche\Dog\Elements;
 use Klitsche\Dog\ElementInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
+use phpDocumentor\Reflection\Location;
 use phpDocumentor\Reflection\Php;
 use phpDocumentor\Reflection\Type;
 
@@ -98,7 +99,9 @@ class Property implements ElementInterface
             return $tag->getDescription() ? (string) $tag->getDescription() : null;
         }
         if ($this->tag !== null) {
-            return $this->tag->getDescription();
+            return $this->tag->getDescription()
+                ? (string) $this->tag->getDescription()
+                : null;
         }
 
         return null;
@@ -122,13 +125,30 @@ class Property implements ElementInterface
         return null;
     }
 
+    public function getLocation(): ?Location
+    {
+        if ($this->property !== null) {
+            return $this->property->getLocation();
+        }
+
+        return null;
+    }
+
     public function getFqsen(): ?Fqsen
     {
         if ($this->property !== null) {
             return $this->property->getFqsen();
         }
+        if ($this->tag !== null) {
+            return new Fqsen(
+                sprintf(
+                    '%s::$%s',
+                    (string) $this->getOwner()->getFqsen(),
+                    (string) $this->tag->getVariableName()
+                )
+            );
+        }
 
-        // todo in case of tag only > get from owner?
         return null;
     }
 }

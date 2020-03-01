@@ -46,8 +46,8 @@ class Namespace_ implements ElementInterface
     public function getClasses(): array
     {
         $classes = [];
-        foreach ($this->namespace->getClasses() as $class) {
-            $classes[] = new Class_($this, $class); // todo: owner namespace or file?
+        foreach ($this->namespace->getClasses() as $fqsen => $class) {
+            $classes[$fqsen] = new Class_($this, $class); // todo: owner namespace or file?
         }
 
         return $classes;
@@ -59,8 +59,8 @@ class Namespace_ implements ElementInterface
     public function getInterfaces(): array
     {
         $interfaces = [];
-        foreach ($this->namespace->getInterfaces() as $interface) {
-            $interfaces[] = new Interface_($this, $interface); // todo: owner namespace or file?
+        foreach ($this->namespace->getInterfaces() as $fqsen => $interface) {
+            $interfaces[$fqsen] = new Interface_($this, $interface); // todo: owner namespace or file?
         }
 
         return $interfaces;
@@ -72,8 +72,8 @@ class Namespace_ implements ElementInterface
     public function getTraits(): array
     {
         $traits = [];
-        foreach ($this->namespace->getTraits() as $trait) {
-            $traits[] = new Trait_($this, $trait); // todo: owner namespace or file?
+        foreach ($this->namespace->getTraits() as $fqsen => $trait) {
+            $traits[$fqsen] = new Trait_($this, $trait); // todo: owner namespace or file?
         }
 
         return $traits;
@@ -85,8 +85,8 @@ class Namespace_ implements ElementInterface
     public function getFunctions(): array
     {
         $functions = [];
-        foreach ($this->namespace->getFunctions() as $function) {
-            $functions[] = new Function_($this, $function); // todo: owner namespace or file?
+        foreach ($this->namespace->getFunctions() as $fqsen => $function) {
+            $functions[$fqsen] = new Function_($this, $function); // todo: owner namespace or file?
         }
 
         return $functions;
@@ -98,8 +98,8 @@ class Namespace_ implements ElementInterface
     public function getConstants(): array
     {
         $constants = [];
-        foreach ($this->namespace->getConstants() as $constant) {
-            $constants[] = new Constant($this, $constant); // todo: owner namespace or file?
+        foreach ($this->namespace->getConstants() as $fqsen => $constant) {
+            $constants[$fqsen] = new Constant($this, $constant); // todo: owner namespace or file?
         }
 
         return $constants;

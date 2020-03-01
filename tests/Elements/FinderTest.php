@@ -63,10 +63,10 @@ class FinderTest extends TestCase
     {
         $finder = new Finder($this->project);
 
-        $element = $finder->byFqsen(new Fqsen('\GlobalClass::withoutDoc()'));
+        $element = $finder->byFqsen(new Fqsen('\GlobalClass::withTypeWithoutDoc()'));
 
         $this->assertInstanceOf(Method::class, $element);
-        $this->assertSame('\GlobalClass::withoutDoc()', (string) $element->getFqsen());
+        $this->assertSame('\GlobalClass::withTypeWithoutDoc()', (string) $element->getFqsen());
     }
 
     public function testGetByFqsenWithClassConstants(): void
