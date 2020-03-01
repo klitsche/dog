@@ -99,7 +99,6 @@ class FileTest extends TestCase
 
         $elements = $files[__DIR__ . '/../Dummy/functions.php']->getFunctions();
 
-        var_dump($elements);
         $this->assertCount(3, $elements);
         $this->assertArrayHasKey(
             '\withTypeWithoutDoc()',
