@@ -2,6 +2,9 @@
 
 namespace Klitsche\Dog\Dummy\Namespaced;
 
+use Klitsche\Dog\Dummy\Namespaced\Other\OtherInterface;
+use Klitsche\Dog\Dummy\Namespaced\Other\OtherTrait;
+
 /**
  * Class Summary
  *

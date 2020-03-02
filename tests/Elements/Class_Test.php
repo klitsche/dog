@@ -76,8 +76,8 @@ class Class_Test extends TestCase
             (string) $interfaces['\Klitsche\Dog\Dummy\Namespaced\BaseInterface']
         );
         $this->assertSame(
-            '\Klitsche\Dog\Dummy\Namespaced\OtherInterface',
-            (string) $interfaces['\Klitsche\Dog\Dummy\Namespaced\OtherInterface']
+            '\Klitsche\Dog\Dummy\Namespaced\Other\OtherInterface',
+            (string) $interfaces['\Klitsche\Dog\Dummy\Namespaced\Other\OtherInterface']
         );
     }
 
@@ -94,8 +94,8 @@ class Class_Test extends TestCase
             (string) $usedTraits['\Klitsche\Dog\Dummy\Namespaced\BaseTrait']
         );
         $this->assertSame(
-            '\Klitsche\Dog\Dummy\Namespaced\OtherTrait',
-            (string) $usedTraits['\Klitsche\Dog\Dummy\Namespaced\OtherTrait']
+            '\Klitsche\Dog\Dummy\Namespaced\Other\OtherTrait',
+            (string) $usedTraits['\Klitsche\Dog\Dummy\Namespaced\Other\OtherTrait']
         );
     }
 
@@ -144,7 +144,7 @@ class Class_Test extends TestCase
         /** @var Class_ $element */
         $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\BaseClass'));
 
-        $this->assertSame(13, $element->getLocation()->getLineNumber());
+        $this->assertSame(16, $element->getLocation()->getLineNumber());
     }
 
     public function testGetOwner(): void

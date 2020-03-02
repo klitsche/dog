@@ -41,67 +41,42 @@ class Namespace_ implements ElementInterface
     }
 
     /**
-     * @return Class_[]
+     * @return Fqsen[]
      */
     public function getClasses(): array
     {
-        $classes = [];
-        foreach ($this->namespace->getClasses() as $fqsen => $class) {
-            $classes[$fqsen] = new Class_($this, $class); // todo: owner namespace or file?
-        }
-
-        return $classes;
+        return $this->namespace->getClasses();
     }
 
     /**
-     * @return Interface_[]
+     * @return Fqsen[]
      */
     public function getInterfaces(): array
     {
-        $interfaces = [];
-        foreach ($this->namespace->getInterfaces() as $fqsen => $interface) {
-            $interfaces[$fqsen] = new Interface_($this, $interface); // todo: owner namespace or file?
-        }
-
-        return $interfaces;
+        return $this->namespace->getInterfaces();
     }
 
     /**
-     * @return Trait_[]
+     * @return Fqsen[]
      */
     public function getTraits(): array
     {
-        $traits = [];
-        foreach ($this->namespace->getTraits() as $fqsen => $trait) {
-            $traits[$fqsen] = new Trait_($this, $trait); // todo: owner namespace or file?
-        }
-
-        return $traits;
+        return $this->namespace->getTraits();
     }
 
     /**
-     * @return Function_[]
+     * @return Fqsen[]
      */
     public function getFunctions(): array
     {
-        $functions = [];
-        foreach ($this->namespace->getFunctions() as $fqsen => $function) {
-            $functions[$fqsen] = new Function_($this, $function); // todo: owner namespace or file?
-        }
-
-        return $functions;
+        return $this->namespace->getFunctions();
     }
 
     /**
-     * @return Constant[]
+     * @return Fqsen[]
      */
     public function getConstants(): array
     {
-        $constants = [];
-        foreach ($this->namespace->getConstants() as $fqsen => $constant) {
-            $constants[$fqsen] = new Constant($this, $constant); // todo: owner namespace or file?
-        }
-
-        return $constants;
+        return $this->namespace->getConstants();
     }
 }

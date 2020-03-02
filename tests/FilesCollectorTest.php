@@ -20,7 +20,13 @@ class FilesCollectorTest extends TestCase
 
         $files = $collector->getFiles();
 
-        $this->assertCount(1, $files);
-        $this->assertSame([__DIR__ . '/Dummy/constants.php'], $files);
+        $this->assertCount(2, $files);
+        $this->assertSame(
+            [
+                __DIR__ . '/Dummy/constants.php',
+                __DIR__ . '/Dummy/Namespaced/constants.php',
+            ],
+            $files
+        );
     }
 }

@@ -26,7 +26,7 @@ class Trait_Test extends TestCase
             [
                 __DIR__ . '/../Dummy/Namespaced/BaseTrait.php',
                 __DIR__ . '/../Dummy/Namespaced/ExtendedTrait.php',
-                __DIR__ . '/../Dummy/Namespaced/OtherTrait.php',
+                __DIR__ . '/../Dummy/Namespaced/Other/OtherTrait.php',
             ]
         );
     }
@@ -52,8 +52,8 @@ class Trait_Test extends TestCase
             (string) $usedTraits['\Klitsche\Dog\Dummy\Namespaced\BaseTrait']
         );
         $this->assertSame(
-            '\Klitsche\Dog\Dummy\Namespaced\OtherTrait',
-            (string) $usedTraits['\Klitsche\Dog\Dummy\Namespaced\OtherTrait']
+            '\Klitsche\Dog\Dummy\Namespaced\Other\OtherTrait',
+            (string) $usedTraits['\Klitsche\Dog\Dummy\Namespaced\Other\OtherTrait']
         );
     }
 

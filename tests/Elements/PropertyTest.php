@@ -49,7 +49,7 @@ class PropertyTest extends TestCase
         $this->assertNull($element->getType());
         $this->assertTrue($element->isStatic());
         $this->assertSame('public', (string) $element->getVisibility());
-        $this->assertSame(25, $element->getLocation()->getLineNumber());
+        $this->assertSame(28, $element->getLocation()->getLineNumber());
     }
 
     public function testPropertyWithValueAndDoc(): void
@@ -70,7 +70,7 @@ class PropertyTest extends TestCase
         $this->assertInstanceOf(String_::class, $element->getType());
         $this->assertFalse($element->isStatic());
         $this->assertSame('protected', (string) $element->getVisibility());
-        $this->assertSame(30, $element->getLocation()->getLineNumber());
+        $this->assertSame(33, $element->getLocation()->getLineNumber());
     }
 
     public function testPropertyWithValueAndType(): void
@@ -91,7 +91,7 @@ class PropertyTest extends TestCase
         $this->assertInstanceOf(Integer::class, $element->getType());
         $this->assertFalse($element->isStatic());
         $this->assertSame('private', (string) $element->getVisibility());
-        $this->assertSame(32, $element->getLocation()->getLineNumber());
+        $this->assertSame(35, $element->getLocation()->getLineNumber());
     }
 
     public function testPropertyTagOnly(): void

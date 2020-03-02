@@ -34,6 +34,8 @@ class FilesCollector
             $files[] = (string) $file;
         }
 
+        sort($files, SORT_FLAG_CASE | SORT_NATURAL);
+
         return $files;
     }
 }

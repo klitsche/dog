@@ -25,7 +25,7 @@ class Interface_Test extends TestCase
         $this->project = $analyzer->analyze(
             [
                 __DIR__ . '/../Dummy/Namespaced/BaseInterface.php',
-                __DIR__ . '/../Dummy/Namespaced/OtherInterface.php',
+                __DIR__ . '/../Dummy/Namespaced/Other/OtherInterface.php',
                 __DIR__ . '/../Dummy/Namespaced/ExtendedInterface.php',
             ]
         );
@@ -68,8 +68,8 @@ class Interface_Test extends TestCase
             (string) $parents['\Klitsche\Dog\Dummy\Namespaced\BaseInterface']
         );
         $this->assertSame(
-            '\Klitsche\Dog\Dummy\Namespaced\OtherInterface',
-            (string) $parents['\Klitsche\Dog\Dummy\Namespaced\OtherInterface']
+            '\Klitsche\Dog\Dummy\Namespaced\Other\OtherInterface',
+            (string) $parents['\Klitsche\Dog\Dummy\Namespaced\Other\OtherInterface']
         );
     }
 

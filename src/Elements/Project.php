@@ -133,13 +133,16 @@ class Project implements ElementInterface
         return $constants;
     }
 
-    // todo: root namespace?
+    /**
+     * @return Namespace_[]
+     */
     public function getNamespaces(): array
     {
         $namespaces = [];
         foreach ($this->project->getNamespaces() as $fqsen => $namespace) {
-            $namespace[$fqsen] = new Namespace_($this, $namespace);
+            $namespaces[$fqsen] = new Namespace_($this, $namespace);
         }
+
         return $namespaces;
     }
 
