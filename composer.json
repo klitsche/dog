@@ -2,8 +2,16 @@
     "name": "klitsche/dog",
     "type": "library",
     "description": "Source code documentation generator for PHP libraries",
-    "keywords": [],
-    "homepage": "https://klitsche.de",
+    "keywords": [
+        "documentation",
+        "generator",
+        "source code",
+        "phpdoc",
+        "api",
+        "twig",
+        "markdown"
+    ],
+    "homepage": "https://klitsche.github.io/dog/",
     "license": "MIT",
     "authors": [
         {
@@ -12,7 +20,7 @@
         }
     ],
     "require": {
-        "phpdocumentor/reflection": " ~4.0",
+        "phpdocumentor/reflection": "^4.0",
         "twig/twig": "^3.0",
         "symfony/console": "^5.0",
         "symfony/filesystem": "^5.0",
