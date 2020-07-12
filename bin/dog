@@ -3,13 +3,30 @@
 
 declare(strict_types=1);
 
+use Klitsche\Dog\Cli\CommandUsageReporter;
 use Klitsche\Dog\Cli\GenerateCommand;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\ConsoleEvents;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Stopwatch\Stopwatch;
 
-require __DIR__ . '/../vendor/autoload.php';
+const DOG_VERSION = 'dev-master';
 
-$application = new Application('dog', 'dev-master');
-$command = new GenerateCommand();
-$application->add($command);
-$application->setDefaultCommand($command->getName(), true);
+foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        require $file;
+        break;
+    }
+}
+
+$usageReporter = new CommandUsageReporter(new Stopwatch());
+
+$dispatcher = new EventDispatcher();
+$dispatcher->addListener(ConsoleEvents::COMMAND, [$usageReporter, 'onConsoleCommand']);
+$dispatcher->addListener(ConsoleEvents::TERMINATE, [$usageReporter, 'onConsoleTerminate']);
+
+$application = new Application('dog', DOG_VERSION);
+$application->setDispatcher($dispatcher);
+$application->add(new GenerateCommand('generate', $dispatcher));
+$application->setDefaultCommand('generate');
 $application->run();

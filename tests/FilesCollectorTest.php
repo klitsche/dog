@@ -14,11 +14,14 @@ class FilesCollectorTest extends TestCase
     public function testGetFiles(): void
     {
         $collector = new FilesCollector(
-            __DIR__ . '/Dummy',
-            '/const.*\.php$/'
+            [
+                __DIR__ . '/Dummy' => [
+                    '/const.*\.php$/' => true,
+                ],
+            ]
         );
 
-        $files = $collector->getFiles();
+        $files = $collector->collect();
 
         $this->assertCount(2, $files);
         $this->assertSame(

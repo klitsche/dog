@@ -1,2 +1,5 @@
 /vendor/
 /composer.lock
+/docs/index.md
+/docs/license.md
+/docs/api

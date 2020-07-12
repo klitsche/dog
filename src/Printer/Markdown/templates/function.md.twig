@@ -1,44 +1,34 @@
 ### {{ function.name }}
 
-{#**Description**#}
 ```php
 
 {% include 'function-signature.md.twig' %}
 
 ```
 
+{% apply linkFqsen %}
+
 {{ function.docblock.summary|raw }}
 
 {{ function.docblock.description|raw }}
 
-{% if function.docblock.tagsByName('deprecated') is not empty  %}⚠️ _This method is **deprecated**_. _{{ function.docblock.tagsByName('deprecated')|first.description }}_
-{% endif %}
-
-{% if function.docblock.tagsByName('see') is not empty or function.docblock.tagsByName('link') is not empty %}
-See also:
-
-{% for see in function.docblock.tagsByName('see') ~%}
-* {{ linkReference(see.reference) }}
-{%- endfor %}
-{% for link in function.docblock.tagsByName('link') ~%}
-* [{% if link.description and link.description != link.link %}{{ link.description|raw }}{% else %} {{ link.reference }} {% endif %}]({{ link.link }})
-{%- endfor %}
-
-{% endif %}
+{% include '_notes.md.twig' with { element: function } %}
 
 {% if function.arguments is not empty %}
-{#**Parameters**#}
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
 {% for argument in function.arguments %}
-| `{{ argument.name }}` | **{{ linkType(argument.type) }}** | {{ argument.description|split('\n')|join(' ') }} |
+**{{ argument.name }}**
+: {{ argument.type }}.
+: {{ argument.description|split('\n')|join(' ') }}
+
 {% endfor %}
 
-{% endif %}{# function.arguments is not empty #}
+{% endif %}
 
 {% if function.returnType and function.returnType != 'void' %}
-{#**Return Values**#}
 
-Returns `{{ function.returnType }}`. {{ function.returnDescription }}
+Returns {{ function.returnType }}. {{ function.returnDescription|raw }}
+
 {% endif %}
+
+{% endapply %}

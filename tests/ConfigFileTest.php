@@ -7,7 +7,7 @@ namespace Klitsche\Dog;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Klitsche\Dog\ConfigFile
+ * @covers \Klitsche\Dog\Config
  */
 class ConfigFileTest extends TestCase
 {
@@ -27,19 +27,17 @@ class ConfigFileTest extends TestCase
         $this->tmpfile = tempnam(sys_get_temp_dir(), 'dogtest');
         file_put_contents($this->tmpfile, 'title: title');
 
-        $configFile = new ConfigFile($this->tmpfile);
-        $config = $configFile->getConfig();
+        $config = Config::fromYamlFile($this->tmpfile, sys_get_temp_dir());
 
         $this->assertSame('title', $config->getTitle());
     }
 
     public function testGetConfigWithRelativePath(): void
     {
-        $this->tmpfile = tempnam(getcwd(), 'dogtest');
+        $this->tmpfile = tempnam(sys_get_temp_dir(), 'dogtest');
         file_put_contents($this->tmpfile, 'title: title');
 
-        $configFile = new ConfigFile(basename($this->tmpfile));
-        $config = $configFile->getConfig();
+        $config = Config::fromYamlFile(basename($this->tmpfile), sys_get_temp_dir());
 
         $this->assertSame('title', $config->getTitle());
     }
@@ -47,6 +45,6 @@ class ConfigFileTest extends TestCase
     public function testGetConfigWithInvalidFile(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        new ConfigFile('missingFile');
+        Config::fromYamlFile('missingfile', sys_get_temp_dir());
     }
 }

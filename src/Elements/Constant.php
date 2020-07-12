@@ -4,26 +4,41 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
+use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Location;
 use phpDocumentor\Reflection\Php;
 use phpDocumentor\Reflection\Type;
 
-class Constant implements ElementInterface
+class Constant implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, VisibilityAwareInterface, ProjectAwareInterface
 {
-    /**
-     * @var Php\Constant
-     */
-    private Php\Constant $constant;
+    use DocBlockTrait;
+    use VisibilityTrait;
+    use ProjectTrait;
+    use FqsenTrait;
+
+    public const TYPE = 'Constant';
+
+    private Php\Constant $php;
 
     private ElementInterface $owner;
 
-    public function __construct(ElementInterface $owner, Php\Constant $constant)
+    public function __construct(ProjectInterface $project, ElementInterface $owner, Php\Constant $php)
     {
-        $this->constant = $constant;
+        $this->setProject($project);
+        $this->php = $php;
         $this->owner = $owner;
+    }
+
+    public function getElementType(): string
+    {
+        return self::TYPE;
+    }
+
+    public function getId(): string
+    {
+        return (string) $this->getFqsen();
     }
 
     public function getOwner(): ?ElementInterface
@@ -31,34 +46,39 @@ class Constant implements ElementInterface
         return $this->owner;
     }
 
-    public function getPhp(): ?Php\Constant
+    public function getFile(): File
     {
-        return $this->constant;
+        return $this->getOwner()->getFile();
+    }
+
+    public function getPhp(): Php\Constant
+    {
+        return $this->php;
     }
 
     public function getName(): ?string
     {
-        return $this->constant->getName();
+        return $this->php->getName();
     }
 
-    public function getFqsen(): ?Fqsen
+    public function getFqsen(): Fqsen
     {
-        return $this->constant->getFqsen();
+        return $this->php->getFqsen();
     }
 
     public function getVisibility(): ?Php\Visibility
     {
-        return $this->constant->getVisibility();
+        return $this->php->getVisibility();
     }
 
     public function getValue(): ?string
     {
-        return $this->constant->getValue();
+        return $this->php->getValue();
     }
 
     public function getLocation(): Location
     {
-        return $this->constant->getLocation();
+        return $this->php->getLocation();
     }
 
     public function getType(): ?Type
@@ -66,8 +86,9 @@ class Constant implements ElementInterface
         if ($this->getDocBlock() && $this->getDocBlock()->hasTag('var')) {
             /** @var DocBlock\Tags\Var_ $tag */
             $tag = $this->getDocBlock()->getTagsByName('var')[0];
-
-            return $tag->getType();
+            if ($tag instanceof DocBlock\Tags\Var_) {
+                return $tag->getType();
+            }
         }
 
         return null;
@@ -75,7 +96,7 @@ class Constant implements ElementInterface
 
     public function getDocBlock(): ?DocBlock
     {
-        return $this->constant->getDocBlock();
+        return $this->php->getDocBlock();
     }
 
     public function getDescription(): ?string
@@ -83,10 +104,19 @@ class Constant implements ElementInterface
         if ($this->getDocBlock() && $this->getDocBlock()->hasTag('var')) {
             /** @var DocBlock\Tags\Var_ $tag */
             $tag = $this->getDocBlock()->getTagsByName('var')[0];
-
-            return $tag->getDescription() ? (string) $tag->getDescription() : null;
+            if ($tag instanceof DocBlock\Tags\Var_) {
+                return $tag->getDescription() ? (string) $tag->getDescription() : null;
+            }
         }
 
         return null;
+    }
+
+    public function isClassConstant(): bool
+    {
+        if ($this->getOwner() === null) {
+            return false;
+        }
+        return $this->getOwner()->getElementType() !== File::TYPE;
     }
 }

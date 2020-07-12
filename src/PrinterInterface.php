@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog;
 
-use Klitsche\Dog\Elements\Project;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 interface PrinterInterface
 {
-    public static function create(Config $config): self;
+    public const PROGRESS_TOPIC = 'Generate Documentation';
 
-    public function print(Project $project): void;
+    public static function create(ConfigInterface $config, EventDispatcherInterface $dispatcher): self;
+
+    public function print(ProjectInterface $project): void;
 }

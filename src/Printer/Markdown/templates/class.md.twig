@@ -2,35 +2,26 @@
 title: {{ class.name }}
 ---
 
-# Class {{ class.fqsen }}
+# Class {{ class.name }}
 
-{{ class.docblock.summary|raw }}
+{% if class.isAbstract %}abstract{% elseif class.isFinal %}final{% endif %}
+Class {{ class.fqsen }}
+
+{% apply linkFqsen %}
+{% if class.parent %}* __extends__ {{ class.parent }}{% endif %}
+{% for interface in class.interfaces %}
+* __implements__  {{ interface }}
+{% endfor %}
+{% for usedTrait in class.usedTraits %}
+* __uses__ {{ usedTrait }}
+{% endfor %}
+
+{{~ class.docblock.summary|raw }}
 
 {{ class.docblock.description|raw }}
 
-{% if class.parent %}extends **{{ linkFqsen(class.parent) }}**
-{% endif %}
-{% for interface in class.interfaces %}
-implements **{{ linkFqsen(interface) }}**
-{% endfor %}
-{% for usedTrait in class.usedTraits %}
-uses **{{ linkFqsen(usedTrait) }}**
-{% endfor %}
-
-{% if class.docblock.tagsByName('deprecated') is not empty %}⚠️ _This class is **deprecated**. {{ class.docblock.tagsByName('deprecated')|first.description|raw }}_
-{% endif %}
-
-{% if class.docblock.tagsByName('see') is not empty or class.docblock.tagsByName('link') is not empty %}
-See also:
-
-{% for see in class.docblock.tagsByName('see') -%}
-* [{{ see.reference }}]({{ see.reference }})
-{%- endfor %}
-{% for link in class.docblock.tagsByName('link') ~%}
-* [{% if link.description and link.description != link.link %}{{ link.description|raw }}{% else %} {{ link.reference }} {% endif %}]({{ link.link }})
-{%- endfor %}
-
-{% endif %}
+{% include '_notes.md.twig' with { element: class } %}
+{% endapply %}
 
 {%  if class.constants|filter(i => i.visibility == 'public') is not empty %}
 ## Constants
@@ -55,7 +46,7 @@ See also:
 {% if class.methods|filter(i => i.visibility == 'public') is not empty %}
 ## Methods
 
-{% for method in class.methods|sort((a,b) => a.name <=> b.name) %}
+{% for method in class.allMethods|sort((a,b) => a.name <=> b.name) %}
     {%- if method.visibility == 'public' -%}
         {%- include 'method.md.twig' -%}
     {%- endif -%}

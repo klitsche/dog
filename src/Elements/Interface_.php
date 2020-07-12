@@ -4,25 +4,42 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
+use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Location;
 use phpDocumentor\Reflection\Php;
 
-class Interface_ implements ElementInterface
+class Interface_ implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, ProjectAwareInterface
 {
-    /**
-     * @var Php\Interface_
-     */
-    private Php\Interface_ $interface;
+    use DocBlockTrait;
+    use ProjectTrait;
+    use FqsenTrait;
+
+    public const TYPE = 'Interface';
+
+    private Php\Interface_ $php;
 
     private ElementInterface $owner;
 
-    public function __construct(ElementInterface $owner, Php\Interface_ $interface)
+    private array $constants;
+    private array $methods;
+
+    public function __construct(ProjectInterface $project, ElementInterface $owner, Php\Interface_ $php)
     {
-        $this->interface = $interface;
+        $this->setProject($project);
+        $this->php = $php;
         $this->owner = $owner;
+    }
+
+    public function getElementType(): string
+    {
+        return self::TYPE;
+    }
+
+    public function getId(): string
+    {
+        return (string) $this->getFqsen();
     }
 
     public function getOwner(): ?ElementInterface
@@ -30,29 +47,34 @@ class Interface_ implements ElementInterface
         return $this->owner;
     }
 
-    public function getPhp(): ?Php\interface_
+    public function getFile(): File
     {
-        return $this->interface;
+        return $this->getOwner()->getFile();
+    }
+
+    public function getPhp(): Php\interface_
+    {
+        return $this->php;
     }
 
     public function getName(): string
     {
-        return $this->interface->getName();
+        return $this->php->getName();
     }
 
     public function getDocBlock(): ?DocBlock
     {
-        return $this->interface->getDocBlock();
+        return $this->php->getDocBlock();
     }
 
-    public function getFqsen(): ?Fqsen
+    public function getFqsen(): Fqsen
     {
-        return $this->interface->getFqsen();
+        return $this->php->getFqsen();
     }
 
     public function getLocation(): Location
     {
-        return $this->interface->getLocation();
+        return $this->php->getLocation();
     }
 
     /**
@@ -60,12 +82,14 @@ class Interface_ implements ElementInterface
      */
     public function getMethods(): array
     {
-        $methods = [];
-        foreach ($this->interface->getMethods() as $method) {
-            $methods[$method->getName()] = new Method($this, $method, $this->findMethodTag($method));
+        if (isset($this->methods) === false) {
+            $this->methods = [];
+            foreach ($this->php->getMethods() as $method) {
+                $this->methods[$method->getName()] = new Method($this->getProject(), $this, $method, $this->findMethodTag($method));
+            }
         }
 
-        return $methods;
+        return $this->methods;
     }
 
     private function findMethodTag(Php\Method $method): ?DocBlock\Tags\Method
@@ -82,8 +106,8 @@ class Interface_ implements ElementInterface
 
     private function getDocBlockTags(): iterable
     {
-        if ($this->interface->getDocBlock()) {
-            foreach ($this->interface->getDocBlock()->getTags() as $tag) {
+        if ($this->php->getDocBlock()) {
+            foreach ($this->php->getDocBlock()->getTags() as $tag) {
                 yield $tag;
             }
         }
@@ -94,12 +118,14 @@ class Interface_ implements ElementInterface
      */
     public function getConstants(): array
     {
-        $constants = [];
-        foreach ($this->interface->getConstants() as $constant) {
-            $constants[] = new Constant($this, $constant);
+        if (isset($this->constants) === false) {
+            $this->constants = [];
+            foreach ($this->php->getConstants() as $constant) {
+                $this->constants[] = new Constant($this->getProject(), $this, $constant);
+            }
         }
 
-        return $constants;
+        return $this->constants;
     }
 
     /**
@@ -107,6 +133,6 @@ class Interface_ implements ElementInterface
      */
     public function getParents(): array
     {
-        return $this->interface->getParents();
+        return $this->php->getParents();
     }
 }

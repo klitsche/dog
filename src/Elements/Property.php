@@ -4,27 +4,44 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
+use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Location;
 use phpDocumentor\Reflection\Php;
 use phpDocumentor\Reflection\Type;
 
-class Property implements ElementInterface
+class Property implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, VisibilityAwareInterface, ProjectAwareInterface
 {
-    private ?Php\Property $property;
+    use DocBlockTrait;
+    use VisibilityTrait;
+    use ProjectTrait;
+    use FqsenTrait;
+
+    public const TYPE = 'Property';
+
+    private ?Php\Property $php;
 
     private ?DocBlock\Tags\Property $tag;
 
     private ElementInterface $owner;
 
-    // todo: add support for read/write property
-    public function __construct(ElementInterface $owner, ?Php\Property $property, ?DocBlock\Tags\Property $tag)
+    public function __construct(ProjectInterface $project, ElementInterface $owner, ?Php\Property $php, ?DocBlock\Tags\Property $tag)
     {
-        $this->property = $property;
+        $this->setProject($project);
+        $this->php = $php;
         $this->tag = $tag;
         $this->owner = $owner;
+    }
+
+    public function getElementType(): string
+    {
+        return self::TYPE;
+    }
+
+    public function getId(): string
+    {
+        return (string) $this->getFqsen();
     }
 
     public function getOwner(): ?ElementInterface
@@ -34,7 +51,7 @@ class Property implements ElementInterface
 
     public function getPhp(): ?Php\Property
     {
-        return $this->property;
+        return $this->php;
     }
 
     public function getTag(): ?DocBlock\Tags\Property
@@ -44,8 +61,8 @@ class Property implements ElementInterface
 
     public function getName(): ?string
     {
-        if ($this->property !== null) {
-            return $this->property->getName();
+        if ($this->php !== null) {
+            return $this->php->getName();
         }
         if ($this->tag !== null) {
             return $this->tag->getVariableName();
@@ -54,19 +71,25 @@ class Property implements ElementInterface
         return null;
     }
 
+    public function getFile(): File
+    {
+        return $this->getOwner()->getFile();
+    }
+
     public function getType(): ?Type
     {
         if ($this->getDocBlock() && $this->getDocBlock()->hasTag('var')) {
             /** @var DocBlock\Tags\Var_ $tag */
             $tag = $this->getDocBlock()->getTagsByName('var')[0];
-
-            return $tag->getType();
+            if ($tag instanceof DocBlock\Tags\Var_) {
+                return $tag->getType();
+            }
         }
         if ($this->tag !== null) {
             return $this->tag->getType();
         }
-        if ($this->property !== null) {
-            return $this->property->getType();
+        if ($this->php !== null) {
+            return $this->php->getType();
         }
 
         return null;
@@ -74,8 +97,8 @@ class Property implements ElementInterface
 
     public function getDocBlock(): ?DocBlock
     {
-        if ($this->property !== null) {
-            return $this->property->getDocBlock();
+        if ($this->php !== null) {
+            return $this->php->getDocBlock();
         }
 
         return null;
@@ -83,8 +106,8 @@ class Property implements ElementInterface
 
     public function getDefault(): ?string
     {
-        if ($this->property !== null) {
-            return $this->property->getDefault();
+        if ($this->php !== null) {
+            return $this->php->getDefault();
         }
 
         return null;
@@ -95,8 +118,9 @@ class Property implements ElementInterface
         if ($this->getDocBlock() && $this->getDocBlock()->hasTag('var')) {
             /** @var DocBlock\Tags\Var_ $tag */
             $tag = $this->getDocBlock()->getTagsByName('var')[0];
-
-            return $tag->getDescription() ? (string) $tag->getDescription() : null;
+            if ($tag instanceof DocBlock\Tags\Var_) {
+                return $tag->getDescription() ? (string) $tag->getDescription() : null;
+            }
         }
         if ($this->tag !== null) {
             return $this->tag->getDescription()
@@ -109,8 +133,8 @@ class Property implements ElementInterface
 
     public function isStatic(): bool
     {
-        if ($this->property !== null) {
-            return $this->property->isStatic();
+        if ($this->php !== null) {
+            return $this->php->isStatic();
         }
 
         return false;
@@ -118,8 +142,8 @@ class Property implements ElementInterface
 
     public function getVisibility(): ?Php\Visibility
     {
-        if ($this->property !== null) {
-            return $this->property->getVisibility();
+        if ($this->php !== null) {
+            return $this->php->getVisibility();
         }
 
         return null;
@@ -127,19 +151,24 @@ class Property implements ElementInterface
 
     public function getLocation(): ?Location
     {
-        if ($this->property !== null) {
-            return $this->property->getLocation();
+        if ($this->php !== null) {
+            return $this->php->getLocation();
+        }
+        if ($this->tag !== null && $this->getOwner()->getDocBlock() !== null) {
+            return $this->getOwner()->getDocBlock()->getLocation();
         }
 
         return null;
     }
 
-    public function getFqsen(): ?Fqsen
+    public function getFqsen(): Fqsen
     {
-        if ($this->property !== null) {
-            return $this->property->getFqsen();
+        if ($this->php !== null) {
+            return $this->php->getFqsen();
         }
-        if ($this->tag !== null) {
+        if ($this->tag !== null &&
+            empty($this->tag->getVariableName()) === false &&
+            $this->getOwner()->getFqsen() !== null) {
             return new Fqsen(
                 sprintf(
                     '%s::$%s',
@@ -149,6 +178,6 @@ class Property implements ElementInterface
             );
         }
 
-        return null;
+        throw new \LogicException('Property must have reference to php or tag');
     }
 }

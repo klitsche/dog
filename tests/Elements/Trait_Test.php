@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
-use Klitsche\Dog\FilesAnalyzer;
+use Klitsche\Dog\FilesParser;
+use Klitsche\Dog\Project;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use PHPUnit\Framework\TestCase;
@@ -21,8 +21,8 @@ class Trait_Test extends TestCase
     {
         parent::setUp();
 
-        $analyzer = new FilesAnalyzer();
-        $this->project = $analyzer->analyze(
+        $analyzer = new FilesParser();
+        $this->project = $analyzer->parse(
             [
                 __DIR__ . '/../Dummy/Namespaced/BaseTrait.php',
                 __DIR__ . '/../Dummy/Namespaced/ExtendedTrait.php',

@@ -1,28 +1,15 @@
 ### {{ constant.name }}
 
-{{ constant.docblock.summary|raw }}
-
 ```php
 
 {% include 'constant-signature.md.twig' %}
 
 ```
+{% apply linkFqsen %}
+{{ constant.docblock.summary|raw }}
 
 {{ constant.docblock.description|raw }}
 
-{% if constant.docblock.tags.deprecated %}* **Deprecated:** this constant is **deprecated**. {{ constant.docblock.tags.deprecated.description }}
-{% endif %}
-
-{% if constant.tags.see is not empty or constant.tags.link is not empty %}
-__See Also:__
-
-{% for see in constant.tags.see %}
-
-- [{% if see.description %}{{ see.description|raw }} {% else %} {{ see.reference }} {% endif %}]({{ see.reference }})
-{% endfor %}
-{% for link in constant.tags.link %}
--[{% if link.description and link.description != link.link %}{{ link.description|raw }}{% else %} {{ link.reference }} {% endif %}]({{ link.link }})
-{% endfor %}
-
-{% endif %}
+{% include '_notes.md.twig' with { element: constant } %}
+{% endapply %}
 

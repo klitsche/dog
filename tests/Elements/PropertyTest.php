@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
-use Klitsche\Dog\FilesAnalyzer;
+use Klitsche\Dog\FilesParser;
+use Klitsche\Dog\Project;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Types\Integer;
@@ -23,8 +23,8 @@ class PropertyTest extends TestCase
     {
         parent::setUp();
 
-        $analyzer = new FilesAnalyzer();
-        $this->project = $analyzer->analyze(
+        $analyzer = new FilesParser();
+        $this->project = $analyzer->parse(
             [
                 __DIR__ . '/../Dummy/Namespaced/BaseClass.php',
             ]
@@ -112,7 +112,7 @@ class PropertyTest extends TestCase
         $this->assertInstanceOf(String_::class, $element->getType());
         $this->assertFalse($element->isStatic());
         $this->assertNull($element->getVisibility());
-        $this->assertNull($element->getLocation());
+        $this->assertSame(8, $element->getLocation()->getLineNumber());
     }
 
     public function testGetOwner(): void

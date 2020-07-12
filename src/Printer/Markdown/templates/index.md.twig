@@ -4,42 +4,44 @@ title: {{ config.title }}
 
 # {{ config.title }}
 
+{% apply linkFqsen %}
 {% if project.interfaces %}
 ## Interfaces
 
-{% for elem in project.interfaces|sort((a, b) => a.fqsen <=> b.fqsen) %}
-{{ '* '~link(elem) }}
+{% for element in project.interfaces|sort((a, b) => a.fqsen <=> b.fqsen) %}
+{{ '* '~element.fqsen }}
 {% endfor %}
 {% endif %}
 
 {% if project.traits %}
 ## Traits
 
-{% for elem in project.traits|sort((a, b) => a.fqsen <=> b.fqsen) %}
-{{ '* '~link(elem) }}
+{% for element in project.traits|sort((a, b) => a.fqsen <=> b.fqsen) %}
+{{ '* '~element.fqsen }}
 {% endfor %}
 {% endif %}
 
 {% if project.classes %}
 ## Classes
 
-{% for elem in project.classes|sort((a, b) => a.fqsen <=> b.fqsen) %}
-{{ '* '~link(elem) }}
+{% for element in project.classes|sort((a, b) => a.fqsen <=> b.fqsen) %}
+{{ '* '~element.fqsen }}
 {% endfor %}
 {% endif %}
 
 {% if project.functions %}
 ## Functions
 
-{% for elem in project.functions|sort((a, b) => a.fqsen <=> b.fqsen) %}
-{{ '* '~link(elem) }}
+{% for element in project.functions|sort((a, b) => a.fqsen <=> b.fqsen) %}
+{{ '* '~element.fqsen }}
 {% endfor %}
 {% endif %}
 
 {% if project.constants %}
 ## Constants
 
-{% for elem in project.constants|sort((a, b) => a.fqsen <=> b.fqsen) %}
-{{ '* '~link(elem) }}
+{% for element in project.constants|sort((a, b) => a.fqsen <=> b.fqsen) %}
+{{ '* '~element.fqsen }}
 {% endfor %}
 {% endif %}
+{% endapply %}

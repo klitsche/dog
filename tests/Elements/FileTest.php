@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
-use Klitsche\Dog\FilesAnalyzer;
+use Klitsche\Dog\FilesParser;
+use Klitsche\Dog\Project;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use PHPUnit\Framework\TestCase;
@@ -21,8 +21,8 @@ class FileTest extends TestCase
     {
         parent::setUp();
 
-        $analyzer = new FilesAnalyzer();
-        $this->project = $analyzer->analyze(
+        $analyzer = new FilesParser();
+        $this->project = $analyzer->parse(
             [
                 __DIR__ . '/../Dummy/constants.php',
                 __DIR__ . '/../Dummy/functions.php',
@@ -54,15 +54,6 @@ class FileTest extends TestCase
         );
         $this->assertNull(
             $files[__DIR__ . '/../Dummy/GlobalClass.php']->getDocBlock()
-        );
-    }
-
-    public function testGetFqsen(): void
-    {
-        $files = $this->project->getFiles();
-
-        $this->assertNull(
-            $files[__DIR__ . '/../Dummy/constants.php']->getFqsen()
         );
     }
 
@@ -185,16 +176,6 @@ class FileTest extends TestCase
         $this->assertSame(
             __DIR__ . '/../Dummy/constants.php',
             $files[__DIR__ . '/../Dummy/constants.php']->getPath()
-        );
-    }
-
-    public function testGetOwner(): void
-    {
-        $files = $this->project->getFiles();
-
-        $this->assertInstanceOf(
-            ElementInterface::class,
-            $files[__DIR__ . '/../Dummy/constants.php']->getOwner()
         );
     }
 }

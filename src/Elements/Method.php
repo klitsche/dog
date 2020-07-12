@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
+use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Location;
@@ -12,19 +12,39 @@ use phpDocumentor\Reflection\Php;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\Mixed_;
 
-class Method implements ElementInterface
+class Method implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, VisibilityAwareInterface, ProjectAwareInterface, ArgumentsAwareInterface
 {
-    private ?Php\Method $method;
+    use DocBlockTrait;
+    use VisibilityTrait;
+    use ProjectTrait;
+    use FqsenTrait;
+
+    public const TYPE = 'Method';
+
+    private ?Php\Method $php;
 
     private ?DocBlock\Tags\Method $tag;
 
     private ElementInterface $owner;
 
-    public function __construct(ElementInterface $owner, ?Php\Method $method, ?DocBlock\Tags\Method $tag)
+    private array $arguments;
+
+    public function __construct(ProjectInterface $project, ElementInterface $owner, ?Php\Method $php, ?DocBlock\Tags\Method $tag)
     {
-        $this->method = $method;
+        $this->setProject($project);
+        $this->php = $php;
         $this->tag = $tag;
         $this->owner = $owner;
+    }
+
+    public function getElementType(): string
+    {
+        return self::TYPE;
+    }
+
+    public function getId(): string
+    {
+        return (string) $this->getFqsen();
     }
 
     public function getOwner(): ?ElementInterface
@@ -32,9 +52,14 @@ class Method implements ElementInterface
         return $this->owner;
     }
 
+    public function getFile(): File
+    {
+        return $this->getOwner()->getFile();
+    }
+
     public function getPhp(): ?Php\Method
     {
-        return $this->method;
+        return $this->php;
     }
 
     public function getTag(): ?DocBlock\Tags\Method
@@ -47,29 +72,27 @@ class Method implements ElementInterface
      */
     public function getArguments(): array
     {
-        $arguments = [];
-        if ($this->method !== null) {
-            foreach ($this->method->getArguments() as $argument) {
-                $arguments[] = new Argument($this, $argument, $this->findParamTag($argument));
+        if (isset($this->arguments) === false) {
+            $this->arguments = [];
+            if ($this->php !== null) {
+                foreach ($this->php->getArguments() as $argument) {
+                    $this->arguments[] = new Argument($this, $argument, $this->findParamTag($argument));
+                }
+            } elseif ($this->tag !== null) {
+                foreach ($this->tag->getArguments() as $argument) {
+                    $this->arguments[] = new Argument(
+                        $this,
+                        null,
+                        new DocBlock\Tags\Param(
+                            $argument['name'],
+                            $argument['type'],
+                        )
+                    );
+                }
             }
-            return $arguments;
-        }
-        if ($this->tag !== null) {
-            foreach ($this->tag->getArguments() as $argument) {
-                $arguments[] = new Argument(
-                    $this,
-                    null,
-                    new DocBlock\Tags\Param(
-                        $argument['name'],
-                        $argument['type'],
-                    )
-                );
-            }
-
-            return $arguments;
         }
 
-        return [];
+        return $this->arguments;
     }
 
     private function findParamTag(Php\Argument $argument): ?DocBlock\Tags\Param
@@ -77,7 +100,7 @@ class Method implements ElementInterface
         if ($this->getDocBlock() === null) {
             return null;
         }
-        foreach ($this->method->getDocBlock()->getTags() as $tag) {
+        foreach ($this->php->getDocBlock()->getTags() as $tag) {
             if ($tag instanceof DocBlock\Tags\Param) {
                 if ($tag->getVariableName() === $argument->getName()) {
                     return $tag;
@@ -90,8 +113,8 @@ class Method implements ElementInterface
 
     public function getDocBlock(): ?DocBlock
     {
-        if ($this->method !== null) {
-            return $this->method->getDocBlock();
+        if ($this->php !== null) {
+            return $this->php->getDocBlock();
         }
 
         return null;
@@ -99,8 +122,8 @@ class Method implements ElementInterface
 
     public function getName(): ?string
     {
-        if ($this->method !== null) {
-            return $this->method->getName();
+        if ($this->php !== null) {
+            return $this->php->getName();
         }
         if ($this->tag !== null) {
             return $this->tag->getMethodName();
@@ -109,10 +132,10 @@ class Method implements ElementInterface
         return null;
     }
 
-    public function getFqsen(): ?Fqsen
+    public function getFqsen(): Fqsen
     {
-        if ($this->method !== null) {
-            return $this->method->getFqsen();
+        if ($this->php !== null) {
+            return $this->php->getFqsen();
         }
         if ($this->tag !== null) {
             return new Fqsen(
@@ -124,13 +147,13 @@ class Method implements ElementInterface
             );
         }
 
-        return null;
+        throw new \LogicException('Method must have reference to php or tag');
     }
 
     public function getVisibility(): ?Php\Visibility
     {
-        if ($this->method !== null) {
-            return $this->method->getVisibility();
+        if ($this->php !== null) {
+            return $this->php->getVisibility();
         }
 
         return null;
@@ -141,11 +164,12 @@ class Method implements ElementInterface
         if ($this->getDocBlock() && $this->getDocBlock()->hasTag('return')) {
             /** @var DocBlock\Tags\Return_ $tag */
             $tag = $this->getDocBlock()->getTagsByName('return')[0];
-
-            return $tag->getType();
+            if ($tag instanceof DocBlock\Tags\Return_) {
+                return $tag->getType();
+            }
         }
-        if ($this->method !== null) {
-            $type = $this->method->getReturnType();
+        if ($this->php !== null) {
+            $type = $this->php->getReturnType();
             if ($type instanceof Mixed_ &&
                 in_array($this->getName(), ['__construct', '__destruct'], true) === true) {
                 return null;
@@ -165,8 +189,9 @@ class Method implements ElementInterface
         if ($this->getDocBlock() && $this->getDocBlock()->hasTag('return')) {
             /** @var DocBlock\Tags\Return_ $tag */
             $tag = $this->getDocBlock()->getTagsByName('return')[0];
-
-            return $tag->getDescription() ? (string) $tag->getDescription() : null;
+            if ($tag instanceof DocBlock\Tags\Return_) {
+                return $tag->getDescription() ? (string) $tag->getDescription() : null;
+            }
         }
 
         return null;
@@ -174,8 +199,11 @@ class Method implements ElementInterface
 
     public function getLocation(): ?Location
     {
-        if ($this->method !== null) {
-            return $this->method->getLocation();
+        if ($this->php !== null) {
+            return $this->php->getLocation();
+        }
+        if ($this->tag !== null && $this->getOwner()->getDocBlock() !== null) {
+            return $this->getOwner()->getDocBlock()->getLocation();
         }
 
         return null;
@@ -183,8 +211,8 @@ class Method implements ElementInterface
 
     public function isStatic(): bool
     {
-        if ($this->method !== null) {
-            return $this->method->isStatic();
+        if ($this->php !== null) {
+            return $this->php->isStatic();
         }
         if ($this->tag !== null) {
             return $this->tag->isStatic();
@@ -195,8 +223,8 @@ class Method implements ElementInterface
 
     public function isAbstract(): bool
     {
-        if ($this->method !== null) {
-            return $this->method->isAbstract();
+        if ($this->php !== null) {
+            return $this->php->isAbstract();
         }
 
         return false;
@@ -204,8 +232,8 @@ class Method implements ElementInterface
 
     public function isFinal(): bool
     {
-        if ($this->method !== null) {
-            return $this->method->isFinal();
+        if ($this->php !== null) {
+            return $this->php->isFinal();
         }
         if ($this->tag !== null) {
             if ($this->getOwner() instanceof Class_) {

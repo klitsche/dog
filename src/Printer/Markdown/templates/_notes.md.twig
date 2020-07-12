@@ -1,0 +1,26 @@
+{% if element.docblock.tagsByName('deprecated') is not empty %}
+!!! warning "Deprecated"
+    {{ element.docblock.tagsByName('deprecated')|first.description|raw }}
+{% endif %}
+
+{% if element.docblock.tagsByName('internal') is not empty %}
+!!! warning "Internal only"
+    {{ element.docblock.tagsByName('internal')|first.description|raw }}
+{% endif %}
+
+{% if element.docblock.tagsByName('todo') is not empty %}
+!!! info "Open todos"
+{% for todo in element.docblock.tagsByName('todo') ~%}
+    * {{ todo }}
+{% endfor %}
+{% endif %}
+
+{% if element.docblock.tagsByName('see') is not empty or element.docblock.tagsByName('link') is not empty %}
+!!! tip "See also"
+{% for see in element.docblock.tagsByName('see') ~%}
+    * {{ see.reference }}
+{% endfor %}
+{% for link in element.docblock.tagsByName('link') ~%}
+    * [{% if link.description and link.description != link.link %}{{ link.description|raw }}{% else %} {{ link }} {% endif %}]({{ link.link }})
+{% endfor %}
+{% endif %}

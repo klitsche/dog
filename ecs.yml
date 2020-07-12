@@ -11,3 +11,9 @@ parameters:
     PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer: ~
   exclude_files:
     - 'tests/Dummy/*'
+services:
+  PhpCsFixer\Fixer\Import\OrderedImportsFixer:
+    imports_order:
+      - class
+      - const
+      - function

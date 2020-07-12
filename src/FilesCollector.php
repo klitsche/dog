@@ -4,34 +4,40 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog;
 
+use Symfony\Component\Finder\Finder;
+
 class FilesCollector
 {
-    /**
-     * @var string
-     */
-    private string $path;
-    /**
-     * @var string
-     */
-    private string $pathRegExFilter;
+    private array $paths;
 
-    public function __construct(string $path, string $pathRegExFilter)
+    /**
+     * @param array $paths Map of `[baseDirectory => [ regexOrStringPattern => true (include) or false (exclude), ... ]]`
+     * @see \Klitsche\Dog\ConfigInterface::getSrcPaths()
+     */
+    public function __construct(array $paths)
     {
-        $this->path = $path;
-        $this->pathRegExFilter = $pathRegExFilter; // todo: include/exclude with fnmatch pattern & array?
+        $this->paths = $paths;
     }
 
-    public function getFiles(): array
+    public function collect(): array
     {
-        $directory = new \RecursiveDirectoryIterator($this->path);
-        $iterator = new \RecursiveIteratorIterator($directory);
-        $splFiles = new \RegexIterator(
-            $iterator, $this->pathRegExFilter, \RecursiveRegexIterator::MATCH
-        );
-
         $files = [];
-        foreach ($splFiles as $file) {
-            $files[] = (string) $file;
+
+        foreach ($this->paths as $path => $patterns) {
+            $index = new Finder();
+            $index->in($path);
+
+            foreach ($patterns as $pattern => $match) {
+                if ($match === true) {
+                    $index->path($pattern);
+                } else {
+                    $index->notPath($pattern);
+                }
+            }
+
+            foreach ($index->files() as $file) {
+                $files[] = (string) $file;
+            }
         }
 
         sort($files, SORT_FLAG_CASE | SORT_NATURAL);

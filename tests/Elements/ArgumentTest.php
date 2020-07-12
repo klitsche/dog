@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
-use Klitsche\Dog\FilesAnalyzer;
+use Klitsche\Dog\FilesParser;
+use Klitsche\Dog\Project;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Boolean;
@@ -25,8 +25,8 @@ class ArgumentTest extends TestCase
     {
         parent::setUp();
 
-        $analyzer = new FilesAnalyzer();
-        $this->project = $analyzer->analyze(
+        $analyzer = new FilesParser();
+        $this->project = $analyzer->parse(
             [
                 __DIR__ . '/../Dummy/functions.php',
                 __DIR__ . '/../Dummy/Namespaced/BaseClass.php',

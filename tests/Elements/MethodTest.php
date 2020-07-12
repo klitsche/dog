@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
-use Klitsche\Dog\FilesAnalyzer;
+use Klitsche\Dog\FilesParser;
+use Klitsche\Dog\Project;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Types\Float_;
@@ -23,8 +23,8 @@ class MethodTest extends TestCase
     {
         parent::setUp();
 
-        $analyzer = new FilesAnalyzer();
-        $this->project = $analyzer->analyze(
+        $analyzer = new FilesParser();
+        $this->project = $analyzer->parse(
             [
                 __DIR__ . '/../Dummy/GlobalClass.php',
             ]
@@ -96,7 +96,7 @@ class MethodTest extends TestCase
         $this->assertFalse($element->isAbstract());
         $this->assertFalse($element->isFinal());
         $this->assertFalse($element->isStatic());
-        $this->assertNull($element->getLocation());
+        $this->assertSame(3, $element->getLocation()->getLineNumber());
     }
 
     public function testGetOwner(): void

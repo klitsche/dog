@@ -8,25 +8,22 @@ theme:
   name: 'material'
   palette:
     primary: 'white'
-#  logo: 'img/dog.png'
-  logo:
-    icon: 'code'
-#  favicon: 'img/favicon.ico'
-  feature:
-#    tabs: true
-  include_sidebar: true
+  logo: 'img/dog.png'
+  favicon: 'img/dog.png'
+  features:
+    - tabs
 
 repo_name: 'klitsche/dog'
 repo_url: 'https://github.com/klitsche/dog'
 
 # enabled extensions
 markdown_extensions:
-  - markdown.extensions.admonition
-  - markdown.extensions.def_list
-  - markdown.extensions.footnotes
-  - markdown.extensions.meta
-  - markdown.extensions.smarty
-  - markdown.extensions.toc:
+  - admonition
+  - def_list
+  - footnotes
+  - meta
+  - smarty
+  - toc:
       permalink: true
   - pymdownx.arithmatex
   - pymdownx.betterem:
@@ -55,7 +52,13 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tilde
 
-copyright: Copyright &copy; klitsche.de / Dirk Adler
+copyright: 'Copyright &copy; klitsche.de / Dirk Adler'
 
 plugins:
   - search
+  - awesome-pages
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/klitsche/dog

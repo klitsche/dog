@@ -2,35 +2,23 @@
 title: {{ trait.name }}
 ---
 
-# Trait {{ trait.fqsen }}
+# Trait {{ trait.name }}
 
-{{ trait.docblock.summary|raw }}
+Trait {{ trait.fqsen }}
+
+{% apply linkFqsen %}
+
+{% for usedTrait in trait.usedTraits %}
+* __uses__  {{ usedTrait }}
+{% endfor %}
+
+{{~ trait.docblock.summary|raw }}
 
 {{ trait.docblock.description|raw }}
 
-{% if trait.parent %}extends **{{ linkFqsen(trait.parent) }}**
-{% endif %}
-{% for interface in trait.interfaces %}
-implements **{{ linkFqsen(interface) }}**
-{% endfor %}
-{% for usedTrait in trait.usedTraits %}
-uses **{{ linkFqsen(usedTrait) }}**
-{% endfor %}
+{% include '_notes.md.twig' with { element: trait } %}
 
-{% if trait.docblock.tagsByName('deprecated') is not empty %}⚠️ _This class is **deprecated**. {{ trait.docblock.tagsByName('deprecated')|first.description|raw }}_
-{% endif %}
-
-{% if trait.docblock.tagsByName('see') is not empty or trait.docblock.tagsByName('link') is not empty %}
-See also:
-
-{% for see in trait.docblock.tagsByName('see') -%}
-* [{{ see.reference }}]({{ see.reference }})
-{%- endfor %}
-{% for link in trait.docblock.tagsByName('link') ~%}
-* [{% if link.description and link.description != link.link %}{{ link.description|raw }}{% else %} {{ link.reference }} {% endif %}]({{ link.link }})
-{%- endfor %}
-
-{% endif %}
+{% endapply %}
 
 {% if trait.properties|filter(i => i.visibility == 'public') is not empty %}
 ## Properties

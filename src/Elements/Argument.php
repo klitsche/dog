@@ -4,24 +4,28 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Php;
 use phpDocumentor\Reflection\Type;
 
 class Argument
 {
-    private ?Php\Argument $argument;
+    private ?Php\Argument $php;
 
     private ?DocBlock\Tags\Param $tag;
 
     private ElementInterface $owner;
 
-    public function __construct(ElementInterface $owner, ?Php\Argument $argument, ?DocBlock\Tags\Param $tag)
+    public function __construct(ElementInterface $owner, ?Php\Argument $php, ?DocBlock\Tags\Param $tag)
     {
-        $this->argument = $argument;
+        $this->php = $php;
         $this->tag = $tag;
         $this->owner = $owner;
+    }
+
+    public function getId(): string
+    {
+        return $this->getOwner()->getFqsen() . '-' . $this->getName();
     }
 
     public function getOwner(): ?ElementInterface
@@ -29,9 +33,14 @@ class Argument
         return $this->owner;
     }
 
+    public function getFile(): File
+    {
+        return $this->getOwner()->getFile();
+    }
+
     public function getPhp(): ?Php\Argument
     {
-        return $this->argument;
+        return $this->php;
     }
 
     public function getTag(): ?DocBlock\Tags\Param
@@ -41,8 +50,8 @@ class Argument
 
     public function getName(): ?string
     {
-        if ($this->argument !== null) {
-            return $this->argument->getName();
+        if ($this->php !== null) {
+            return $this->php->getName();
         }
         if ($this->tag !== null) {
             return $this->tag->getVariableName();
@@ -56,8 +65,8 @@ class Argument
         if ($this->tag !== null) {
             return $this->tag->getType();
         }
-        if ($this->argument !== null) {
-            return $this->argument->getType();
+        if ($this->php !== null) {
+            return $this->php->getType();
         }
 
         return null;
@@ -65,8 +74,8 @@ class Argument
 
     public function getDefault(): ?string
     {
-        if ($this->argument !== null) {
-            return $this->argument->getDefault();
+        if ($this->php !== null) {
+            return $this->php->getDefault();
         }
 
         return null;
@@ -85,8 +94,8 @@ class Argument
 
     public function isByReference(): bool
     {
-        if ($this->argument !== null) {
-            return $this->argument->isByReference();
+        if ($this->php !== null) {
+            return $this->php->isByReference();
         }
 
         return false;
@@ -94,13 +103,18 @@ class Argument
 
     public function isVariadic(): bool
     {
-        if ($this->argument !== null) {
-            return $this->argument->isVariadic();
+        if ($this->php !== null) {
+            return $this->php->isVariadic();
         }
         if ($this->tag !== null) {
             return $this->tag->isVariadic();
         }
 
         return false;
+    }
+
+    public function getLocation()
+    {
+        return $this->getOwner()->getLocation();
     }
 }

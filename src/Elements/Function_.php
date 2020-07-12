@@ -4,26 +4,42 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
+use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Location;
 use phpDocumentor\Reflection\Php;
 use phpDocumentor\Reflection\Type;
 
-class Function_ implements ElementInterface
+class Function_ implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, ProjectAwareInterface, ArgumentsAwareInterface
 {
-    /**
-     * @var Php\Function_
-     */
-    private Php\Function_ $function;
+    use DocBlockTrait;
+    use ProjectTrait;
+    use FqsenTrait;
+
+    public const TYPE = 'Function';
+
+    private Php\Function_ $php;
 
     private ElementInterface $owner;
 
-    public function __construct(ElementInterface $owner, Php\Function_ $function)
+    private array $arguments;
+
+    public function __construct(ProjectInterface $project, ElementInterface $owner, Php\Function_ $php)
     {
-        $this->function = $function;
+        $this->setProject($project);
+        $this->php = $php;
         $this->owner = $owner;
+    }
+
+    public function getElementType(): string
+    {
+        return self::TYPE;
+    }
+
+    public function getId(): string
+    {
+        return (string) $this->getFqsen();
     }
 
     public function getOwner(): ?ElementInterface
@@ -31,26 +47,38 @@ class Function_ implements ElementInterface
         return $this->owner;
     }
 
+    public function getFile(): File
+    {
+        return $this->getOwner()->getFile();
+    }
+
+    public function getPhp(): ?Php\Function_
+    {
+        return $this->php;
+    }
+
     /**
      * @return Argument[]
      */
     public function getArguments(): array
     {
-        $arguments = [];
-        foreach ($this->function->getArguments() as $argument) {
-            $arguments[] = new Argument($this, $argument, $this->findParamTagByArgument($argument));
+        if (isset($this->arguments) === false) {
+            $this->arguments = [];
+            foreach ($this->php->getArguments() as $argument) {
+                $this->arguments[] = new Argument($this, $argument, $this->findParamTagByArgument($argument));
+            }
         }
 
-        return $arguments;
+        return $this->arguments;
     }
 
     private function findParamTagByArgument(Php\Argument $argument): ?DocBlock\Tags\Param
     {
-        if ($this->function->getDocBlock() === null) {
+        if ($this->php->getDocBlock() === null) {
             return null;
         }
 
-        foreach ($this->function->getDocBlock()->getTags() as $tag) {
+        foreach ($this->php->getDocBlock()->getTags() as $tag) {
             if ($tag instanceof DocBlock\Tags\Param) {
                 if ($tag->getVariableName() === $argument->getName()) {
                     return $tag;
@@ -63,12 +91,12 @@ class Function_ implements ElementInterface
 
     public function getName(): ?string
     {
-        return $this->function->getName();
+        return $this->php->getName();
     }
 
-    public function getFqsen(): ?Fqsen
+    public function getFqsen(): Fqsen
     {
-        return $this->function->getFqsen();
+        return $this->php->getFqsen();
     }
 
     public function getReturnType(): ?Type
@@ -76,11 +104,12 @@ class Function_ implements ElementInterface
         if ($this->getDocBlock() && $this->getDocBlock()->hasTag('return')) {
             /** @var DocBlock\Tags\Return_ $tag */
             $tag = $this->getDocBlock()->getTagsByName('return')[0];
-
-            return $tag->getType();
+            if ($tag instanceof DocBlock\Tags\Return_) {
+                return $tag->getType();
+            }
         }
-        if ($this->function !== null) {
-            return $this->function->getReturnType();
+        if ($this->php !== null) {
+            return $this->php->getReturnType();
         }
 
         return null;
@@ -88,7 +117,7 @@ class Function_ implements ElementInterface
 
     public function getDocBlock(): ?DocBlock
     {
-        return $this->function->getDocBlock();
+        return $this->php->getDocBlock();
     }
 
     public function getReturnDescription(): ?string
@@ -96,8 +125,9 @@ class Function_ implements ElementInterface
         if ($this->getDocBlock() && $this->getDocBlock()->hasTag('return')) {
             /** @var DocBlock\Tags\Return_ $tag */
             $tag = $this->getDocBlock()->getTagsByName('return')[0];
-
-            return $tag->getDescription() ? (string) $tag->getDescription() : null;
+            if ($tag instanceof DocBlock\Tags\Return_) {
+                return $tag->getDescription() ? (string) $tag->getDescription() : null;
+            }
         }
 
         return null;
@@ -105,6 +135,6 @@ class Function_ implements ElementInterface
 
     public function getLocation(): ?Location
     {
-        return $this->function->getLocation();
+        return $this->php->getLocation();
     }
 }

@@ -19,9 +19,9 @@ script:
   - |
     set -e;
     composer update --prefer-stable --no-interaction --no-suggest;
-    vendor/bin/ecs check src tests;
-    vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml;
-    resources/build-docs.sh;
+    composer cs;
+    composer test-coverage;
+    composer build-docs;
 after_script:
   - |
     if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi;

@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\FilesAnalyzer;
+use Klitsche\Dog\FilesParser;
+use Klitsche\Dog\Project;
 use phpDocumentor\Reflection\Fqsen;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Klitsche\Dog\Elements\Finder
+ * @covers \Klitsche\Dog\Elements\ElementsIndex
  */
-class FinderTest extends TestCase
+class ElementIndexTest extends TestCase
 {
     private Project $project;
 
@@ -19,8 +20,8 @@ class FinderTest extends TestCase
     {
         parent::setUp();
 
-        $analyzer = new FilesAnalyzer();
-        $this->project = $analyzer->analyze(
+        $analyzer = new FilesParser();
+        $this->project = $analyzer->parse(
             [
                 __DIR__ . '/../Dummy/constants.php',
                 __DIR__ . '/../Dummy/functions.php',
@@ -31,9 +32,9 @@ class FinderTest extends TestCase
 
     public function testGetByFqsenWithFunction(): void
     {
-        $finder = new Finder($this->project);
+        $index = $this->project->getIndex();
 
-        $element = $finder->byFqsen(new Fqsen('\withoutTypeWithDoc()'));
+        $element = $index->getElementByFqsen(new Fqsen('\withoutTypeWithDoc()'));
 
         $this->assertInstanceOf(Function_::class, $element);
         $this->assertSame('\withoutTypeWithDoc()', (string) $element->getFqsen());
@@ -41,9 +42,9 @@ class FinderTest extends TestCase
 
     public function testGetByFqsenWithConstant(): void
     {
-        $finder = new Finder($this->project);
+        $index = $this->project->getIndex();
 
-        $element = $finder->byFqsen(new Fqsen('\GLOBAL_CONSTANT_WITHOUT_TAG'));
+        $element = $index->getElementByFqsen(new Fqsen('\GLOBAL_CONSTANT_WITHOUT_TAG'));
 
         $this->assertInstanceOf(Constant::class, $element);
         $this->assertSame('\GLOBAL_CONSTANT_WITHOUT_TAG', (string) $element->getFqsen());
@@ -51,9 +52,9 @@ class FinderTest extends TestCase
 
     public function testGetByFqsenWithClass(): void
     {
-        $finder = new Finder($this->project);
+        $index = $this->project->getIndex();
 
-        $element = $finder->byFqsen(new Fqsen('\GlobalClass'));
+        $element = $index->getElementByFqsen(new Fqsen('\GlobalClass'));
 
         $this->assertInstanceOf(Class_::class, $element);
         $this->assertSame('\GlobalClass', (string) $element->getFqsen());
@@ -61,9 +62,9 @@ class FinderTest extends TestCase
 
     public function testGetByFqsenWithMethod(): void
     {
-        $finder = new Finder($this->project);
+        $index = $this->project->getIndex();
 
-        $element = $finder->byFqsen(new Fqsen('\GlobalClass::withTypeWithoutDoc()'));
+        $element = $index->getElementByFqsen(new Fqsen('\GlobalClass::withTypeWithoutDoc()'));
 
         $this->assertInstanceOf(Method::class, $element);
         $this->assertSame('\GlobalClass::withTypeWithoutDoc()', (string) $element->getFqsen());
@@ -71,9 +72,9 @@ class FinderTest extends TestCase
 
     public function testGetByFqsenWithClassConstants(): void
     {
-        $finder = new Finder($this->project);
+        $index = $this->project->getIndex();
 
-        $element = $finder->byFqsen(new Fqsen('\GlobalClass::WITHOUT_TAG'));
+        $element = $index->getElementByFqsen(new Fqsen('\GlobalClass::WITHOUT_TAG'));
 
         $this->assertInstanceOf(Constant::class, $element);
         $this->assertSame('\GlobalClass::WITHOUT_TAG', (string) $element->getFqsen());
@@ -81,9 +82,9 @@ class FinderTest extends TestCase
 
     public function testGetByFqsenWithUnknown(): void
     {
-        $finder = new Finder($this->project);
+        $index = $this->project->getIndex();
 
-        $element = $finder->byFqsen(new Fqsen('\UNKNOWN'));
+        $element = $index->getElementByFqsen(new Fqsen('\UNKNOWN'));
 
         $this->assertNull($element);
     }

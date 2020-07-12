@@ -1,6 +1,5 @@
 ### {{ property.name }}
 
-{{ property.docblock.summary|raw }}
 
 ```php
 {{ property.static ? 'static ' }}
@@ -9,6 +8,8 @@
 {{- ' '~property.name }}
 {{- property.default ? ' = '~property.default|raw }}
 ```
+{% apply linkFqsen %}
+{{ property.docblock.summary|raw }}
 
 {{ property.docblock.description|raw }}
 
@@ -28,4 +29,5 @@ __See Also:__
 {% endfor %}
 
 {% endif %}
+{% endapply %}
 

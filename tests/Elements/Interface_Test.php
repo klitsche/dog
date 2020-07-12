@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
-use Klitsche\Dog\FilesAnalyzer;
+use Klitsche\Dog\FilesParser;
+use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use PHPUnit\Framework\TestCase;
@@ -15,14 +15,14 @@ use PHPUnit\Framework\TestCase;
  */
 class Interface_Test extends TestCase
 {
-    private Project $project;
+    private ProjectInterface $project;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $analyzer = new FilesAnalyzer();
-        $this->project = $analyzer->analyze(
+        $analyzer = new FilesParser();
+        $this->project = $analyzer->parse(
             [
                 __DIR__ . '/../Dummy/Namespaced/BaseInterface.php',
                 __DIR__ . '/../Dummy/Namespaced/Other/OtherInterface.php',

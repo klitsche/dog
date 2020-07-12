@@ -7,15 +7,15 @@ namespace Klitsche\Dog;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Klitsche\Dog\FilesAnalyzer
+ * @covers \Klitsche\Dog\FilesParser
  */
 class FilesAnalyzerTest extends TestCase
 {
     public function testAnalyze(): void
     {
-        $analyzer = new FilesAnalyzer();
+        $analyzer = new FilesParser();
 
-        $project = $analyzer->analyze([__DIR__ . '/Dummy/constants.php']);
+        $project = $analyzer->parse([__DIR__ . '/Dummy/constants.php']);
 
         $this->assertCount(1, $project->getFiles());
     }

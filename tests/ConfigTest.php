@@ -16,32 +16,32 @@ class ConfigTest extends TestCase
         $config = new Config(
             [
                 'title' => 'title',
-                'outputPath' => '/out',
+                'outputDir' => '/out',
                 'printerClass' => 'Printer',
                 'printerConfig' => ['any' => 'other'],
-                'srcFileFilter' => '/.*/',
-                'srcPath' => '/src',
+                'srcPaths' => [
+                    '/src',
+                ],
                 'debug' => true,
-            ]
+            ],
+            ''
         );
 
         $this->assertSame('title', $config->getTitle());
-        $this->assertSame('/out', $config->getOutputPath());
+        $this->assertSame('/out', $config->getOutputDir());
         $this->assertSame('Printer', $config->getPrinterClass());
         $this->assertSame(['any' => 'other'], $config->getPrinterConfig());
-        $this->assertSame('/.*/', $config->getSrcFileFilter());
-        $this->assertSame('/src', $config->getSrcPath());
-        $this->assertSame(getcwd(), $config->getWorkingDir());
+        $this->assertSame(['/src' => []], $config->getSrcPaths());
+        $this->assertSame('', $config->getWorkingDir());
         $this->assertSame(true, $config->isDebugEnabled());
     }
 
     public function testConstructWithEmptyParameters(): void
     {
-        $config = new Config();
+        $config = new Config([], '');
 
-        $this->assertSame(getcwd() . '/docs/api', $config->getOutputPath());
-        $this->assertSame('/.*\.php$/', $config->getSrcFileFilter());
-        $this->assertSame(getcwd() . '/src', $config->getSrcPath());
+        $this->assertSame('/docs/api', $config->getOutputDir());
+        $this->assertSame(['/src' => ['/.*\.php$/' => true]], $config->getSrcPaths());
     }
 
     public function testConstructWithUnknownParameter(): void
@@ -51,7 +51,8 @@ class ConfigTest extends TestCase
         new Config(
             [
                 'unknownParam' => 'value',
-            ]
+            ],
+           ''
         );
     }
 
@@ -62,7 +63,8 @@ class ConfigTest extends TestCase
         new Config(
             [
                 0 => 'value',
-            ]
+            ],
+            ''
         );
     }
 }

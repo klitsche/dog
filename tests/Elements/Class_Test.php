@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
-use Klitsche\Dog\FilesAnalyzer;
+use Klitsche\Dog\FilesParser;
+use Klitsche\Dog\Project;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use PHPUnit\Framework\TestCase;
@@ -21,8 +21,8 @@ class Class_Test extends TestCase
     {
         parent::setUp();
 
-        $analyzer = new FilesAnalyzer();
-        $this->project = $analyzer->analyze(
+        $analyzer = new FilesParser();
+        $this->project = $analyzer->parse(
             [
                 __DIR__ . '/../Dummy/GlobalClass.php',
                 __DIR__ . '/../Dummy/Namespaced/BaseClass.php',
@@ -113,6 +113,14 @@ class Class_Test extends TestCase
         $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\BaseClass'));
 
         $this->assertSame('\Klitsche\Dog\Dummy\Namespaced\BaseClass', (string) $element->getFqsen());
+    }
+
+    public function testGetNamespace(): void
+    {
+        /** @var Class_ $element */
+        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\BaseClass'));
+
+        $this->assertSame('\Klitsche\Dog\Dummy\Namespaced', (string) $element->getNamespace());
     }
 
     public function testGetDocBlock(): void

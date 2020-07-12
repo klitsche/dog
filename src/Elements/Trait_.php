@@ -4,25 +4,42 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
-use Klitsche\Dog\ElementInterface;
+use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Location;
 use phpDocumentor\Reflection\Php;
 
-class Trait_ implements ElementInterface
+class Trait_ implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, ProjectAwareInterface
 {
-    /**
-     * @var Php\Trait_
-     */
-    private Php\Trait_ $trait;
+    use DocBlockTrait;
+    use ProjectTrait;
+    use FqsenTrait;
+
+    public const TYPE = 'Trait';
+
+    private Php\Trait_ $php;
 
     private ElementInterface $owner;
 
-    public function __construct(ElementInterface $owner, Php\Trait_ $trait)
+    private array $properties;
+    private array $methods;
+
+    public function __construct(ProjectInterface $project, ElementInterface $owner, Php\Trait_ $php)
     {
-        $this->trait = $trait;
+        $this->setProject($project);
+        $this->php = $php;
         $this->owner = $owner;
+    }
+
+    public function getElementType(): string
+    {
+        return self::TYPE;
+    }
+
+    public function getId(): string
+    {
+        return (string) $this->getFqsen();
     }
 
     public function getOwner(): ?ElementInterface
@@ -30,29 +47,34 @@ class Trait_ implements ElementInterface
         return $this->owner;
     }
 
-    public function getPhp(): ?Php\Trait_
+    public function getFile(): File
     {
-        return $this->trait;
+        return $this->getOwner()->getFile();
+    }
+
+    public function getPhp(): Php\Trait_
+    {
+        return $this->php;
     }
 
     public function getName(): string
     {
-        return $this->trait->getName();
+        return $this->php->getName();
     }
 
     public function getDocBlock(): ?DocBlock
     {
-        return $this->trait->getDocBlock();
+        return $this->php->getDocBlock();
     }
 
-    public function getFqsen(): ?Fqsen
+    public function getFqsen(): Fqsen
     {
-        return $this->trait->getFqsen();
+        return $this->php->getFqsen();
     }
 
     public function getLocation(): Location
     {
-        return $this->trait->getLocation();
+        return $this->php->getLocation();
     }
 
     /**
@@ -60,18 +82,25 @@ class Trait_ implements ElementInterface
      */
     public function getMethods(): array
     {
-        $methods = [];
-        foreach ($this->trait->getMethods() as $method) {
-            $methods[$method->getName()] = new Method($this, $method, $this->findMethodTag($method));
-        }
-        foreach ($this->getDocBlockTags() as $tag) {
-            if ($tag instanceof DocBlock\Tags\Method &&
-                array_key_exists($tag->getMethodName(), $methods) === false) {
-                $methods[$tag->getMethodName()] = new Method($this, null, $tag);
+        if (isset($this->methods) === false) {
+            $this->methods = [];
+            foreach ($this->php->getMethods() as $method) {
+                $this->methods[$method->getName()] = new Method(
+                    $this->getProject(),
+                    $this,
+                    $method,
+                    $this->findMethodTag($method)
+                );
+            }
+            foreach ($this->getDocBlockTags() as $tag) {
+                if ($tag instanceof DocBlock\Tags\Method &&
+                    array_key_exists($tag->getMethodName(), $this->methods) === false) {
+                    $this->methods[$tag->getMethodName()] = new Method($this->getProject(), $this, null, $tag);
+                }
             }
         }
 
-        return $methods;
+        return $this->methods;
     }
 
     private function findMethodTag(Php\Method $method): ?DocBlock\Tags\Method
@@ -88,8 +117,8 @@ class Trait_ implements ElementInterface
 
     private function getDocBlockTags(): iterable
     {
-        if ($this->trait->getDocBlock()) {
-            foreach ($this->trait->getDocBlock()->getTags() as $tag) {
+        if ($this->php->getDocBlock()) {
+            foreach ($this->php->getDocBlock()->getTags() as $tag) {
                 yield $tag;
             }
         }
@@ -100,18 +129,25 @@ class Trait_ implements ElementInterface
      */
     public function getProperties(): array
     {
-        $properties = [];
-        foreach ($this->trait->getProperties() as $property) {
-            $properties[$property->getName()] = new Property($this, $property, $this->findPropertyTag($property));
-        }
-        foreach ($this->getDocBlockTags() as $tag) {
-            if ($tag instanceof DocBlock\Tags\Property &&
-                array_key_exists($tag->getVariableName(), $properties) === false) {
-                $properties[$tag->getVariableName()] = new Property($this, null, $tag);
+        if (isset($this->properties) === false) {
+            $this->properties = [];
+            foreach ($this->php->getProperties() as $property) {
+                $this->properties[$property->getName()] = new Property(
+                    $this->getProject(),
+                    $this,
+                    $property,
+                    $this->findPropertyTag($property)
+                );
+            }
+            foreach ($this->getDocBlockTags() as $tag) {
+                if ($tag instanceof DocBlock\Tags\Property &&
+                    array_key_exists($tag->getVariableName(), $this->properties) === false) {
+                    $this->properties[$tag->getVariableName()] = new Property($this->getProject(), $this, null, $tag);
+                }
             }
         }
 
-        return $properties;
+        return $this->properties;
     }
 
     private function findPropertyTag(Php\Property $property): ?DocBlock\Tags\Property
@@ -131,6 +167,6 @@ class Trait_ implements ElementInterface
      */
     public function getUsedTraits(): array
     {
-        return $this->trait->getUsedTraits();
+        return $this->php->getUsedTraits();
     }
 }

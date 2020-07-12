@@ -2,30 +2,23 @@
 title: {{ interface.name }}
 ---
 
-# Interface {{ interface.fqsen }}
+# Interface {{ interface.name }}
 
-{{ interface.docblock.summary|raw }}
+Interface {{ interface.fqsen }}
+
+{% apply linkFqsen %}
+
+{% for parentInterface in interface.parents %}
+* __extends__  {{ parentInterface }}
+{% endfor %}
+
+{{~ interface.docblock.summary|raw }}
 
 {{ interface.docblock.description|raw }}
 
-{% for parent in interface.parents %}
-extends **{{ linkFqsen(parent) }}**
-{% endfor %}
+{% include '_notes.md.twig' with { element: interface } %}
 
-{% if interface.docblock.tagsByName('deprecated') is not empty %}⚠️ _This class is **deprecated**. {{ interface.docblock.tagsByName('deprecated')|first.description|raw }}_
-{% endif %}
-
-{% if interface.docblock.tagsByName('see') is not empty or interface.docblock.tagsByName('link') is not empty %}
-See also:
-
-{% for see in interface.docblock.tagsByName('see') -%}
-* [{{ see.reference }}]({{ see.reference }})
-{%- endfor %}
-{% for link in interface.docblock.tagsByName('link') ~%}
-* [{% if link.description and link.description != link.link %}{{ link.description|raw }}{% else %} {{ link.reference }} {% endif %}]({{ link.link }})
-{%- endfor %}
-
-{% endif %}
+{% endapply %}
 
 {%  if interface.constants|filter(i => i.visibility == 'public') is not empty %}
 ## Constants
