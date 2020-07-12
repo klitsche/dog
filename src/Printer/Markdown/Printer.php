@@ -182,7 +182,7 @@ class Printer implements PrinterInterface
         );
     }
 
-    protected function fileName(ElementInterface $element)
+    protected function fileName(ElementInterface $element): string
     {
         switch (true) {
             case $element instanceof Class_:
@@ -195,13 +195,16 @@ class Printer implements PrinterInterface
                 $owner = $this->fileName($element->getOwner());
                 return $owner . '#' . strtolower($element->getFqsen()->getName());
                 break;
-            case Function_::class:
+            case $element instanceof Function_:
                 $fqsen = trim((string) $element->getFqsen(), '\\()');
                 return 'functions.md#' . strtolower(str_replace('\\', '_', $fqsen));
                 break;
-            case Constant::class:
+            case $element instanceof Constant:
                 $fqsen = trim((string) $element->getFqsen(), '\\()');
                 return 'constants.md#' . strtolower(str_replace('\\', '_', $fqsen));
+                break;
+            default:
+                return 'index.md';
                 break;
         }
     }
@@ -351,9 +354,9 @@ class Printer implements PrinterInterface
                 break;
             case $element instanceof Constant:
                 if ($element->isClassConstant()) {
-                    $fileName = 'constants.md';
-                } else {
                     $fileName = $this->fileName($element->getOwner());
+                } else {
+                    $fileName = 'constants.md';
                 }
 
                 $link = $this->filesystem->makePathRelative(
