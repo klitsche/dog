@@ -72,15 +72,15 @@ rules:
 ## printerClass
 Full qualified class name of the template printer class.
 Type: `string`. 
-Default: `'\Klitsche\Dog\Printer\Markdown\Printer'`
+Default: `'Klitsche\Dog\Printer\Markdown\Printer'`
 
 !!! note 
-    The printer class must implement `\Klitsche\Dog\PrinterInterface`. 
+    The printer class must implement `Klitsche\Dog\PrinterInterface`. 
     
 Example:
 
 ```yaml
-printerClass: '\Klitsche\Dog\Printer\Markdown\Printer'
+printerClass: 'Klitsche\Dog\Printer\Markdown\Printer'
 ```
 
 ## printerConfig
