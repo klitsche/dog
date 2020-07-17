@@ -9,6 +9,7 @@ use Klitsche\Dog\Analyzer\Rules\DocBlockApiNoDescriptionRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockApiNotInternalRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockApiVisibilityPublicRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockAuthorEmailRule;
+use Klitsche\Dog\Analyzer\Rules\DocBlockAuthorNameMissingRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockCopyrightMissingRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockCopyrightYearRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockDeprecatedCorrespondingSeeRule;
@@ -135,6 +136,10 @@ class Rules implements AnalyzeInterface
             'issueLevel' => 'error',
         ],
         // @author
+        'DocBlockAuthorNameMissingRule' => [
+            'class' => DocBlockAuthorNameMissingRule::class,
+            'issueLevel' => 'error',
+        ],
         'DocBlockAuthorEmailRule' => [
             'class' => DocBlockAuthorEmailRule::class,
             'issueLevel' => 'notice',

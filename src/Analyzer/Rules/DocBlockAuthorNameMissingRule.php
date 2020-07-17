@@ -10,29 +10,30 @@ use Klitsche\Dog\Elements\ElementInterface;
 use phpDocumentor\Reflection\DocBlock;
 
 /**
- * @link https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md#51-api
- * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/api.html
+ * @link https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md#52-author
+ * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/author.html
  */
-class DocBlockApiNoDescriptionRule extends Rule
+class DocBlockAuthorNameMissingRule extends Rule
 {
     public function analyze(ElementInterface $element): iterable
     {
         if (
             $element instanceof DocBlockAwareInterface
             && $element->hasDocBlock() === true
-            && $element->getDocBlock()->hasTag('api') === true
+            && $element->getDocBlock()->hasTag('author') === true
         ) {
-            foreach ($element->getDocBlock()->getTagsByName('api') as $tag) {
+            foreach ($element->getDocBlock()->getTagsByName('author') as $tag) {
                 if (
-                    $tag instanceof DocBlock\Tags\Generic
-                    && empty($tag->getDescription()) === true
+                    $tag instanceof DocBlock\Tags\Author
+                    && $tag->getAuthorName() === ''
                 ) {
                     yield $this->createIssue(
                         $element,
                         sprintf(
-                            '@api in DocBlock for %s %s should not have a description',
+                            '@author name for "%s" in DocBlock for %s %s not found',
+                            $tag->getAuthorName(),
                             $element->getElementType(),
-                            $element->getFqsen()
+                            $element->getFqsen(),
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

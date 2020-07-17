@@ -21,8 +21,8 @@ class Trait_Test extends TestCase
     {
         parent::setUp();
 
-        $analyzer = new FilesParser();
-        $this->project = $analyzer->parse(
+        $parser = new FilesParser();
+        $this->project = $parser->parse(
             [
                 __DIR__ . '/../Dummy/Namespaced/BaseTrait.php',
                 __DIR__ . '/../Dummy/Namespaced/ExtendedTrait.php',

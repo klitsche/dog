@@ -32,11 +32,11 @@ class Analyzer implements EventDispatcherAwareInterface
 
     public function analyze(ProjectInterface $project): void
     {
-        $index = $project->getIndex();
+        $elements = $project->getElements();
 
-        $this->emitProgressStart(self::PROGRESS_TOPIC, $index->countElements());
+        $this->emitProgressStart(self::PROGRESS_TOPIC, count($elements));
 
-        foreach ($index->walkElements() as $element) {
+        foreach ($elements as $element) {
             $this->emitProgress(self::PROGRESS_TOPIC, 1, $element->getId());
 
             foreach ($this->rules->analyze($element) as $issue) {

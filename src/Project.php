@@ -96,4 +96,9 @@ class Project implements ProjectInterface
     {
         return $this->index;
     }
+
+    public function getElements(): array
+    {
+        return $this->index->getElements();
+    }
 }

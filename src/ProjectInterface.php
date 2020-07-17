@@ -6,6 +6,7 @@ namespace Klitsche\Dog;
 
 use Klitsche\Dog\Elements\Class_;
 use Klitsche\Dog\Elements\Constant;
+use Klitsche\Dog\Elements\ElementInterface;
 use Klitsche\Dog\Elements\ElementsIndex;
 use Klitsche\Dog\Elements\File;
 use Klitsche\Dog\Elements\Function_;
@@ -51,4 +52,9 @@ interface ProjectInterface
     public function getNamespaces(): array;
 
     public function getIndex(): ElementsIndex;
+
+    /**
+     * @return ElementInterface[]
+     */
+    public function getElements(): array;
 }

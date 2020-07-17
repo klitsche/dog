@@ -137,6 +137,14 @@ class ElementsIndex
     /**
      * @return ElementInterface[]
      */
+    public function getElements(): array
+    {
+        return $this->elementById;
+    }
+
+    /**
+     * @return ElementInterface[]
+     */
     public function walkElements(): iterable
     {
         foreach ($this->elementById as $id => $element) {

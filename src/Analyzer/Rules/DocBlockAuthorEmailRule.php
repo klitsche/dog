@@ -25,6 +25,7 @@ class DocBlockAuthorEmailRule extends Rule
             foreach ($element->getDocBlock()->getTagsByName('author') as $tag) {
                 if (
                     $tag instanceof DocBlock\Tags\Author
+                    && $tag->getAuthorName() !== ''
                     && $tag->getEmail() === ''
                 ) {
                     yield $this->createIssue(

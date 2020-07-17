@@ -20,8 +20,8 @@ class ConstantTest extends TestCase
     {
         parent::setUp();
 
-        $analyzer = new FilesParser();
-        $this->project = $analyzer->parse(
+        $parser = new FilesParser();
+        $this->project = $parser->parse(
             [
                 __DIR__ . '/../Dummy/constants.php',
                 __DIR__ . '/../Dummy/GlobalClass.php',

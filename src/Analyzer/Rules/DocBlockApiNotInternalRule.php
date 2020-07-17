@@ -25,7 +25,7 @@ class DocBlockApiNotInternalRule extends Rule
             foreach ($element->getDocBlock()->getTagsByName('api') as $tag) {
                 if (
                     $tag instanceof DocBlock\Tags\Generic
-                    && $element->isInternal() === true
+                    && $this->isInternal($element) === true
                 ) {
                     yield $this->createIssue(
                         $element,
@@ -43,5 +43,20 @@ class DocBlockApiNotInternalRule extends Rule
         }
 
         yield from [];
+    }
+
+    private function isInternal(ElementInterface $element): bool
+    {
+        if ($element instanceof DocBlockAwareInterface &&
+            $element->isInternal() === true) {
+            return true;
+        }
+
+        $owner = $element->getOwner();
+        if ($owner !== null) {
+            return $this->isInternal($owner);
+        }
+
+        return false;
     }
 }
