@@ -28,6 +28,14 @@ DocBlockApiVisibilityPublicRule:
     issueLevel: error
 ```
 
+### DocBlockAuthorNameMissingRule
+
+```yaml
+DocBlockAuthorNameMissingRule:
+    class: Klitsche\Dog\Analyzer\Rules\DocBlockAuthorNameMissingRule
+    issueLevel: error
+```
+
 ### DocBlockInvalidTagsRule
 
 ```yaml
