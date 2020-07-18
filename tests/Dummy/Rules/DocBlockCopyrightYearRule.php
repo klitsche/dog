@@ -6,7 +6,7 @@
 namespace Klitsche\Dog\Dummy\Rules;
 
 // no doc block
-function DocBlockAuthorNameMissingRuleFunc()
+function DocBlockCopyrightYearRuleFunc()
 {
 }
 
