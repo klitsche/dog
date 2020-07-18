@@ -33,7 +33,7 @@ class DocBlockMethodAllowedRule extends Rule
                         sprintf(
                             '@method in DocBlock for %s %s not allowed',
                             $element->getElementType(),
-                            $element->getFqsen(),
+                            $element->getId(),
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

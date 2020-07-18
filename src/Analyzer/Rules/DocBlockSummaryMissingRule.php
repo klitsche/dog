@@ -23,7 +23,7 @@ class DocBlockSummaryMissingRule extends Rule
                 sprintf(
                     'Summary in DocBlock for %s %s not found',
                     $element->getElementType(),
-                    $element->getFqsen(),
+                    $element->getId(),
                 ),
                 $element->getDocBlock()->getLocation()
                     ? $element->getDocBlock()->getLocation()->getLineNumber()

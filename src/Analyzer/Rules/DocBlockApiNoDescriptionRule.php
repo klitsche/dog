@@ -32,7 +32,7 @@ class DocBlockApiNoDescriptionRule extends Rule
                         sprintf(
                             '@api in DocBlock for %s %s should not have a description',
                             $element->getElementType(),
-                            $element->getFqsen()
+                            $element->getId()
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

@@ -41,7 +41,7 @@ class TypeMissingRule extends Rule
                         $i + 1,
                         $argument->getName(),
                         $element->getElementType(),
-                        $element->getFqsen()
+                        $element->getId()
                     ),
                     $element->getLocation()
                         ? $element->getLocation()->getLineNumber()
@@ -60,7 +60,7 @@ class TypeMissingRule extends Rule
                 sprintf(
                     'Return type for %s %s not found',
                     $element->getElementType(),
-                    $element->getFqsen()
+                    $element->getId()
                 ),
                 $element->getLocation()
                     ? $element->getLocation()->getLineNumber()
@@ -82,7 +82,7 @@ class TypeMissingRule extends Rule
                 sprintf(
                     'Type for %s %s not found',
                     $element->getElementType(),
-                    $element->getFqsen()
+                    $element->getId()
                 ),
                 $element->getLocation()
                     ? $element->getLocation()->getLineNumber()

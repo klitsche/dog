@@ -1,4 +1,8 @@
 <?php
+/**
+ * @api func
+ * @internal
+ */
 
 namespace Klitsche\Dog\Dummy\Rules;
 

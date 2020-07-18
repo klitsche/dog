@@ -25,7 +25,7 @@ class DocBlockLicenceMissingRule extends Rule
                 sprintf(
                     '@license in DocBlock for %s %s not found',
                     $element->getElementType(),
-                    $element->getFqsen()
+                    $element->getId()
                 ),
                 $element->getDocBlock()->getLocation()
                     ? $element->getDocBlock()->getLocation()->getLineNumber()

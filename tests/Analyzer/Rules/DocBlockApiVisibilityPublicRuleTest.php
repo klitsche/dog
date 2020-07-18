@@ -12,12 +12,12 @@ use Klitsche\Dog\Analyzer\Rules;
  */
 class DocBlockApiVisibilityPublicRuleTest extends RulesTestCase
 {
-    public function testRule(): void
+    public function testAnalyze(): void
     {
-        $defaultRules = new Rules(new Rules\DocBlockApiVisibilityPublicRule('any', 'error'));
+        $rules = new Rules(new Rules\DocBlockApiVisibilityPublicRule('any', 'error'));
         $issuesCollector = $this->getIssueCollector();
 
-        $analyzer = new Analyzer($defaultRules, $issuesCollector);
+        $analyzer = new Analyzer($rules, $issuesCollector);
         $analyzer->analyze(
             $this->getProject(
                 [
@@ -30,36 +30,20 @@ class DocBlockApiVisibilityPublicRuleTest extends RulesTestCase
 
         $this->assertCount(4, $issues);
 
-        $this->assertInstanceOf(Rules\DocBlockApiVisibilityPublicRule::class, $issues[0]->getRule());
-        $this->assertSame('error', $issues[0]->getLevel());
-        $this->assertSame('Property', $issues[0]->getElement()->getElementType());
-        $this->assertSame(
+        $expectedElementIds = [
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiVisibilityPublicRule::$protectedVar',
-            $issues[0]->getElement()->getId()
-        );
-
-        $this->assertInstanceOf(Rules\DocBlockApiVisibilityPublicRule::class, $issues[1]->getRule());
-        $this->assertSame('error', $issues[1]->getLevel());
-        $this->assertSame('Property', $issues[1]->getElement()->getElementType());
-        $this->assertSame(
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiVisibilityPublicRule::$privateVar',
-            $issues[1]->getElement()->getId()
-        );
-
-        $this->assertInstanceOf(Rules\DocBlockApiVisibilityPublicRule::class, $issues[2]->getRule());
-        $this->assertSame('error', $issues[2]->getLevel());
-        $this->assertSame('Method', $issues[2]->getElement()->getElementType());
-        $this->assertSame(
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiVisibilityPublicRule::protectedFunc()',
-            $issues[2]->getElement()->getId()
-        );
-
-        $this->assertInstanceOf(Rules\DocBlockApiVisibilityPublicRule::class, $issues[3]->getRule());
-        $this->assertSame('error', $issues[3]->getLevel());
-        $this->assertSame('Method', $issues[3]->getElement()->getElementType());
-        $this->assertSame(
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiVisibilityPublicRule::privateFunc()',
-            $issues[3]->getElement()->getId()
-        );
+        ];
+
+        foreach ($issues as $i => $issue) {
+            $this->assertInstanceOf(Rules\DocBlockApiVisibilityPublicRule::class, $issue->getRule());
+            $this->assertSame('error', $issue->getLevel());
+            $this->assertSame(
+                $expectedElementIds[$i],
+                $issue->getElement()->getId()
+            );
+        }
     }
 }

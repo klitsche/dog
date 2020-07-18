@@ -1,6 +1,15 @@
 <?php
-
+/**
+ * @author emailmissing0
+ */
 namespace Klitsche\Dog\Dummy\Rules;
+
+/**
+ * @author emailmissing4
+ */
+function DocBlockAuthorEmailRuleFunc()
+{
+}
 
 /**
  * @author

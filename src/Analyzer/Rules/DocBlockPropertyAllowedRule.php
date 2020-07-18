@@ -36,7 +36,7 @@ class DocBlockPropertyAllowedRule extends Rule
                             '@property in DocBlock for %s %s not allowed',
                             $tag->getVariableName(),
                             $element->getElementType(),
-                            $element->getFqsen(),
+                            $element->getId(),
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

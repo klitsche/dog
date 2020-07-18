@@ -32,7 +32,7 @@ class DocBlockApiNotInternalRule extends Rule
                         sprintf(
                             '@api in DocBlock for %s %s conflicts with @internal',
                             $element->getElementType(),
-                            $element->getFqsen()
+                            $element->getId()
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

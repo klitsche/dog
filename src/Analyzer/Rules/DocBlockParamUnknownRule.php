@@ -41,7 +41,7 @@ class DocBlockParamUnknownRule extends Rule
                             '@param %s does not match any Argument in DocBlock for %s %s',
                             $tag->getVariableName(),
                             $element->getElementType(),
-                            $element->getFqsen(),
+                            $element->getId(),
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

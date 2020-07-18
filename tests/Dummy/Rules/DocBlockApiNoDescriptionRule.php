@@ -1,4 +1,7 @@
 <?php
+/**
+ * @api should not have a description
+ */
 
 namespace Klitsche\Dog\Dummy\Rules;
 

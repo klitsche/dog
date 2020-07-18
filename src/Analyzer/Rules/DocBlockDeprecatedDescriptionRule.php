@@ -32,7 +32,7 @@ class DocBlockDeprecatedDescriptionRule extends Rule
                         sprintf(
                             '@deprecated in DocBlock for %s %s is missing description stating why the associated element is deprecated',
                             $element->getElementType(),
-                            $element->getFqsen()
+                            $element->getId()
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

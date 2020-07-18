@@ -12,12 +12,12 @@ use Klitsche\Dog\Analyzer\Rules;
  */
 class DocBlockApiNoInternalRuleTest extends RulesTestCase
 {
-    public function testRule(): void
+    public function testAnalyze(): void
     {
-        $defaultRules = new Rules(new Rules\DocBlockApiNotInternalRule('any', 'error'));
+        $rules = new Rules(new Rules\DocBlockApiNotInternalRule('any', 'error'));
         $issuesCollector = $this->getIssueCollector();
 
-        $analyzer = new Analyzer($defaultRules, $issuesCollector);
+        $analyzer = new Analyzer($rules, $issuesCollector);
         $analyzer->analyze(
             $this->getProject(
                 [
@@ -28,48 +28,32 @@ class DocBlockApiNoInternalRuleTest extends RulesTestCase
 
         $issues = $issuesCollector->issues;
 
-        $this->assertCount(4, $issues);
+        $this->assertCount(5, $issues);
 
-        $this->assertInstanceOf(Rules\DocBlockApiNotInternalRule::class, $issues[0]->getRule());
-        $this->assertSame('error', $issues[0]->getLevel());
-        $this->assertSame('Class', $issues[0]->getElement()->getElementType());
-        $this->assertSame(
+        $expectedElementIds = [
+            __DIR__ . '/../../Dummy/Rules/DocBlockApiNotInternalRule.php',
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiNotInternalRule',
-            $issues[0]->getElement()->getId()
-        );
-
-        $this->assertInstanceOf(Rules\DocBlockApiNotInternalRule::class, $issues[1]->getRule());
-        $this->assertSame('error', $issues[1]->getLevel());
-        $this->assertSame('Property', $issues[1]->getElement()->getElementType());
-        $this->assertSame(
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiNotInternalRule::$var',
-            $issues[1]->getElement()->getId()
-        );
-
-        $this->assertInstanceOf(Rules\DocBlockApiNotInternalRule::class, $issues[2]->getRule());
-        $this->assertSame('error', $issues[2]->getLevel());
-        $this->assertSame('Method', $issues[2]->getElement()->getElementType());
-        $this->assertSame(
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiNotInternalRule::func()',
-            $issues[2]->getElement()->getId()
-        );
-        $this->assertStringContainsString('func', $issues[2]->getElement()->getName());
-
-        $this->assertInstanceOf(Rules\DocBlockApiNotInternalRule::class, $issues[3]->getRule());
-        $this->assertSame('error', $issues[3]->getLevel());
-        $this->assertSame('Function', $issues[3]->getElement()->getElementType());
-        $this->assertSame(
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiNotInternalRuleFunc()',
-            $issues[3]->getElement()->getId()
-        );
+        ];
+
+        foreach ($issues as $i => $issue) {
+            $this->assertInstanceOf(Rules\DocBlockApiNotInternalRule::class, $issue->getRule());
+            $this->assertSame('error', $issue->getLevel());
+            $this->assertSame(
+                $expectedElementIds[$i],
+                $issue->getElement()->getId()
+            );
+        }
     }
 
-    public function testRuleWithOuterTag(): void
+    public function testAnalyzeWithOuterTag(): void
     {
-        $defaultRules = new Rules(new Rules\DocBlockApiNotInternalRule('any', 'error'));
+        $rules = new Rules(new Rules\DocBlockApiNotInternalRule('any', 'error'));
         $issuesCollector = $this->getIssueCollector();
 
-        $analyzer = new Analyzer($defaultRules, $issuesCollector);
+        $analyzer = new Analyzer($rules, $issuesCollector);
         $analyzer->analyze(
             $this->getProject(
                 [
@@ -82,37 +66,20 @@ class DocBlockApiNoInternalRuleTest extends RulesTestCase
 
         $this->assertCount(4, $issues);
 
-        $this->assertInstanceOf(Rules\DocBlockApiNotInternalRule::class, $issues[0]->getRule());
-        $this->assertSame('error', $issues[0]->getLevel());
-        $this->assertSame('Class', $issues[0]->getElement()->getElementType());
-        $this->assertSame(
+        $expectedElementIds = [
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiNotInternalRuleWithOuterTag',
-            $issues[0]->getElement()->getId()
-        );
-
-        $this->assertInstanceOf(Rules\DocBlockApiNotInternalRule::class, $issues[1]->getRule());
-        $this->assertSame('error', $issues[1]->getLevel());
-        $this->assertSame('Property', $issues[1]->getElement()->getElementType());
-        $this->assertSame(
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiNotInternalRuleWithOuterTag::$var',
-            $issues[1]->getElement()->getId()
-        );
-
-        $this->assertInstanceOf(Rules\DocBlockApiNotInternalRule::class, $issues[2]->getRule());
-        $this->assertSame('error', $issues[2]->getLevel());
-        $this->assertSame('Method', $issues[2]->getElement()->getElementType());
-        $this->assertSame(
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiNotInternalRuleWithOuterTag::func()',
-            $issues[2]->getElement()->getId()
-        );
-        $this->assertStringContainsString('func', $issues[2]->getElement()->getName());
-
-        $this->assertInstanceOf(Rules\DocBlockApiNotInternalRule::class, $issues[3]->getRule());
-        $this->assertSame('error', $issues[3]->getLevel());
-        $this->assertSame('Function', $issues[3]->getElement()->getElementType());
-        $this->assertSame(
             '\Klitsche\Dog\Dummy\Rules\DocBlockApiNotInternalRuleWithOuterTagFunc()',
-            $issues[3]->getElement()->getId()
-        );
+        ];
+
+        foreach ($issues as $i => $issue) {
+            $this->assertInstanceOf(Rules\DocBlockApiNotInternalRule::class, $issue->getRule());
+            $this->assertSame('error', $issue->getLevel());
+            $this->assertSame(
+                $expectedElementIds[$i],
+                $issue->getElement()->getId()
+            );
+        }
     }
 }

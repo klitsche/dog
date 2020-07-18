@@ -33,7 +33,7 @@ class DocBlockReturnOnlyOnceRule extends Rule
                     sprintf(
                         '@return in DocBlock for %s %s occurs more than once',
                         $element->getElementType(),
-                        $element->getFqsen(),
+                        $element->getId(),
                     ),
                     $element->getDocBlock()->getLocation()
                         ? $element->getDocBlock()->getLocation()->getLineNumber()

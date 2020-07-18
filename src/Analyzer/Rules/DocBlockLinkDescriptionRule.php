@@ -32,7 +32,7 @@ class DocBlockLinkDescriptionRule extends Rule
                         sprintf(
                             '@link in DocBlock for %s %s is missing description indicating the type of relation',
                             $element->getElementType(),
-                            $element->getFqsen()
+                            $element->getId()
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

@@ -33,7 +33,7 @@ class DocBlockAuthorNameMissingRule extends Rule
                             '@author name for "%s" in DocBlock for %s %s not found',
                             $tag->getAuthorName(),
                             $element->getElementType(),
-                            $element->getFqsen(),
+                            $element->getId(),
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

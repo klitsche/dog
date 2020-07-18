@@ -32,7 +32,7 @@ class DocBlockSinceVersionRule extends Rule
                         sprintf(
                             '@see in DocBlock for %s %s is missing "Semantic version"',
                             $element->getElementType(),
-                            $element->getFqsen()
+                            $element->getId()
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

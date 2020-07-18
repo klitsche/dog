@@ -44,7 +44,7 @@ class DocBlockDeprecatedCorrespondingSeeRule extends Rule
                     sprintf(
                         '@deprecated in DocBlock for %s %s is missing corresponding @see',
                         $element->getElementType(),
-                        $element->getFqsen()
+                        $element->getId()
                     ),
                     $element->getDocBlock()->getLocation()
                         ? $element->getDocBlock()->getLocation()->getLineNumber()

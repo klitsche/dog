@@ -34,7 +34,7 @@ class DocBlockAuthorEmailRule extends Rule
                             '@author email for "%s" in DocBlock for %s %s not found',
                             $tag->getAuthorName(),
                             $element->getElementType(),
-                            $element->getFqsen(),
+                            $element->getId(),
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

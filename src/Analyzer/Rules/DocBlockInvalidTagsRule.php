@@ -25,7 +25,7 @@ class DocBlockInvalidTagsRule extends Rule
                             '@%s in DocBlock for %s %s has invalid format',
                             $tag->getName(),
                             $element->getElementType(),
-                            $element->getFqsen()
+                            $element->getId()
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

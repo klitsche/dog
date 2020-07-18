@@ -7,7 +7,6 @@ namespace Klitsche\Dog\Analyzer\Rules;
 use Klitsche\Dog\Analyzer\Rule;
 use Klitsche\Dog\Elements\DocBlockAwareInterface;
 use Klitsche\Dog\Elements\ElementInterface;
-use Klitsche\Dog\Elements\FqsenAwareInterface;
 
 class DocBlockMissingRule extends Rule
 {
@@ -22,7 +21,7 @@ class DocBlockMissingRule extends Rule
                 sprintf(
                     'DocBlock of %s %s not found',
                     $element->getElementType(),
-                    $element instanceof FqsenAwareInterface ? $element->getFqsen() : $element->getName()
+                    $element->getId()
                 ),
                 $element->getLocation()
                     ? $element->getLocation()->getLineNumber()

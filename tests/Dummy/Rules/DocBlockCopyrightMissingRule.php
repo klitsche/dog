@@ -1,31 +1,27 @@
 <?php
 /**
- * @author
+ * copyright tag missing
  */
 
 namespace Klitsche\Dog\Dummy\Rules;
 
-/**
- * @author
- */
+// no doc block
 function DocBlockAuthorNameMissingRuleFunc()
 {
 }
 
 /**
- * @author valid name
+ * copyright tag missing
  */
-class DocBlockAuthorNameMissingRule
+class DocBlockCopyrightMissingRule
 {
     /**
-     * @author valid name
-     * @author
-     * @author
+     * @copyright
      */
     public int $var;
 
     /**
-     * @author
+     * @copyright
      */
     public function func()
     {

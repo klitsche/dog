@@ -32,7 +32,7 @@ class DocBlockParamDescriptionRule extends Rule
                             '@param description for Argument %s in DocBlock for %s %s not found',
                             $tag->getVariableName(),
                             $element->getElementType(),
-                            $element->getFqsen(),
+                            $element->getId(),
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

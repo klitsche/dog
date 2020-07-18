@@ -36,7 +36,7 @@ class DocBlockParamNameOnlyOnceRule extends Rule
                             '@param for Argument %s in DocBlock for %s %s occurs more than once',
                             $tag->getVariableName(),
                             $element->getElementType(),
-                            $element->getFqsen(),
+                            $element->getId(),
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

@@ -32,7 +32,7 @@ class DocBlockDeprecatedVersionRule extends Rule
                         sprintf(
                             '@deprecated in DocBlock for %s %s is missing "Semantic version"',
                             $element->getElementType(),
-                            $element->getFqsen()
+                            $element->getId()
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

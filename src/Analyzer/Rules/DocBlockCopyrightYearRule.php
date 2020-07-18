@@ -32,7 +32,7 @@ class DocBlockCopyrightYearRule extends Rule
                         sprintf(
                             '@copyright description in DocBlock for %s %s should mention year or years',
                             $element->getElementType(),
-                            $element->getFqsen(),
+                            $element->getId(),
                         ),
                         $element->getDocBlock()->getLocation()
                             ? $element->getDocBlock()->getLocation()->getLineNumber()

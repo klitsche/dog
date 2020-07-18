@@ -12,12 +12,12 @@ use Klitsche\Dog\Analyzer\Rules;
  */
 class DocBlockAuthorEmailRuleTest extends RulesTestCase
 {
-    public function testRule(): void
+    public function testAnalyze(): void
     {
-        $defaultRules = new Rules(new Rules\DocBlockAuthorEmailRule('any', 'error'));
+        $rules = new Rules(new Rules\DocBlockAuthorEmailRule('any', 'error'));
         $issuesCollector = $this->getIssueCollector();
 
-        $analyzer = new Analyzer($defaultRules, $issuesCollector);
+        $analyzer = new Analyzer($rules, $issuesCollector);
         $analyzer->analyze(
             $this->getProject(
                 [
@@ -28,33 +28,24 @@ class DocBlockAuthorEmailRuleTest extends RulesTestCase
 
         $issues = $issuesCollector->issues;
 
-        $this->assertCount(3, $issues);
+        $this->assertCount(5, $issues);
 
-        $this->assertInstanceOf(Rules\DocBlockAuthorEmailRule::class, $issues[0]->getRule());
-        $this->assertSame('error', $issues[0]->getLevel());
-        $this->assertSame('Property', $issues[0]->getElement()->getElementType());
-        $this->assertSame(
+        $expectedElementIds = [
+            __DIR__ . '/../../Dummy/Rules/DocBlockAuthorEmailRule.php',
             '\Klitsche\Dog\Dummy\Rules\DocBlockAuthorEmailRule::$var',
-            $issues[0]->getElement()->getId()
-        );
-        $this->assertStringContainsString('emailmissing1', $issues[0]->getMessage());
-
-        $this->assertInstanceOf(Rules\DocBlockAuthorEmailRule::class, $issues[1]->getRule());
-        $this->assertSame('error', $issues[1]->getLevel());
-        $this->assertSame('Property', $issues[1]->getElement()->getElementType());
-        $this->assertSame(
             '\Klitsche\Dog\Dummy\Rules\DocBlockAuthorEmailRule::$var',
-            $issues[1]->getElement()->getId()
-        );
-        $this->assertStringContainsString('emailmissing2', $issues[1]->getMessage());
-
-        $this->assertInstanceOf(Rules\DocBlockAuthorEmailRule::class, $issues[2]->getRule());
-        $this->assertSame('error', $issues[2]->getLevel());
-        $this->assertSame('Method', $issues[2]->getElement()->getElementType());
-        $this->assertSame(
             '\Klitsche\Dog\Dummy\Rules\DocBlockAuthorEmailRule::func()',
-            $issues[2]->getElement()->getId()
-        );
-        $this->assertStringContainsString('emailmissing3', $issues[2]->getMessage());
+            '\Klitsche\Dog\Dummy\Rules\DocBlockAuthorEmailRuleFunc()',
+        ];
+
+        foreach ($issues as $i => $issue) {
+            $this->assertInstanceOf(Rules\DocBlockAuthorEmailRule::class, $issue->getRule());
+            $this->assertSame('error', $issue->getLevel());
+            $this->assertSame(
+                $expectedElementIds[$i],
+                $issue->getElement()->getId()
+            );
+            $this->assertStringContainsString('emailmissing' . $i, $issue->getMessage());
+        }
     }
 }

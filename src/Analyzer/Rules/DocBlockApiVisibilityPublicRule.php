@@ -34,7 +34,7 @@ class DocBlockApiVisibilityPublicRule extends Rule
                         sprintf(
                             '@api in DocBlock for %s %s must not be used on elements with %s visibility',
                             $element->getElementType(),
-                            $element->getFqsen(),
+                            $element->getId(),
                             $element->getVisibility(),
                         ),
                         $element->getDocBlock()->getLocation()
