@@ -18,7 +18,9 @@ use Klitsche\Dog\Analyzer\Rules\DocBlockDeprecatedVersionRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockDescriptionMissingRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockInvalidTagRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockLicenseMissingRule;
+use Klitsche\Dog\Analyzer\Rules\DocBlockLinkDescriptionRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockLinkMissingRule;
+use Klitsche\Dog\Analyzer\Rules\DocBlockLinkUrlRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockMethodAllowedRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockMissingRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockParamAllowedRule;
@@ -182,14 +184,22 @@ class Rules implements AnalyzeInterface
         // @link
         'FileDocBlockLinkMissingRule' => [
             'class' => DocBlockLinkMissingRule::class,
-            'issueLevel' => 'notice',
+            'issueLevel' => 'ignore',
             'match' => [
                 'getElementType' => 'File',
                 'isInternal' => false,
             ],
         ],
+        'DocBlockLinkUrlRule' => [
+            'class' => DocBlockLinkUrlRule::class,
+            'issueLevel' => 'error',
+            'match' => [
+                'isInternal' => false,
+                'isPublic' => true,
+            ],
+        ],
         'DocBlockLinkDescriptionRule' => [
-            'class' => DocBlockLinkMissingRule::class,
+            'class' => DocBlockLinkDescriptionRule::class,
             'issueLevel' => 'notice',
             'match' => [
                 'isInternal' => false,

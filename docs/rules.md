@@ -44,6 +44,15 @@ DocBlockInvalidTagsRule:
     issueLevel: error
 ```
 
+### DocBlockLinkUrlRule
+
+```yaml
+DocBlockLinkUrlRule:
+    class: Klitsche\Dog\Analyzer\Rules\DocBlockLinkUrlRule
+    issueLevel: error
+    match: { isInternal: false, isPublic: true }
+```
+
 ### DocBlockMethodAllowedRule
 
 ```yaml
@@ -225,7 +234,7 @@ DocBlockDeprecatedDescriptionRule:
 
 ```yaml
 DocBlockLinkDescriptionRule:
-    class: Klitsche\Dog\Analyzer\Rules\DocBlockLinkMissingRule
+    class: Klitsche\Dog\Analyzer\Rules\DocBlockLinkDescriptionRule
     issueLevel: notice
     match: { isInternal: false, isPublic: true }
 ```
@@ -252,15 +261,6 @@ FileDocBlockCopyrightMissingRule:
 ```yaml
 FileDocBlockLicenseMissingRule:
     class: Klitsche\Dog\Analyzer\Rules\DocBlockLicenseMissingRule
-    issueLevel: notice
-    match: { getElementType: File, isInternal: false }
-```
-
-### FileDocBlockLinkMissingRule
-
-```yaml
-FileDocBlockLinkMissingRule:
-    class: Klitsche\Dog\Analyzer\Rules\DocBlockLinkMissingRule
     issueLevel: notice
     match: { getElementType: File, isInternal: false }
 ```
@@ -317,4 +317,15 @@ PublicPropertyDocBlockMissingRule:
     class: Klitsche\Dog\Analyzer\Rules\DocBlockMissingRule
     issueLevel: notice
     match: { getElementType: Property, isPublic: true, isInternal: false }
+```
+
+## Ignored
+
+### FileDocBlockLinkMissingRule
+
+```yaml
+FileDocBlockLinkMissingRule:
+    class: Klitsche\Dog\Analyzer\Rules\DocBlockLinkMissingRule
+    issueLevel: ignore
+    match: { getElementType: File, isInternal: false }
 ```

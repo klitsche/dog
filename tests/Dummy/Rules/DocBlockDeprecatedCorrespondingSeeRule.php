@@ -21,6 +21,11 @@ class DocBlockDeprecatedCorrespondingSeeRule
     public int $var;
 
     /**
+     * @deprecated some inline {@see DocBlockDeprecatedCorrespondingSeeRule::$var}
+     */
+    public int $anotherVar;
+
+    /**
      * @deprecated
      */
     public function func()
