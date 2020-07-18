@@ -3,24 +3,24 @@
 namespace Klitsche\Dog\Dummy\Rules;
 
 /**
- * @api
+ * @api should not have a description
  */
 function DocBlockApiNoDescriptionRuleFunc()
 {
 }
 
 /**
- * @api
+ * @api should not have a description
  */
 class DocBlockApiNoDescriptionRule
 {
     /**
-     * @api
+     * @api should not have a description
      */
     public int $var;
 
     /**
-     * @api
+     * @api should not have a description
      */
     public function func()
     {
