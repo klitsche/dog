@@ -16,8 +16,8 @@ use Klitsche\Dog\Analyzer\Rules\DocBlockDeprecatedCorrespondingSeeRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockDeprecatedDescriptionRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockDeprecatedVersionRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockDescriptionMissingRule;
-use Klitsche\Dog\Analyzer\Rules\DocBlockInvalidTagsRule;
-use Klitsche\Dog\Analyzer\Rules\DocBlockLicenceMissingRule;
+use Klitsche\Dog\Analyzer\Rules\DocBlockInvalidTagRule;
+use Klitsche\Dog\Analyzer\Rules\DocBlockLicenseMissingRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockLinkMissingRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockMethodAllowedRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockMissingRule;
@@ -117,9 +117,9 @@ class Rules implements AnalyzeInterface
                 'isPublic' => true,
             ],
         ],
-        // Invalid DocBlock Tags
+        // Invalid DocBlock Tag
         'DocBlockInvalidTagsRule' => [
-            'class' => DocBlockInvalidTagsRule::class,
+            'class' => DocBlockInvalidTagRule::class,
             'issueLevel' => 'error',
         ],
         // @api
@@ -171,8 +171,8 @@ class Rules implements AnalyzeInterface
             'issueLevel' => 'notice',
         ],
         // @license
-        'FileDocBlockLicenceMissingRule' => [
-            'class' => DocBlockLicenceMissingRule::class,
+        'FileDocBlockLicenseMissingRule' => [
+            'class' => DocBlockLicenseMissingRule::class,
             'issueLevel' => 'notice',
             'match' => [
                 'getElementType' => 'File',

@@ -40,7 +40,7 @@ DocBlockAuthorNameMissingRule:
 
 ```yaml
 DocBlockInvalidTagsRule:
-    class: Klitsche\Dog\Analyzer\Rules\DocBlockInvalidTagsRule
+    class: Klitsche\Dog\Analyzer\Rules\DocBlockInvalidTagRule
     issueLevel: error
 ```
 
@@ -247,11 +247,11 @@ FileDocBlockCopyrightMissingRule:
     match: { getElementType: File, isInternal: false }
 ```
 
-### FileDocBlockLicenceMissingRule
+### FileDocBlockLicenseMissingRule
 
 ```yaml
-FileDocBlockLicenceMissingRule:
-    class: Klitsche\Dog\Analyzer\Rules\DocBlockLicenceMissingRule
+FileDocBlockLicenseMissingRule:
+    class: Klitsche\Dog\Analyzer\Rules\DocBlockLicenseMissingRule
     issueLevel: notice
     match: { getElementType: File, isInternal: false }
 ```

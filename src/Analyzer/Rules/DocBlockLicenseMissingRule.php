@@ -11,7 +11,7 @@ use Klitsche\Dog\Elements\ElementInterface;
 /**
  * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/license.html
  */
-class DocBlockLicenceMissingRule extends Rule
+class DocBlockLicenseMissingRule extends Rule
 {
     public function analyze(ElementInterface $element): iterable
     {

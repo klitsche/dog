@@ -9,7 +9,7 @@ use Klitsche\Dog\Elements\DocBlockAwareInterface;
 use Klitsche\Dog\Elements\ElementInterface;
 use phpDocumentor\Reflection\DocBlock;
 
-class DocBlockInvalidTagsRule extends Rule
+class DocBlockInvalidTagRule extends Rule
 {
     public function analyze(ElementInterface $element): iterable
     {
