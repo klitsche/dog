@@ -15,7 +15,7 @@ class DocBlockDescriptionMissingRule extends Rule
         if (
             $element instanceof DocBlockAwareInterface
             && $element->hasDocBlock() === true
-            && $element->getDocBlock()->getDescription() === ''
+            && (string) $element->getDocBlock()->getDescription() === ''
             && $element->getDocBlock()->hasTag('inheritDoc') === false
         ) {
             yield $this->createIssue(

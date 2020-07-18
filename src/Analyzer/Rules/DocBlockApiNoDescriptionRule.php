@@ -25,7 +25,7 @@ class DocBlockApiNoDescriptionRule extends Rule
             foreach ($element->getDocBlock()->getTagsByName('api') as $tag) {
                 if (
                     $tag instanceof DocBlock\Tags\Generic
-                    && empty($tag->getDescription()) === false
+                    && (string) $tag->getDescription() !== ''
                 ) {
                     yield $this->createIssue(
                         $element,
