@@ -25,11 +25,13 @@ class DocBlockParamNameOnlyOnceRule extends Rule
             $variableNames = [];
             foreach ($element->getDocBlock()->getTagsByName('param') as $tag) {
                 if (
-                    $tag instanceof DocBlock\Tags\Param
-                    && $tag->getVariableName() !== null
-                    && array_key_exists($tag->getVariableName(), $variableNames) === true
+                    ($tag instanceof DocBlock\Tags\Param) === false
+                    || empty($tag->getVariableName()) === true
                 ) {
-                    $variableNames[$tag->getVariableName()] = true;
+                    continue;
+                }
+
+                if (array_key_exists($tag->getVariableName(), $variableNames) === true) {
                     yield $this->createIssue(
                         $element,
                         sprintf(
@@ -43,6 +45,8 @@ class DocBlockParamNameOnlyOnceRule extends Rule
                             : 1
                     );
                 }
+
+                $variableNames[$tag->getVariableName()] = true;
             }
         }
 
