@@ -25,10 +25,9 @@ script:
     composer update --prefer-stable --no-interaction --no-suggest;
     composer cs;
     composer test-coverage;
-    composer build-docs;
 after_script:
   - |
-    if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi;
+    if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.4" ]] && [[ $TRAVIS_PULL_REQUEST == "false" ]]; then composer build-docs; ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi;
 deploy:
   provider: pages
   local_dir: site
