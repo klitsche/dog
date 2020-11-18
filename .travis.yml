@@ -38,3 +38,4 @@ deploy:
   target_branch: gh-pages
   on:
     branch: master
+    condition: ${TRAVIS_PHP_VERSION:0:3} == "7.4"
