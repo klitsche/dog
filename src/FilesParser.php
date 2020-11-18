@@ -54,7 +54,9 @@ class FilesParser
                         0,
                         $exception
                     ),
-                    ['file' => $file]
+                    [
+                        'file' => $file,
+                    ]
                 );
             }
         }

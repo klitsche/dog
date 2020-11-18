@@ -10,9 +10,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(
         'sets',
         [
-            'psr-12',
-            'php-70',
-            'php-71',
+            'psr12',
+            'php70',
+            'php71',
             'common',
             'clean-code',
             'dead-code',

@@ -18,7 +18,9 @@ class ConfigTest extends TestCase
                 'title' => 'title',
                 'outputDir' => '/out',
                 'printerClass' => 'Printer',
-                'printerConfig' => ['any' => 'other'],
+                'printerConfig' => [
+                    'any' => 'other',
+                ],
                 'srcPaths' => [
                     '/src',
                 ],
@@ -30,8 +32,18 @@ class ConfigTest extends TestCase
         $this->assertSame('title', $config->getTitle());
         $this->assertSame('/out', $config->getOutputDir());
         $this->assertSame('Printer', $config->getPrinterClass());
-        $this->assertSame(['any' => 'other'], $config->getPrinterConfig());
-        $this->assertSame(['/src' => []], $config->getSrcPaths());
+        $this->assertSame(
+            [
+                'any' => 'other',
+            ],
+            $config->getPrinterConfig()
+        );
+        $this->assertSame(
+            [
+                '/src' => [],
+            ],
+            $config->getSrcPaths()
+        );
         $this->assertSame('', $config->getWorkingDir());
         $this->assertSame(true, $config->isDebugEnabled());
     }
@@ -41,7 +53,14 @@ class ConfigTest extends TestCase
         $config = new Config([], '');
 
         $this->assertSame('/docs/api', $config->getOutputDir());
-        $this->assertSame(['/src' => ['/.*\.php$/' => true]], $config->getSrcPaths());
+        $this->assertSame(
+            [
+                '/src' => [
+                    '/.*\.php$/' => true,
+                ],
+            ],
+            $config->getSrcPaths()
+        );
     }
 
     public function testConstructWithUnknownParameter(): void
@@ -52,7 +71,7 @@ class ConfigTest extends TestCase
             [
                 'unknownParam' => 'value',
             ],
-           ''
+            ''
         );
     }
 

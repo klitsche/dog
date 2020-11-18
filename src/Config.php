@@ -15,7 +15,11 @@ class Config implements ConfigInterface
 
     private string $title = 'Api Reference';
 
-    private array $srcPaths = ['src' => ['/.*\.php$/' => true]];
+    private array $srcPaths = [
+        'src' => [
+            '/.*\.php$/' => true,
+        ],
+    ];
 
     private string $printerClass = Printer::class;
 

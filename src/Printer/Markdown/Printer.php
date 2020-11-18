@@ -145,7 +145,9 @@ class Printer implements PrinterInterface
                     0,
                     $exception
                 ),
-                ['filename' => $fileName]
+                [
+                    'filename' => $fileName,
+                ]
             );
         }
 
