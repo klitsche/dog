@@ -55,7 +55,7 @@
             "cp LICENSE.md docs/license.md",
             "rm -fr docs/api/",
             "bin/dog --ansi",
-            "docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build"
+            "docker-compose run --rm -v ${PWD}:/docs mkdocs-material build"
         ]
     }
 }

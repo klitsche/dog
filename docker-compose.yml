@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  mkdocs-material:
+    build:
+      context: resources/mkdocs-material
+    image: mkdocs-material
+    volumes:
+      - .:/docs
+    ports:
+      - 8000:8000

@@ -11,7 +11,7 @@ theme:
   logo: 'img/dog.png'
   favicon: 'img/dog.png'
   features:
-    - tabs
+    - navigation.tabs
 
 repo_name: 'klitsche/dog'
 repo_url: 'https://github.com/klitsche/dog'
