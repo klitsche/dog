@@ -1,10 +1,14 @@
 language: php
 php:
   - 7.4
+  - nightly
+jobs:
+  allow_failures:
+    - php: nightly
 sudo: true
 env:
   global:
-    - CC_TEST_REPORTER_ID=06f21fc365ca955657e0b5b6ce2f5c84533cb4e2de87ba0f3d0b016aaf40a1de
+    - CC_TEST_REPORTER_ID=613b733b54821d91a3fe4dd2b408a08cd0bb3550ef88fb2bbad3400bcdd336dc
 cache:
   directories:
     - $HOME/.composer/cache
