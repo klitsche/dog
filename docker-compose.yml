@@ -3,9 +3,23 @@ version: '3'
 services:
   mkdocs-material:
     build:
-      context: resources/mkdocs-material
-    image: mkdocs-material
+      context: resources/docker/mkdocs-material
+    image: dog/mkdocs-material
     volumes:
       - .:/docs
     ports:
       - 8000:8000
+
+  php7:
+    build:
+      context: resources/docker/php7
+    image: dog/php7
+    volumes:
+      - .:/app
+
+  php8:
+    build:
+      context: resources/docker/php8
+    image: dog/php8
+    volumes:
+      - .:/app
