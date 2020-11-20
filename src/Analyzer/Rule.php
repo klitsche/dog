@@ -12,6 +12,11 @@ abstract class Rule implements RuleInterface
     protected array $match;
     private string $id;
 
+    public static function create(string $id, string $issueLevel, array $match = []): self
+    {
+        return new static($id, $issueLevel, $match);
+    }
+
     public function __construct(string $id, string $issueLevel, array $match = [])
     {
         $this->id = $id;

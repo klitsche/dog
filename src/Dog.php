@@ -53,9 +53,9 @@ class Dog
 
     private function validateProject(ProjectInterface $project): void
     {
-        $rules = Rules::createFromConfig($this->config->getRules());
-        $validator = new Analyzer($rules, $this->dispatcher);
-        $validator->analyze($project);
+        $rules = Rules::createFromConfig($this->config);
+        $analyzer = new Analyzer($rules, $this->dispatcher);
+        $analyzer->analyze($project);
     }
 
     private function collectFiles(): array

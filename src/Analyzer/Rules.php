@@ -36,6 +36,7 @@ use Klitsche\Dog\Analyzer\Rules\DocBlockSinceDescriptionRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockSinceVersionRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockSummaryMissingRule;
 use Klitsche\Dog\Analyzer\Rules\TypeMissingRule;
+use Klitsche\Dog\ConfigInterface;
 use Klitsche\Dog\Elements\ElementInterface;
 use ReflectionClass;
 use ReflectionException;
@@ -289,14 +290,15 @@ class Rules implements AnalyzeInterface
         $this->rules = $rules;
     }
 
-    public static function createFromConfig(array $rulesConfig)
+    public static function createFromConfig(ConfigInterface $config)
     {
         $rules = [];
+        $rulesConfig = self::mergeWithDefaultRules($config->getRules());
 
-        foreach (self::mergeWithDefaultRules($rulesConfig) as $id => $config) {
-            $class = $config['class'] ?? '';
-            $issueLevel = $config['issueLevel'] ?? Issue::ERROR;
-            $match = $config['match'] ?? [];
+        foreach ($rulesConfig as $id => $rulecCnfig) {
+            $class = $rulecCnfig['class'] ?? '';
+            $issueLevel = $rulecCnfig['issueLevel'] ?? Issue::ERROR;
+            $match = $rulecCnfig['match'] ?? [];
 
             if ($issueLevel === Issue::IGNORE) {
                 continue;
@@ -325,7 +327,9 @@ class Rules implements AnalyzeInterface
                 );
             }
 
-            $rules[] = new $class($id, $issueLevel, $match);
+            /** @var RuleInterface $class */
+            $rule = $class::create($id, $issueLevel, $match);
+            $rules[] = $rule;
         }
 
         return new static(...$rules);
@@ -406,5 +410,13 @@ class Rules implements AnalyzeInterface
         }
 
         yield from [];
+    }
+
+    /**
+     * @return RuleInterface[]
+     */
+    public function getRules(): array
+    {
+        return $this->rules;
     }
 }
