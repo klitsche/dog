@@ -621,6 +621,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#getrules" class="md-nav__link">
+    getRules()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1788,6 +1795,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#getrules" class="md-nav__link">
+    getRules()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1900,15 +1914,19 @@
 <p>Returns <a href="Issue.html">\Klitsche\Dog\Analyzer\Issue</a>[]. </p>
 <h3 id="createfromconfig">createFromConfig()<a class="headerlink" href="#createfromconfig" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">static</span> <span class="nx">createFromConfig</span> <span class="p">(</span> 
-    <span class="k">array</span> <span class="nv">$rulesConfig</span>
+    <span class="nx">\Klitsche\Dog\ConfigInterface</span> <span class="nv">$config</span>
  <span class="p">)</span><span class="o">:</span> <span class="nx">mixed</span>
 </code></pre></div>
 <dl>
-<dt><strong>rulesConfig</strong></dt>
-<dd>array.</dd>
+<dt><strong>config</strong></dt>
+<dd><a href="../ConfigInterface.html">\Klitsche\Dog\ConfigInterface</a>.</dd>
 <dd></dd>
 </dl>
 <p>Returns mixed. </p>
+<h3 id="getrules">getRules()<a class="headerlink" href="#getrules" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="nx">getRules</span> <span class="p">(</span>  <span class="p">)</span><span class="o">:</span> <span class="nx">\Klitsche\Dog\Analyzer\RuleInterface</span><span class="p">[]</span>
+</code></pre></div>
+<p>Returns <a href="RuleInterface.html">\Klitsche\Dog\Analyzer\RuleInterface</a>[]. </p>
                 
                   
                 
