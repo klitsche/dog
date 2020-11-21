@@ -18,6 +18,8 @@ before_script:
   - |
     curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter;
     chmod +x ./cc-test-reporter;
+    curl -L https://phar.phpunit.de/phploc.phar > ./phploc;
+    chmod +x ./phploc;
     ./cc-test-reporter before-build;
 script:
   - |
@@ -25,6 +27,7 @@ script:
     composer update --prefer-stable --no-interaction --no-suggest;
     composer cs;
     composer test-coverage;
+    ./phploc --log-json=phploc.json src;
     if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.4" ]] && [[ $TRAVIS_PULL_REQUEST == "false" ]]; then composer build-docs; fi;
 after_script:
   - |
