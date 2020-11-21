@@ -25,6 +25,13 @@ class ConfigTest extends TestCase
                     '/src',
                 ],
                 'debug' => true,
+                'rules' => [
+                    'any' => ['class' => 'rule']
+                ],
+                'enrichers' => [
+                    'any' => ['class' => 'enricher']
+                ],
+                'cacheDir' => '/tmp',
             ],
             ''
         );
@@ -46,6 +53,19 @@ class ConfigTest extends TestCase
         );
         $this->assertSame('', $config->getWorkingDir());
         $this->assertSame(true, $config->isDebugEnabled());
+        $this->assertSame('/tmp', $config->getCacheDir());
+        $this->assertSame(
+            [
+                'any' => ['class' => 'rule']
+            ],
+            $config->getRules()
+        );
+        $this->assertSame(
+            [
+                'any' => ['class' => 'enricher']
+            ],
+            $config->getEnrichers()
+        );
     }
 
     public function testConstructWithEmptyParameters(): void
