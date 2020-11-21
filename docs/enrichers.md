@@ -2,12 +2,18 @@
 
 ## How do they work?
 
-Enrichers can add extra data to any data holder like `Project` or `Element` items (File, Class, Interface, Trait, Method, Function, Constants and Function/Method Arguments).
+Enrichers can add extra data to a data holder. Supported data holders are:
 
-* Each Enricher must implement `Klitsche\Dog\Enrichers\EnricherInterface`
-* Recommendation: for a customized enricher extend the abstract class `Klitsche\Dog\Enrichers\Enricher`
-* Data holders must implement `Klitsche\Dog\Enrichers\DataAwareInterface`
-* This extra data can be scalar values or objects
+* `Project`
+* `File`
+* `Class_`
+* `Trait_`
+* `Interface_`
+* `Constant`
+* `Property`
+* `Method`
+* `Function_`
+* `Argument` 
 
 Enrichers come with a 3 phase process:
 
@@ -30,7 +36,7 @@ In this Phase enricher can add data be calling `setData(string $id, $value)` on 
 Using the enricher id here is best practise.
 
 !!! Note
-    All enricher first visit the project and then all enricher visit the elements. 
+    All enricher first visit the project and then the elements. 
     
 ## Access Data in Templates
 
@@ -94,3 +100,11 @@ enrichers:
 ```
 
 See  for more details on phploc.
+
+## Custom enricher
+
+* A Enricher must implement `Klitsche\Dog\Enrichers\EnricherInterface`
+* Best practise: enricher extends the abstract class `Klitsche\Dog\Enrichers\Enricher`
+* Data holders must implement `Klitsche\Dog\Enrichers\DataAwareInterface`
+* Best practise: use its enricher id to add extra data to data holders
+* Extra data can be scalar values or objects

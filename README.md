@@ -22,9 +22,11 @@ It´s a thin layer around [phpdocumentor/reflection](https://github.com/phpDocum
 ## Runtime Requirements
 
 * PHP ^7.4
-* optional
-  * json extension to enrich `phploc`
-  * simplexml extension to enrich `clover` coverage data
+
+Suggested:
+
+* json extension to enrich `phploc` data
+* simplexml extension to enrich `clover` coverage data
 
 ## Quick Start
 
