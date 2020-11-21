@@ -9,7 +9,7 @@ use Klitsche\Dog\Elements\DocBlockAwareInterface;
 use Klitsche\Dog\Elements\ElementInterface;
 
 /**
- * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/license.html
+ * @link https://docs.phpdoc.org/latest/guide/references/phpdoc/tags/license.html
  */
 class DocBlockLicenseMissingRule extends Rule
 {

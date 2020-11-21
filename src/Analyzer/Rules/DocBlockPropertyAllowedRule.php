@@ -13,7 +13,7 @@ use phpDocumentor\Reflection\DocBlock;
 
 /**
  * @link https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md#510-property
- * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/property.html
+ * @link https://docs.phpdoc.org/latest/guide/references/phpdoc/tags/property.html
  *
  * @todo support property-read & property-write
  */

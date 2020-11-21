@@ -11,7 +11,7 @@ use phpDocumentor\Reflection\DocBlock;
 
 /**
  * @link https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md#56-link
- * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/link.html
+ * @link https://docs.phpdoc.org/latest/guide/references/phpdoc/tags/link.html
  */
 class DocBlockLinkDescriptionRule extends Rule
 {

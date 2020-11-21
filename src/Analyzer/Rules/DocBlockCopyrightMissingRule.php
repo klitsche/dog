@@ -10,7 +10,7 @@ use Klitsche\Dog\Elements\ElementInterface;
 
 /**
  * @link https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md#53-copyright
- * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/copyright.html
+ * @link https://docs.phpdoc.org/latest/guide/references/phpdoc/tags/copyright.html
  */
 class DocBlockCopyrightMissingRule extends Rule
 {

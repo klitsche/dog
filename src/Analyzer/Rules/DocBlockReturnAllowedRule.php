@@ -13,7 +13,7 @@ use phpDocumentor\Reflection\DocBlock;
 
 /**
  * @link https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md#511-return
- * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/return.html
+ * @link https://docs.phpdoc.org/latest/guide/references/phpdoc/tags/return.html
  */
 class DocBlockReturnAllowedRule extends Rule
 {

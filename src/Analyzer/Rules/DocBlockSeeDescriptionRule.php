@@ -11,7 +11,7 @@ use phpDocumentor\Reflection\DocBlock;
 
 /**
  * @link https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md#512-see
- * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/see.html
+ * @link https://docs.phpdoc.org/latest/guide/references/phpdoc/tags/see.html
  */
 class DocBlockSeeDescriptionRule extends Rule
 {

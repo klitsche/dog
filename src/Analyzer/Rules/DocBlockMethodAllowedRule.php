@@ -13,7 +13,7 @@ use phpDocumentor\Reflection\DocBlock;
 
 /**
  * @link https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md#57-method
- * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/method.html
+ * @link https://docs.phpdoc.org/latest/guide/references/phpdoc/tags/method.html
  */
 class DocBlockMethodAllowedRule extends Rule
 {

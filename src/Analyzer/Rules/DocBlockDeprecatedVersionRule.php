@@ -11,7 +11,7 @@ use phpDocumentor\Reflection\DocBlock;
 
 /**
  * @link https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md#54-deprecated
- * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/deprecated.html
+ * @link https://docs.phpdoc.org/latest/guide/references/phpdoc/tags/deprecated.html
  */
 class DocBlockDeprecatedVersionRule extends Rule
 {

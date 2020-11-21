@@ -9,6 +9,7 @@ use Klitsche\Dog\Elements\ElementInterface;
 use Klitsche\Dog\Elements\Function_;
 use Klitsche\Dog\Elements\Method;
 use Klitsche\Dog\Elements\Property;
+use phpDocumentor\Reflection\Types\Mixed_;
 
 class TypeMissingRule extends Rule
 {
@@ -33,7 +34,14 @@ class TypeMissingRule extends Rule
     private function validateFunction(ElementInterface $element): iterable
     {
         foreach ($element->getArguments() as $i => $argument) {
-            if ($argument->getType() === null) {
+            if (
+                $argument->getType() === null
+                || (
+                    $argument->getTag() === null
+                    && $argument->getPhp() !== null
+                    && $argument->getPhp()->getType() instanceof Mixed_
+                )
+            ) {
                 yield $this->createIssue(
                     $element,
                     sprintf(
@@ -51,9 +59,16 @@ class TypeMissingRule extends Rule
         }
 
         if (
-            $element->getReturnType() === null
-            && $element->getName() !== '__construct'
-            && $element->getName() !== '__destruct'
+            (
+                $element->getReturnType() === null
+                && $element->getName() !== '__construct'
+                && $element->getName() !== '__destruct')
+            || (
+                $element->getDocBlock() !== null
+                && $element->getDocBlock()->hasTag('return') === false
+                && $element->getPhp() !== null
+                && $element->getPhp()->getReturnType() instanceof Mixed_
+            )
         ) {
             yield $this->createIssue(
                 $element,

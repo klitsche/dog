@@ -13,7 +13,7 @@ use phpDocumentor\Reflection\DocBlock;
 
 /**
  * @link https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md#59-param
- * @link https://docs.phpdoc.org/latest/references/phpdoc/tags/param.html
+ * @link https://docs.phpdoc.org/latest/guide/references/phpdoc/tags/param.html
  */
 class DocBlockParamUnknownRule extends Rule
 {
