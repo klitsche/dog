@@ -27,7 +27,7 @@ class Dog
     /**
      * During files parsing {@see ProgressStartEvent}, {@see ProgressEvent}, {@see ProgressFinishEvent} and {@see ErrorEvent} will be dispatched.
      */
-    public function parse(): void
+    public function prepare(): void
     {
         $this->prepareProject();
     }
@@ -36,7 +36,7 @@ class Dog
      * During files parsing and elements validation {@see ProgressStartEvent}, {@see ProgressEvent}, {@see ProgressFinishEvent} and
      * {@see IssueEvent} will be dispatched.
      */
-    public function validate(): void
+    public function analyze(): void
     {
         $project = $this->prepareProject();
         $this->validateProject($project);

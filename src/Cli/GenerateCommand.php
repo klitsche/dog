@@ -96,7 +96,7 @@ class GenerateCommand extends Command
             $config,
             $this->dispatcher
         );
-        $dog->parse();
+        $dog->prepare();
 
         if ($this->errorReporter->hasErrors()) {
             $this->errorReporter->output();
@@ -105,7 +105,7 @@ class GenerateCommand extends Command
         }
 
         if ($analyzeOption === true) {
-            $dog->validate();
+            $dog->analyze();
             $this->issueReporter->output();
             if ($this->issueReporter->hasErrors()) {
                 return 1;
