@@ -1,0 +1,8 @@
+{% if element.data('clover') %}
+{% if element.data('clover').classesCoverage > 0.9 %} 💚
+{% elseif element.data('clover').classesCoverage > 0.7 %} 💛
+{% elseif element.data('clover').classesCoverage > 0.5 %} 🧡
+{% else %} ❤️
+{% endif %}
+{% else %} 🤍
+{% endif %}

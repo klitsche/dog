@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
+use Klitsche\Dog\Enrichers\DataAwareInterface;
+use Klitsche\Dog\Enrichers\DataTrait;
 use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
@@ -12,12 +14,13 @@ use phpDocumentor\Reflection\Php;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\Mixed_;
 
-class Method implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, VisibilityAwareInterface, ProjectAwareInterface, ArgumentsAwareInterface
+class Method implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, VisibilityAwareInterface, ProjectAwareInterface, ArgumentsAwareInterface, DataAwareInterface
 {
     use DocBlockTrait;
     use VisibilityTrait;
     use ProjectTrait;
     use FqsenTrait;
+    use DataTrait;
 
     public const TYPE = 'Method';
 

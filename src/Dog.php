@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Klitsche\Dog;
 
 use Klitsche\Dog\Analyzer\Rules;
+use Klitsche\Dog\Enrichers\Enrichers;
 use Klitsche\Dog\Events\ErrorEvent;
 use Klitsche\Dog\Events\IssueEvent;
 use Klitsche\Dog\Events\ProgressEvent;
@@ -15,13 +16,13 @@ class Dog
 {
     private ConfigInterface $config;
     private EventDispatcherInterface $dispatcher;
-    private ?ProjectInterface $project;
+    private ProjectInterface $project;
+    private ProjectEnricher $enricher;
 
     public function __construct(ConfigInterface $config, EventDispatcherInterface $dispatcher)
     {
         $this->config = $config;
         $this->dispatcher = $dispatcher;
-        $this->project = null;
     }
 
     /**
@@ -29,6 +30,7 @@ class Dog
      */
     public function prepare(): void
     {
+        $this->prepareEnrichers();
         $this->prepareProject();
     }
 
@@ -39,7 +41,7 @@ class Dog
     public function analyze(): void
     {
         $project = $this->prepareProject();
-        $this->validateProject($project);
+        $this->analyzeProject($project);
     }
 
     /**
@@ -51,11 +53,22 @@ class Dog
         $this->print($project);
     }
 
-    private function validateProject(ProjectInterface $project): void
+    private function prepareEnrichers(): void
     {
-        $rules = Rules::createFromConfig($this->config);
-        $analyzer = new Analyzer($rules, $this->dispatcher);
-        $analyzer->analyze($project);
+        $enrichers = Enrichers::createFromConfig($this->config);
+        $this->enricher = new ProjectEnricher($enrichers, $this->dispatcher);
+        $this->enricher->prepare();
+    }
+
+    private function prepareProject(): ProjectInterface
+    {
+        if (isset($this->project) === false) {
+            $files = $this->collectFiles();
+            $this->project = $this->parseFiles($files);
+            $this->enricher->enrich($this->project);
+        }
+
+        return $this->project;
     }
 
     private function collectFiles(): array
@@ -66,20 +79,17 @@ class Dog
         return $collector->collect();
     }
 
-    private function prepareProject(): ProjectInterface
-    {
-        if ($this->project === null) {
-            $files = $this->collectFiles();
-            $this->project = $this->parseFiles($files);
-        }
-
-        return $this->project;
-    }
-
     private function parseFiles(array $files): ProjectInterface
     {
         $analyzer = new FilesParser(null, $this->dispatcher);
         return $analyzer->parse($files);
+    }
+
+    private function analyzeProject(ProjectInterface $project): void
+    {
+        $rules = Rules::createFromConfig($this->config);
+        $analyzer = new Analyzer($rules, $this->dispatcher);
+        $analyzer->analyze($project);
     }
 
     private function print(ProjectInterface $project): void

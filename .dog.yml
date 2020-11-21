@@ -3,6 +3,13 @@ title: 'Overview'
 srcPaths:
   'src':
     '/.*\.php$/': true
-printerClass: 'Klitsche\Dog\Printer\Markdown\Printer'
+printerClass: \Klitsche\Dog\Printer\Markdown\Printer
 outputDir: 'docs/api'
 debug: false
+enrichers:
+  phploc:
+    class: \Klitsche\Dog\Enrichers\PHPLOC\PHPLOCEnricher
+    file: phploc.json
+  clover:
+    class: \Klitsche\Dog\Enrichers\Clover\CloverEnricher
+    file: clover.xml

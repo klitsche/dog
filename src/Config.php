@@ -33,6 +33,8 @@ class Config implements ConfigInterface
 
     private string $workingDir;
 
+    private array $enrichers = [];
+
     public function __construct(array $parameters, string $workingDir)
     {
         foreach ($parameters as $parameter => $value) {
@@ -152,5 +154,10 @@ class Config implements ConfigInterface
     public function getCacheDir(): string
     {
         return $this->cacheDir ?? sys_get_temp_dir();
+    }
+
+    public function getEnrichers(): array
+    {
+        return $this->enrichers;
     }
 }

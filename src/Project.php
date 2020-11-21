@@ -12,10 +12,14 @@ use Klitsche\Dog\Elements\File;
 use Klitsche\Dog\Elements\Function_;
 use Klitsche\Dog\Elements\Interface_;
 use Klitsche\Dog\Elements\Trait_;
+use Klitsche\Dog\Enrichers\DataAwareInterface;
+use Klitsche\Dog\Enrichers\DataTrait;
 use phpDocumentor\Reflection\Fqsen;
 
-class Project implements ProjectInterface
+class Project implements ProjectInterface, DataAwareInterface
 {
+    use DataTrait;
+
     private ElementsIndex $index;
 
     public function __construct()

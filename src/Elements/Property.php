@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
+use Klitsche\Dog\Enrichers\DataAwareInterface;
+use Klitsche\Dog\Enrichers\DataTrait;
 use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
@@ -11,12 +13,13 @@ use phpDocumentor\Reflection\Location;
 use phpDocumentor\Reflection\Php;
 use phpDocumentor\Reflection\Type;
 
-class Property implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, VisibilityAwareInterface, ProjectAwareInterface
+class Property implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, VisibilityAwareInterface, ProjectAwareInterface, DataAwareInterface
 {
     use DocBlockTrait;
     use VisibilityTrait;
     use ProjectTrait;
     use FqsenTrait;
+    use DataTrait;
 
     public const TYPE = 'Property';
 

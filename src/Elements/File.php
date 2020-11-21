@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
+use Klitsche\Dog\Enrichers\DataAwareInterface;
+use Klitsche\Dog\Enrichers\DataTrait;
 use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Location;
 use phpDocumentor\Reflection\Php;
 
-class File implements ElementInterface, DocBlockAwareInterface, ProjectAwareInterface
+class File implements ElementInterface, DocBlockAwareInterface, ProjectAwareInterface, DataAwareInterface
 {
     use DocBlockTrait;
     use ProjectTrait;
+    use DataTrait;
 
     public const TYPE = 'File';
 

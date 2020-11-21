@@ -61,12 +61,29 @@ rules:
   PublicFileDocBlockMissingRule:
     issueLevel: warning
   # add new rule
-  PublicTypeMissingRule
+  PublicTypeMissingRule:
     class: \Klitsche\Dog\Analyzer\Rules\TypeMissingRule
     issueLevel: error
     match:
       isPublic: true
       isInternal: false
+```
+
+## enrichers
+Configure enrichers to add extra data to project and element items.
+Type: `array`.
+Default: []
+
+See [enrichers](enrichers.md) for more details on how they work and for a list of bundled enrichers.
+
+```yaml
+enrichers:
+  # id of enricher
+  phploc:
+    # full qualified class name
+    class: \Klitsche\Dog\Enrichers\PHPLOC\PHPLOCEnricher
+    # parameters
+    file: phploc.json
 ```
 
 ## printerClass

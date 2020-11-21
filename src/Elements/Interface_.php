@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
+use Klitsche\Dog\Enrichers\DataAwareInterface;
+use Klitsche\Dog\Enrichers\DataTrait;
 use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Location;
 use phpDocumentor\Reflection\Php;
 
-class Interface_ implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, ProjectAwareInterface
+class Interface_ implements ElementInterface, FqsenAwareInterface, DocBlockAwareInterface, ProjectAwareInterface, DataAwareInterface
 {
     use DocBlockTrait;
     use ProjectTrait;
     use FqsenTrait;
+    use DataTrait;
 
     public const TYPE = 'Interface';
 

@@ -17,10 +17,14 @@ It´s a thin layer around [phpdocumentor/reflection](https://github.com/phpDocum
 * Outputs markdown (e.g. for use with [mkdocs-material](https://github.com/squidfunk/mkdocs-material))
 * Analyzes source code PHP ^5.2
 * Provides support for custom printer logic & easy templating (planned)
+* Provides support for custom enricher logic to add relevant & related data 
 
 ## Runtime Requirements
 
 * PHP ^7.4
+* optional
+  * json extension to enrich `phploc`
+  * simplexml extension to enrich `clover` coverage data
 
 ## Quick Start
 
@@ -46,6 +50,11 @@ rules:
     issueLevel: 'ignore'
     match:
       getElementType: 'File'
+# Configure enrichers to add extra data to project or element items
+enrichers:
+  clover:
+    class: \Klitsche\Dog\Enrichers\Clover\CloverEnricher
+    file: clover.xml
 # FQCN for template printer class
 printerClass: 'Klitsche\Dog\Printer\Markdown\Printer'
 # Relative or absolute path to output directory
@@ -76,9 +85,9 @@ https://klitsche.github.io/dog/
 * [x] Add travis
 * [x] Add cmd interface for dog bin
 * [x] Add validation rules
+* [x] Add documentation (mkdocs, github page)
 * [ ] Add tests
 * [ ] Add support for printer config - eg. templatePath
 * [ ] Improve description printing - (inheritDoc, inline tags, ...)
-* [ ] Add documentation (mkdocs, github page)
 * [ ] Add direct element interface for [proposed PSR-19 tags](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc-tags.md)
 * [ ] Add phar / phive packaging

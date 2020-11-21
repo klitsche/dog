@@ -56,4 +56,9 @@ interface ConfigInterface
      * Default: system tmp directory.
      */
     public function getCacheDir(): string;
+
+    /**
+     * @return array Generic assoc array [enricherClass => [key => value, ...]] per enricher.
+     */
+    public function getEnrichers(): array;
 }

@@ -17,7 +17,7 @@ title: {{ config.title }}
 ## Traits
 
 {% for element in project.traits|sort((a, b) => a.fqsen <=> b.fqsen) %}
-{{ '* '~element.fqsen }}
+{{ '* '~element.fqsen }}{% include 'clover-lines-coverage-icon.md.twig' %}
 {% endfor %}
 {% endif %}
 
@@ -25,7 +25,7 @@ title: {{ config.title }}
 ## Classes
 
 {% for element in project.classes|sort((a, b) => a.fqsen <=> b.fqsen) %}
-{{ '* '~element.fqsen }}
+{{ '* '~element.fqsen }}{% include 'clover-lines-coverage-icon.md.twig' %}
 {% endfor %}
 {% endif %}
 
@@ -44,4 +44,9 @@ title: {{ config.title }}
 {{ '* '~element.fqsen }}
 {% endfor %}
 {% endif %}
+
+{% include 'clover-project-summary.md.twig' with {element: project} %}
+
+{% include 'phploc-project-summary.md.twig' with {element: project} %}
+
 {% endapply %}

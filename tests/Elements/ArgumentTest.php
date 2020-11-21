@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
+use Klitsche\Dog\Enrichers\DataAwareInterface;
 use Klitsche\Dog\FilesParser;
-use Klitsche\Dog\Project;
+use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Boolean;
@@ -19,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ArgumentTest extends TestCase
 {
-    private Project $project;
+    private ProjectInterface $project;
 
     protected function setUp(): void
     {
@@ -131,5 +132,18 @@ class ArgumentTest extends TestCase
         $arguments = $element->getArguments();
 
         $this->assertInstanceOf(ElementInterface::class, $arguments[0]->getOwner());
+    }
+
+    public function testSetAndGetData(): void
+    {
+        /** @var Method $element */
+        $element = $this->project->getByFqsen(
+            new Fqsen('\Klitsche\Dog\Dummy\Namespaced\BaseClass::withTagOnly()')
+        );
+        $arguments = $element->getArguments();
+
+        $this->assertInstanceOf(DataAwareInterface::class, $arguments[0]);
+        $arguments[0]->setData('any', 'data');
+        $this->assertSame('data', $arguments[0]->getData('any'));
     }
 }

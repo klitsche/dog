@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
+use Klitsche\Dog\Enrichers\DataAwareInterface;
 use Klitsche\Dog\FilesParser;
-use Klitsche\Dog\Project;
+use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class Class_Test extends TestCase
 {
-    private Project $project;
+    private ProjectInterface $project;
 
     protected function setUp(): void
     {
@@ -161,5 +162,14 @@ class Class_Test extends TestCase
         $element = $this->project->getByFqsen(new Fqsen('\GlobalClass'));
 
         $this->assertInstanceOf(ElementInterface::class, $element->getOwner());
+    }
+
+    public function testSetAndGetData(): void
+    {
+        $element = $this->project->getByFqsen(new Fqsen('\GlobalClass'));
+
+        $this->assertInstanceOf(DataAwareInterface::class, $element);
+        $element->setData('any', 'data');
+        $this->assertSame('data', $element->getData('any'));
     }
 }

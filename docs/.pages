@@ -2,5 +2,6 @@ arrange:
   - index.md
   - configuration.md
   - rules.md
+  - enrichers.md
   - api
   - license.md

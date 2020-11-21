@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
+use Klitsche\Dog\Enrichers\DataAwareInterface;
 use Klitsche\Dog\FilesParser;
-use Klitsche\Dog\Project;
+use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Types\Integer;
@@ -17,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PropertyTest extends TestCase
 {
-    private Project $project;
+    private ProjectInterface $project;
 
     protected function setUp(): void
     {
@@ -123,5 +124,17 @@ class PropertyTest extends TestCase
         );
 
         $this->assertInstanceOf(ElementInterface::class, $element->getOwner());
+    }
+
+    public function testSetAndGetData(): void
+    {
+        /** @var Property $element */
+        $element = $this->project->getByFqsen(
+            new Fqsen('\Klitsche\Dog\Dummy\Namespaced\BaseClass::$propertyWithoutValue')
+        );
+
+        $this->assertInstanceOf(DataAwareInterface::class, $element);
+        $element->setData('any', 'data');
+        $this->assertSame('data', $element->getData('any'));
     }
 }

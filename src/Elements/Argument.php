@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
+use Klitsche\Dog\Enrichers\DataAwareInterface;
+use Klitsche\Dog\Enrichers\DataTrait;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Php;
 use phpDocumentor\Reflection\Type;
 
-class Argument
+class Argument implements DataAwareInterface
 {
+    use DataTrait;
+
     private ?Php\Argument $php;
 
     private ?DocBlock\Tags\Param $tag;

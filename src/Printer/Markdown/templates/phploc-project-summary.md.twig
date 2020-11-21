@@ -1,0 +1,7 @@
+{% if element.data('phploc') %}
+## PHPLOC
+
+{% for key, value in element.data('phploc') %}
+{{ '* '~key }}{{ ' = '~value }}
+{% endfor %}
+{% endif %}

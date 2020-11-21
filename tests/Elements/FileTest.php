@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
+use Klitsche\Dog\Enrichers\DataAwareInterface;
 use Klitsche\Dog\FilesParser;
-use Klitsche\Dog\Project;
+use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Fqsen;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class FileTest extends TestCase
 {
-    private Project $project;
+    private ProjectInterface $project;
 
     protected function setUp(): void
     {
@@ -177,5 +178,15 @@ class FileTest extends TestCase
             __DIR__ . '/../Dummy/constants.php',
             $files[__DIR__ . '/../Dummy/constants.php']->getPath()
         );
+    }
+
+    public function testSetAndGetData(): void
+    {
+        $files = $this->project->getFiles();
+        $file = $files[__DIR__ . '/../Dummy/Namespaced/BaseTrait.php'];
+
+        $this->assertInstanceOf(DataAwareInterface::class, $file);
+        $file->setData('any', 'data');
+        $this->assertSame('data', $file->getData('any'));
     }
 }

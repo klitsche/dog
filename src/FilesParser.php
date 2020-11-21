@@ -16,7 +16,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 class FilesParser
 {
-    public const PROGRESS_TOPIC = 'Parse files';
+    public const PROGRESS_TOPIC = 'Parse Files';
     use EventDispatcherAwareTrait;
     use ProgressEmitterTrait;
     use ErrorEmitterTrait;

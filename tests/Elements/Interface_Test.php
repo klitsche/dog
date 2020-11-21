@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Klitsche\Dog\Elements;
 
+use Klitsche\Dog\Enrichers\DataAwareInterface;
 use Klitsche\Dog\FilesParser;
 use Klitsche\Dog\ProjectInterface;
 use phpDocumentor\Reflection\DocBlock;
@@ -103,5 +104,15 @@ class Interface_Test extends TestCase
         $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\BaseInterface'));
 
         $this->assertInstanceOf(ElementInterface::class, $element->getOwner());
+    }
+
+    public function testSetAndGetData(): void
+    {
+        /** @var Interface_ $element */
+        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\BaseInterface'));
+
+        $this->assertInstanceOf(DataAwareInterface::class, $element);
+        $element->setData('any', 'data');
+        $this->assertSame('data', $element->getData('any'));
     }
 }

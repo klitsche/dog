@@ -4,11 +4,13 @@ title: {{ class.name }}
 
 # Class {{ class.name }}
 
-{% if class.isAbstract %}abstract{% elseif class.isFinal %}final{% endif %}
+{% if class.isAbstract %}abstract {% elseif class.isFinal %}final {% endif %}
 Class {{ class.fqsen }}
 
 {% apply linkFqsen %}
-{% if class.parent %}* __extends__ {{ class.parent }}{% endif %}
+{% if class.parent %}
+* __extends__ {{ class.parent }}
+{% endif %}
 {% for interface in class.interfaces %}
 * __implements__  {{ interface }}
 {% endfor %}
@@ -16,7 +18,7 @@ Class {{ class.fqsen }}
 * __uses__ {{ usedTrait }}
 {% endfor %}
 
-{{~ class.docblock.summary|raw }}
+{{ class.docblock.summary|raw }}
 
 {{ class.docblock.description|raw }}
 
@@ -51,4 +53,6 @@ Class {{ class.fqsen }}
         {%- include 'method.md.twig' -%}
     {%- endif -%}
 {% endfor %}
+
+{% include 'clover-class-summary.md.twig' with {element: class} %}
 {% endif %}

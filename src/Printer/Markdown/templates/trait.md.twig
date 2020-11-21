@@ -12,7 +12,7 @@ Trait {{ trait.fqsen }}
 * __uses__  {{ usedTrait }}
 {% endfor %}
 
-{{~ trait.docblock.summary|raw }}
+{{ trait.docblock.summary|raw }}
 
 {{ trait.docblock.description|raw }}
 
@@ -38,4 +38,6 @@ Trait {{ trait.fqsen }}
         {%- include 'method.md.twig' -%}
     {%- endif -%}
 {% endfor %}
+
+{% include 'clover-class-summary.md.twig' with {element: trait} %}
 {% endif %}
