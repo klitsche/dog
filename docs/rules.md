@@ -160,6 +160,14 @@ DocBlockSinceVersionRule:
     issueLevel: warning
 ```
 
+### DocBlockVersionVersionRule
+
+```yaml
+DocBlockVersionVersionRule:
+    class: Klitsche\Dog\Analyzer\Rules\DocBlockVersionVersionRule
+    issueLevel: warning
+```
+
 ### PublicClassDocBlockMissingRule
 
 ```yaml
@@ -245,6 +253,14 @@ DocBlockLinkDescriptionRule:
 ```yaml
 DocBlockSinceDescriptionRule:
     class: Klitsche\Dog\Analyzer\Rules\DocBlockSinceDescriptionRule
+    issueLevel: notice
+```
+
+### DocBlockVersionDescriptionRule
+
+```yaml
+DocBlockVersionDescriptionRule:
+    class: Klitsche\Dog\Analyzer\Rules\DocBlockVersionDescriptionRule
     issueLevel: notice
 ```
 

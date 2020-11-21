@@ -36,6 +36,12 @@ class TypeMissingRule implements TypeMissingRuleInterface
 
     public $typeMissing;
 
+    function __construct() {
+    }
+
+    function __destruct() {
+    }
+
     function funcMissing($var): int
     {
     }

@@ -35,6 +35,8 @@ use Klitsche\Dog\Analyzer\Rules\DocBlockSeeDescriptionRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockSinceDescriptionRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockSinceVersionRule;
 use Klitsche\Dog\Analyzer\Rules\DocBlockSummaryMissingRule;
+use Klitsche\Dog\Analyzer\Rules\DocBlockVersionDescriptionRule;
+use Klitsche\Dog\Analyzer\Rules\DocBlockVersionVersionRule;
 use Klitsche\Dog\Analyzer\Rules\TypeMissingRule;
 use Klitsche\Dog\ConfigInterface;
 use Klitsche\Dog\Elements\ElementInterface;
@@ -268,11 +270,15 @@ class Rules implements AnalyzeInterface
             'class' => DocBlockSinceVersionRule::class,
             'issueLevel' => 'warning',
         ],
-        // @throws
-        // @todo
-        // @uses
-        // @var
         // @version
+        'DocBlockVersionDescriptionRule' => [
+            'class' => DocBlockVersionDescriptionRule::class,
+            'issueLevel' => 'notice',
+        ],
+        'DocBlockVersionVersionRule' => [
+            'class' => DocBlockVersionVersionRule::class,
+            'issueLevel' => 'warning',
+        ],
         // element
         'TypeMissingRule' => [
             'class' => TypeMissingRule::class,
