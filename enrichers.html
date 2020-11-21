@@ -372,6 +372,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#custom-enricher" class="md-nav__link">
+    Custom enricher
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2056,6 +2063,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#custom-enricher" class="md-nav__link">
+    Custom enricher
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2075,12 +2089,18 @@
                 
                 <h1 id="enrichers">Enrichers<a class="headerlink" href="#enrichers" title="Permanent link">&para;</a></h1>
 <h2 id="how-do-they-work">How do they work?<a class="headerlink" href="#how-do-they-work" title="Permanent link">&para;</a></h2>
-<p>Enrichers can add extra data to any data holder like <code>Project</code> or <code>Element</code> items (File, Class, Interface, Trait, Method, Function, Constants and Function/Method Arguments).</p>
+<p>Enrichers can add extra data to a data holder. Supported data holders are:</p>
 <ul>
-<li>Each Enricher must implement <code>Klitsche\Dog\Enrichers\EnricherInterface</code></li>
-<li>Recommendation: for a customized enricher extend the abstract class <code>Klitsche\Dog\Enrichers\Enricher</code></li>
-<li>Data holders must implement <code>Klitsche\Dog\Enrichers\DataAwareInterface</code></li>
-<li>This extra data can be scalar values or objects</li>
+<li><code>Project</code></li>
+<li><code>File</code></li>
+<li><code>Class_</code></li>
+<li><code>Trait_</code></li>
+<li><code>Interface_</code></li>
+<li><code>Constant</code></li>
+<li><code>Property</code></li>
+<li><code>Method</code></li>
+<li><code>Function_</code></li>
+<li><code>Argument</code> </li>
 </ul>
 <p>Enrichers come with a 3 phase process:</p>
 <h3 id="1-create">1. Create<a class="headerlink" href="#1-create" title="Permanent link">&para;</a></h3>
@@ -2095,7 +2115,7 @@ Typical preparation tasks are reading and parsing files from processes ran befor
 Using the enricher id here is best practise.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>All enricher first visit the project and then all enricher visit the elements. </p>
+<p>All enricher first visit the project and then the elements. </p>
 </div>
 <h2 id="access-data-in-templates">Access Data in Templates<a class="headerlink" href="#access-data-in-templates" title="Permanent link">&para;</a></h2>
 <p>Enriched data can be accessed be calling <code>getData(string $id)</code> on <code>Project</code> or <code>Element</code> items - eg for the PHPLOCEnricher:</p>
@@ -2138,6 +2158,14 @@ Using the enricher id here is best practise.</p>
     <span class="nt">file</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">phploc.json</span>
 </code></pre></div>
 <p>See  for more details on phploc.</p>
+<h2 id="custom-enricher">Custom enricher<a class="headerlink" href="#custom-enricher" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A Enricher must implement <code>Klitsche\Dog\Enrichers\EnricherInterface</code></li>
+<li>Best practise: enricher extends the abstract class <code>Klitsche\Dog\Enrichers\Enricher</code></li>
+<li>Data holders must implement <code>Klitsche\Dog\Enrichers\DataAwareInterface</code></li>
+<li>Best practise: use its enricher id to add extra data to data holders</li>
+<li>Extra data can be scalar values or objects</li>
+</ul>
                 
               
               
