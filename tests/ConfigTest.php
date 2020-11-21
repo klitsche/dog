@@ -26,10 +26,14 @@ class ConfigTest extends TestCase
                 ],
                 'debug' => true,
                 'rules' => [
-                    'any' => ['class' => 'rule']
+                    'any' => [
+                        'class' => 'rule',
+                    ],
                 ],
                 'enrichers' => [
-                    'any' => ['class' => 'enricher']
+                    'any' => [
+                        'class' => 'enricher',
+                    ],
                 ],
                 'cacheDir' => '/tmp',
             ],
@@ -56,13 +60,17 @@ class ConfigTest extends TestCase
         $this->assertSame('/tmp', $config->getCacheDir());
         $this->assertSame(
             [
-                'any' => ['class' => 'rule']
+                'any' => [
+                    'class' => 'rule',
+                ],
             ],
             $config->getRules()
         );
         $this->assertSame(
             [
-                'any' => ['class' => 'enricher']
+                'any' => [
+                    'class' => 'enricher',
+                ],
             ],
             $config->getEnrichers()
         );
