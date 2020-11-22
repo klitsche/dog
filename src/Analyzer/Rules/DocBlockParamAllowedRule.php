@@ -32,7 +32,6 @@ class DocBlockParamAllowedRule extends Rule
                         $element,
                         sprintf(
                             '@param in DocBlock for %s %s not allowed',
-                            $tag->getVariableName(),
                             $element->getElementType(),
                             $element->getId(),
                         ),

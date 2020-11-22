@@ -34,7 +34,6 @@ class DocBlockPropertyAllowedRule extends Rule
                         $element,
                         sprintf(
                             '@property in DocBlock for %s %s not allowed',
-                            $tag->getVariableName(),
                             $element->getElementType(),
                             $element->getId(),
                         ),
