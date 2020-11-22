@@ -367,6 +367,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#implementedby" class="md-nav__link">
+    implementedBy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usedby" class="md-nav__link">
+    usedBy
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2156,6 +2170,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#implementedby" class="md-nav__link">
+    implementedBy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usedby" class="md-nav__link">
+    usedBy
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2255,7 +2283,28 @@ Using the enricher id here is best practise.</p>
     <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">\Klitsche\Dog\Enrichers\PHPLOC\PHPLOCEnricher</span>
     <span class="nt">file</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">phploc.json</span>
 </code></pre></div>
-<p>See  for more details on phploc.</p>
+<h3 id="implementedby">implementedBy<a class="headerlink" href="#implementedby" title="Permanent link">&para;</a></h3>
+<p>Collects a list of implementing classes for each interface.</p>
+<p>Data added:</p>
+<ul>
+<li><code>Interface_</code> with array of <code>Class_</code> objects</li>
+</ul>
+<p>Configure like:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">enrichers</span><span class="p">:</span>
+  <span class="nt">implementedBy</span><span class="p">:</span>
+    <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">\Klitsche\Dog\Enrichers\ImplementedBy\ImplementedByEnricher</span>
+</code></pre></div>
+<h3 id="usedby">usedBy<a class="headerlink" href="#usedby" title="Permanent link">&para;</a></h3>
+<p>Collects a list of using classes for each trait.</p>
+<p>Data added:</p>
+<ul>
+<li><code>Trait_</code> with array of <code>Class_</code> objects</li>
+</ul>
+<p>Configure like:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">enrichers</span><span class="p">:</span>
+  <span class="nt">usedBy</span><span class="p">:</span>
+    <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">\Klitsche\Dog\Enrichers\UsedBy\UsedByEnricher</span>
+</code></pre></div>
 <h2 id="custom-enricher">Custom enricher<a class="headerlink" href="#custom-enricher" title="Permanent link">&para;</a></h2>
 <ul>
 <li>A Enricher must implement <code>Klitsche\Dog\Enrichers\EnricherInterface</code></li>
