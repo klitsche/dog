@@ -99,7 +99,37 @@ enrichers:
     file: phploc.json
 ```
 
-See  for more details on phploc.
+### implementedBy
+
+Collects a list of implementing classes for each interface.
+
+Data added:
+
+* `Interface_` with array of `Class_` objects
+
+Configure like:
+
+```yaml
+enrichers:
+  implementedBy:
+    class: \Klitsche\Dog\Enrichers\ImplementedBy\ImplementedByEnricher
+```
+
+### usedBy
+
+Collects a list of using classes for each trait.
+
+Data added:
+
+* `Trait_` with array of `Class_` objects
+
+Configure like:
+
+```yaml
+enrichers:
+  usedBy:
+    class: \Klitsche\Dog\Enrichers\UsedBy\UsedByEnricher
+```
 
 ## Custom enricher
 
