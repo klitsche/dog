@@ -10,8 +10,15 @@ use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-const DOG_VERSION = 'dev-master';
+// phar only: user space autoload
+if (Phar::running()) {
+    $file = getcwd() . '/vendor/autoload.php';
+    if (file_exists($file)) {
+        require $file;
+    }
+}
 
+// dev or phar autoload (overwrite user space)
 foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'] as $file) {
     if (file_exists($file)) {
         require $file;
@@ -25,7 +32,8 @@ $dispatcher = new EventDispatcher();
 $dispatcher->addListener(ConsoleEvents::COMMAND, [$usageReporter, 'onConsoleCommand']);
 $dispatcher->addListener(ConsoleEvents::TERMINATE, [$usageReporter, 'onConsoleTerminate']);
 
-$application = new Application('dog', DOG_VERSION);
+$version = '@git-tag@' == '@' . 'git-tag@' ? 'master-dev' : '@git-tag@';
+$application = new Application('dog', $version);
 $application->setDispatcher($dispatcher);
 $application->add(new GenerateCommand('generate', $dispatcher));
 $application->setDefaultCommand('generate');

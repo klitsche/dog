@@ -1,0 +1,25 @@
+{
+    "directories": [
+        "src"
+    ],
+    "finder": [
+        {
+            "name": "/LICENSE|LICENSE.md|license|license.md|.*\\.php/",
+            "exclude": [
+                "doc",
+                "test",
+                "tests",
+                "Tests",
+                "vendor-bin",
+                "bin"
+            ],
+            "in": "vendor"
+        }
+    ],
+    "compression": "GZ",
+    "algorithm": "SHA256",
+    "compactors": [
+        "KevinGH\\Box\\Compactor\\Php"
+    ],
+    "git-tag": "git-tag"
+}

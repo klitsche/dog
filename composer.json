@@ -49,7 +49,8 @@
     ],
     "require-dev": {
         "phpunit/phpunit": "^9.4",
-        "symplify/easy-coding-standard": "^8.3"
+        "symplify/easy-coding-standard": "^8.3",
+        "humbug/box": "^3.9.1"
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
@@ -63,6 +64,32 @@
             "rm -fr docs/api/",
             "bin/dog --ansi",
             "docker-compose run --rm mkdocs-material build"
+        ],
+        "build-phar": [
+            "composer config autoloader-suffix KlitscheDog",
+            "vendor/bin/box.phar compile",
+            "composer config autoloader-suffix --unset"
         ]
-    }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "humbug/box",
+                "version": "3.9.1",
+                "bin": [
+                    "box.phar"
+                ],
+                "dist": {
+                    "type": "file",
+                    "url": "https://github.com/box-project/box/releases/download/3.9.1/box.phar",
+                    "reference": "3.9.1"
+                }
+            }
+        }
+    ]
 }
