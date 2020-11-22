@@ -38,6 +38,8 @@ Trait {{ trait.fqsen }}
         {%- include 'method.md.twig' -%}
     {%- endif -%}
 {% endfor %}
-
-{% include 'clover-class-summary.md.twig' with {element: trait} %}
 {% endif %}
+
+{% include '_clover-class-summary.md.twig' with {element: trait} %}
+
+{% include '_used-by.md.twig' with {element: trait} %}

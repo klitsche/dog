@@ -1,7 +1,0 @@
-{% if element.data('clover') %}
-## Test Coverage{% include 'clover-lines-coverage-icon.md.twig' %}
-
-* {% include 'clover-lines-coverage-icon.md.twig' %} Lines: {{ (element.data('clover').linesCoverage*100)|round(2, "common") }}% ({{ element.data('clover').coveredstatements }} / {{ element.data('clover').statements }})
-* {% include 'clover-lines-coverage-icon.md.twig' %} Classes: {{ (element.data('clover').classesCoverage*100)|round(2, "common") }}% ({{ element.data('clover').coveredclasses }} / {{ element.data('clover').classes }})
-* {% include 'clover-methods-coverage-icon.md.twig' %} Methods: {{ (element.data('clover').methodsCoverage*100)|round(2, "common") }}% ({{ element.data('clover').coveredmethods }} / {{ element.data('clover').methods }})
-{% endif %}

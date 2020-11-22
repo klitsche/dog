@@ -1,0 +1,9 @@
+{% if element.data('usedBy') %}
+{% apply linkFqsen %}
+## Used by
+
+{% for class in element.data('usedBy') %}
+* {{ class.fqsen }}
+{% endfor %}
+{% endapply %}
+{% endif %}

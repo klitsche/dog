@@ -1,0 +1,9 @@
+{% if element.data('implementedBy') %}
+{% apply linkFqsen %}
+## Implemented by
+
+{% for class in element.data('implementedBy') %}
+* {{ class.fqsen }}
+{% endfor %}
+{% endapply %}
+{% endif %}

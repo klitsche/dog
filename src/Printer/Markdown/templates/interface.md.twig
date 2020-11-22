@@ -39,3 +39,5 @@ Interface {{ interface.fqsen }}
     {%- endif -%}
 {% endfor %}
 {% endif %}
+
+{% include '_implemented-by.md.twig' with {element: interface} %}
