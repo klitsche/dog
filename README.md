@@ -1,6 +1,6 @@
 # <img src="docs/img/dog.png" alt="logo" style="width:1.2em; vertical-align: top;"/> Dog
 
-[![Build Status](https://travis-ci.org/klitsche/dog.svg?branch=master)](https://travis-ci.org/klitsche/dog)
+[![Build Status](https://travis-ci.com/klitsche/dog.svg?branch=master)](https://travis-ci.com/klitsche/dog)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2548e8cb2aa6cfb2c9b7/test_coverage)](https://codeclimate.com/github/klitsche/dog/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2548e8cb2aa6cfb2c9b7/maintainability)](https://codeclimate.com/github/klitsche/dog/maintainability)
 [![Packagist](https://img.shields.io/packagist/v/klitsche/dog)](https://packagist.org/packages/klitsche/dog)
