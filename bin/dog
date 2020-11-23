@@ -32,7 +32,7 @@ $dispatcher = new EventDispatcher();
 $dispatcher->addListener(ConsoleEvents::COMMAND, [$usageReporter, 'onConsoleCommand']);
 $dispatcher->addListener(ConsoleEvents::TERMINATE, [$usageReporter, 'onConsoleTerminate']);
 
-$version = '@git-tag@' == '@' . 'git-tag@' ? 'master-dev' : '@git-tag@';
+$version = '@git-tag@' == '@' . 'git-tag@' ? 'dev-main' : '@git-tag@';
 $application = new Application('dog', $version);
 $application->setDispatcher($dispatcher);
 $application->add(new GenerateCommand('generate', $dispatcher));
