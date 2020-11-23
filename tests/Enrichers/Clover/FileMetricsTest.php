@@ -15,35 +15,67 @@ class FileMetricsTest extends TestCase
     {
         $xml = <<<xml
         <file name="any">
-            <metrics loc="0"
-                     ncloc="1" 
-                     classes="2" 
-                     methods="3" 
-                     coveredmethods="4" 
-                     conditionals="5" 
-                     coveredconditionals="6"
-                     statements="7" 
-                     coveredstatements="8" 
-                     elements="9" 
-                     coveredelements="10"/>
+            <metrics loc="1" 
+                     ncloc="2" 
+                     classes="30" 
+                     methods="40" 
+                     coveredmethods="5" 
+                     conditionals="6"
+                     coveredconditionals="7" 
+                     statements="180" 
+                     coveredstatements="9" 
+                     elements="10" 
+                     coveredelements="11"/>
         </file>
         xml;
 
         $element = new \SimpleXMLElement($xml);
-        $element->metrics->addAttribute('coveredclasses', (string) 22);
+        $element->metrics->addAttribute('coveredclasses', (string) 3);
+        $metrics = FileMetrics::createFromElement($element);
+
+        $this->assertSame(1, $metrics->getLoc());
+        $this->assertSame(2, $metrics->getNcloc());
+        $this->assertSame(30, $metrics->getClasses());
+        $this->assertSame(3, $metrics->getCoveredclasses());
+        $this->assertSame(40, $metrics->getMethods());
+        $this->assertSame(5, $metrics->getCoveredmethods());
+        $this->assertSame(6, $metrics->getConditionals());
+        $this->assertSame(7, $metrics->getCoveredconditionals());
+        $this->assertSame(180, $metrics->getStatements());
+        $this->assertSame(9, $metrics->getCoveredstatements());
+        $this->assertSame(10, $metrics->getElements());
+        $this->assertSame(11, $metrics->getCoveredelements());
+
+        $this->assertSame(0.05, $metrics->getLinesCoverage());
+        $this->assertSame(0.125, $metrics->getMethodsCoverage());
+        $this->assertSame(0.1, $metrics->getClassesCoverage());
+    }
+
+    public function testCreateFromElementWithoutMetrics(): void
+    {
+        $xml = <<<xml
+        <file name="any">
+        </file>
+        xml;
+
+        $element = new \SimpleXMLElement($xml);
         $metrics = FileMetrics::createFromElement($element);
 
         $this->assertSame(0, $metrics->getLoc());
-        $this->assertSame(1, $metrics->getNcloc());
-        $this->assertSame(2, $metrics->getClasses());
-        $this->assertSame(22, $metrics->getCoveredclasses());
-        $this->assertSame(3, $metrics->getMethods());
-        $this->assertSame(4, $metrics->getCoveredmethods());
-        $this->assertSame(5, $metrics->getConditionals());
-        $this->assertSame(6, $metrics->getCoveredconditionals());
-        $this->assertSame(7, $metrics->getStatements());
-        $this->assertSame(8, $metrics->getCoveredstatements());
-        $this->assertSame(9, $metrics->getElements());
-        $this->assertSame(10, $metrics->getCoveredelements());
+        $this->assertSame(0, $metrics->getNcloc());
+        $this->assertSame(0, $metrics->getClasses());
+        $this->assertSame(0, $metrics->getCoveredclasses());
+        $this->assertSame(0, $metrics->getMethods());
+        $this->assertSame(0, $metrics->getCoveredmethods());
+        $this->assertSame(0, $metrics->getConditionals());
+        $this->assertSame(0, $metrics->getCoveredconditionals());
+        $this->assertSame(0, $metrics->getStatements());
+        $this->assertSame(0, $metrics->getCoveredstatements());
+        $this->assertSame(0, $metrics->getElements());
+        $this->assertSame(0, $metrics->getCoveredelements());
+
+        $this->assertSame(0.0, $metrics->getLinesCoverage());
+        $this->assertSame(0.0, $metrics->getMethodsCoverage());
+        $this->assertSame(0.0, $metrics->getClassesCoverage());
     }
 }

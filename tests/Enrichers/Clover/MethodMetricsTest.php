@@ -24,4 +24,18 @@ class MethodMetricsTest extends TestCase
         $this->assertSame(1, $metrics->getCrap());
         $this->assertSame(2, $metrics->getCount());
     }
+
+    public function testCreateFromEmptyElement(): void
+    {
+        $xml = <<<xml
+        <line />
+        xml;
+
+        $element = new \SimpleXMLElement($xml);
+        $metrics = MethodMetrics::createFromElement($element);
+
+        $this->assertSame(0, $metrics->getComplexity());
+        $this->assertSame(0, $metrics->getCrap());
+        $this->assertSame(0, $metrics->getCount());
+    }
 }
