@@ -27,7 +27,7 @@ class Class_Test extends TestCase
             [
                 __DIR__ . '/../Dummy/GlobalClass.php',
                 __DIR__ . '/../Dummy/Namespaced/BaseClass.php',
-                __DIR__ . '/../Dummy/Namespaced/ExtendedClass.php',
+                __DIR__ . '/../Dummy/Namespaced/ExtendingClass.php',
             ]
         );
     }
@@ -103,7 +103,7 @@ class Class_Test extends TestCase
     public function testGetParent(): void
     {
         /** @var Class_ $element */
-        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\ExtendedClass'));
+        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\ExtendingClass'));
 
         $this->assertSame('\Klitsche\Dog\Dummy\Namespaced\BaseClass', (string) $element->getParent());
     }
@@ -143,7 +143,7 @@ class Class_Test extends TestCase
     public function testIsFinal(): void
     {
         /** @var Class_ $element */
-        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\ExtendedClass'));
+        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\ExtendingClass'));
 
         $this->assertTrue($element->isFinal());
     }

@@ -26,7 +26,7 @@ class Trait_Test extends TestCase
         $this->project = $parser->parse(
             [
                 __DIR__ . '/../Dummy/Namespaced/BaseTrait.php',
-                __DIR__ . '/../Dummy/Namespaced/ExtendedTrait.php',
+                __DIR__ . '/../Dummy/Namespaced/UsingTrait.php',
                 __DIR__ . '/../Dummy/Namespaced/Other/OtherTrait.php',
             ]
         );
@@ -43,7 +43,7 @@ class Trait_Test extends TestCase
     public function testGetUsedTraits(): void
     {
         /** @var Trait_ $element */
-        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\ExtendedTrait'));
+        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\UsingTrait'));
 
         $usedTraits = $element->getUsedTraits();
 
@@ -69,9 +69,9 @@ class Trait_Test extends TestCase
     public function testGetFqsen(): void
     {
         /** @var Trait_ $element */
-        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\ExtendedTrait'));
+        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\UsingTrait'));
 
-        $this->assertSame('\Klitsche\Dog\Dummy\Namespaced\ExtendedTrait', (string) $element->getFqsen());
+        $this->assertSame('\Klitsche\Dog\Dummy\Namespaced\UsingTrait', (string) $element->getFqsen());
     }
 
     public function testGetDocBlock(): void

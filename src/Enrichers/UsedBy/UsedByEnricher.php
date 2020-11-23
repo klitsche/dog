@@ -21,9 +21,17 @@ class UsedByEnricher extends Enricher
             $project = $dataHolder->getProject();
 
             foreach ($project->getClasses() as $class) {
-                foreach ($class->getUsedTraits() as $interface) {
-                    if ((string) $interface === (string) $dataHolder->getFqsen()) {
+                foreach ($class->getUsedTraits() as $trait) {
+                    if ((string) $trait === (string) $dataHolder->getFqsen()) {
                         $usedBy[] = $class;
+                    }
+                }
+            }
+
+            foreach ($project->getTraits() as $trait) {
+                foreach ($trait->getUsedTraits() as $usedTrait) {
+                    if ((string) $usedTrait === (string) $dataHolder->getFqsen()) {
+                        $usedBy[] = $trait;
                     }
                 }
             }

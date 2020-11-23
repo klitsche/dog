@@ -5,7 +5,7 @@ namespace Klitsche\Dog\Dummy\Namespaced;
 /**
  * @inheritDoc
  */
-final class ExtendedClass extends BaseClass
+final class ExtendingClass extends BaseClass
 {
     /**
      * @inheritDoc

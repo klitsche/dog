@@ -27,7 +27,7 @@ class Interface_Test extends TestCase
             [
                 __DIR__ . '/../Dummy/Namespaced/BaseInterface.php',
                 __DIR__ . '/../Dummy/Namespaced/Other/OtherInterface.php',
-                __DIR__ . '/../Dummy/Namespaced/ExtendedInterface.php',
+                __DIR__ . '/../Dummy/Namespaced/ExtendingInterface.php',
             ]
         );
     }
@@ -59,7 +59,7 @@ class Interface_Test extends TestCase
     public function testGetParents(): void
     {
         /** @var Interface_ $element */
-        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\ExtendedInterface'));
+        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\ExtendingInterface'));
 
         $parents = $element->getParents();
 
@@ -77,9 +77,9 @@ class Interface_Test extends TestCase
     public function testGetFqsen(): void
     {
         /** @var Interface_ $element */
-        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\ExtendedInterface'));
+        $element = $this->project->getByFqsen(new Fqsen('\Klitsche\Dog\Dummy\Namespaced\ExtendingInterface'));
 
-        $this->assertSame('\Klitsche\Dog\Dummy\Namespaced\ExtendedInterface', (string) $element->getFqsen());
+        $this->assertSame('\Klitsche\Dog\Dummy\Namespaced\ExtendingInterface', (string) $element->getFqsen());
     }
 
     public function testGetDocBlock(): void

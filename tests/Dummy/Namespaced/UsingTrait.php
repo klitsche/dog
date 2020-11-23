@@ -4,7 +4,7 @@ namespace Klitsche\Dog\Dummy\Namespaced;
 
 use Klitsche\Dog\Dummy\Namespaced\Other\OtherTrait;
 
-trait ExtendedTrait
+trait UsingTrait
 {
     private int $property;
 
