@@ -56,3 +56,5 @@ Class {{ class.fqsen }}
 
 {% include '_clover-class-summary.md.twig' with {element: class} %}
 {% endif %}
+
+{% include '_extended-by.md.twig' with {element: class} %}

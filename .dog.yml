@@ -13,6 +13,8 @@ enrichers:
   clover:
     class: \Klitsche\Dog\Enrichers\Clover\CloverEnricher
     file: clover.xml
+  extendedBy:
+    class: \Klitsche\Dog\Enrichers\ExtendedBy\ExtendedByEnricher
   implementedBy:
     class: \Klitsche\Dog\Enrichers\ImplementedBy\ImplementedByEnricher
   usedBy:

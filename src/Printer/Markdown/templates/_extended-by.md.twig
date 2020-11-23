@@ -1,0 +1,9 @@
+{% if element.data('extendedBy') %}
+{% apply linkFqsen %}
+## Extended by
+
+{% for extendedElement in element.data('extendedBy')|sort((a, b) => a.fqsen <=> b.fqsen) %}
+* {{ extendedElement.fqsen }}
+{% endfor %}
+{% endapply %}
+{% endif %}

@@ -2,7 +2,7 @@
 {% apply linkFqsen %}
 ## Implemented by
 
-{% for class in element.data('implementedBy') %}
+{% for class in element.data('implementedBy')|sort((a, b) => a.fqsen <=> b.fqsen) %}
 * {{ class.fqsen }}
 {% endfor %}
 {% endapply %}

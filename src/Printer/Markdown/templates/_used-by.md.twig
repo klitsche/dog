@@ -2,8 +2,8 @@
 {% apply linkFqsen %}
 ## Used by
 
-{% for class in element.data('usedBy') %}
-* {{ class.fqsen }}
+{% for usedElement in element.data('usedBy')|sort((a, b) => a.fqsen <=> b.fqsen) %}
+* {{ usedElement.fqsen }}
 {% endfor %}
 {% endapply %}
 {% endif %}
