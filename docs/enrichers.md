@@ -72,7 +72,7 @@ Configure like:
 
 ```yaml
 enrichers:
-  phploc:
+  clover:
     class: \Klitsche\Dog\Enrichers\Clover\CloverEnricher
     file: clover.xml
 ```
