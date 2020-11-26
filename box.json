@@ -19,7 +19,9 @@
     "compression": "GZ",
     "algorithm": "SHA256",
     "compactors": [
-        "KevinGH\\Box\\Compactor\\Php"
+        "KevinGH\\Box\\Compactor\\Php",
+        "KevinGH\\Box\\Compactor\\PhpScoper"
     ],
+    "php-scoper": "box.php-scoper.php",
     "git-tag": "git-tag"
 }
