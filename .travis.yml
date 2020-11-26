@@ -45,7 +45,7 @@ deploy:
       condition: ${TRAVIS_PHP_VERSION:0:3} == "7.4"
   - provider: releases
     api_key: $GITHUB_TOKEN
-    file: bin/box.phar
+    file: bin/dog.phar
     skip_cleanup: true
     draft: true
     on:
