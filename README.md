@@ -89,7 +89,7 @@ https://klitsche.github.io/dog/
 * [x] Add cmd interface for dog bin
 * [x] Add validation rules
 * [x] Add documentation (mkdocs, github page)
-* [ ] Add tests
+* [x] Add tests
 * [ ] Add support for printer config - eg. templatePath
 * [ ] Improve description printing - (inheritDoc, inline tags, ...)
 * [ ] Add direct element interface for [proposed PSR-19 tags](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc-tags.md)
