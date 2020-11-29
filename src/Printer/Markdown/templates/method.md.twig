@@ -12,22 +12,18 @@
 
 {{ method.docblock.description|raw }}
 
-{% include '_notes.md.twig' with { element: method } %}
-
 {% if method.arguments is not empty %}
-
+**Parameters**
 {% for argument in method.arguments %}
-**{{ argument.name }}**
-: {{ argument.type }}.
-: {{ argument.description|split('\n')|join(' ') }}
-
+: _{{ argument.name }}_ <code>{{ argument.type }}</code> {{ argument.description|split('\n')|join(' ') }}
 {% endfor %}
-
 {% endif %}
 
 {% if method.returnType and method.returnType != 'void' %}
-
-Returns {{ method.returnType }}. {{ method.returnDescription|raw }}
-
+**Returns**
+: <code>{{ method.returnType }}</code> {{ method.returnDescription|raw }}
 {% endif %}
+
+{% include '_notes.md.twig' with { element: method } %}
+
 {% endapply %}
