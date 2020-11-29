@@ -2266,11 +2266,18 @@
 <h3 id="getworkingdir">getWorkingDir()<a class="headerlink" href="#getworkingdir" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="nx">getWorkingDir</span> <span class="p">(</span>  <span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
 </code></pre></div>
-<p>Returns string. Absolute path to the current working directory</p>
+<dl>
+<dt><strong>Returns</strong></dt>
+<dd><code>string</code> Absolute path to the current working directory</dd>
+</dl>
 <h3 id="getsrcpaths">getSrcPaths()<a class="headerlink" href="#getsrcpaths" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="nx">getSrcPaths</span> <span class="p">(</span>  <span class="p">)</span><span class="o">:</span> <span class="k">array</span>
 </code></pre></div>
 <p>Get a list of absolute paths to a source directory mapped to a list of matching (true) or not matching (false) patterns (regexp or string)</p>
+<dl>
+<dt><strong>Returns</strong></dt>
+<dd><code>array</code> Map of <code>[baseDirectory =&gt; [ regexOrStringPattern =&gt; true (include) or false (exclude), ... ]]</code></dd>
+</dl>
 <div class="admonition tip">
 <p class="admonition-title">See also</p>
 <ul>
@@ -2285,40 +2292,63 @@
 </li>
 </ul>
 </div>
-<p>Returns array. Map of <code>[baseDirectory =&gt; [ regexOrStringPattern =&gt; true (include) or false (exclude), ... ]]</code></p>
 <h3 id="gettitle">getTitle()<a class="headerlink" href="#gettitle" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="nx">getTitle</span> <span class="p">(</span>  <span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
 </code></pre></div>
-<p>Returns string. Title of your project</p>
+<dl>
+<dt><strong>Returns</strong></dt>
+<dd><code>string</code> Title of your project</dd>
+</dl>
 <h3 id="getprinterclass">getPrinterClass()<a class="headerlink" href="#getprinterclass" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="nx">getPrinterClass</span> <span class="p">(</span>  <span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
 </code></pre></div>
-<p>Returns string. Full qualified class namespace of the used Printer</p>
+<dl>
+<dt><strong>Returns</strong></dt>
+<dd><code>string</code> Full qualified class namespace of the used Printer</dd>
+</dl>
 <h3 id="getoutputdir">getOutputDir()<a class="headerlink" href="#getoutputdir" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="nx">getOutputDir</span> <span class="p">(</span>  <span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
 </code></pre></div>
-<p>Returns string. Absolute path to the output directory. Usually used by the Printer.</p>
+<dl>
+<dt><strong>Returns</strong></dt>
+<dd><code>string</code> Absolute path to the output directory. Usually used by the Printer.</dd>
+</dl>
 <h3 id="getprinterconfig">getPrinterConfig()<a class="headerlink" href="#getprinterconfig" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="nx">getPrinterConfig</span> <span class="p">(</span>  <span class="p">)</span><span class="o">:</span> <span class="k">array</span>
 </code></pre></div>
-<p>Returns array. Generic assoc array [key =&gt; value, &hellip;]. Optionally used by the Printer.</p>
+<dl>
+<dt><strong>Returns</strong></dt>
+<dd><code>array</code> Generic assoc array [key =&gt; value, &hellip;]. Optionally used by the Printer.</dd>
+</dl>
 <h3 id="isdebugenabled">isDebugEnabled()<a class="headerlink" href="#isdebugenabled" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="nx">isDebugEnabled</span> <span class="p">(</span>  <span class="p">)</span><span class="o">:</span> <span class="nx">bool</span>
 </code></pre></div>
-<p>Returns bool. Whether debug is enabled or not. Usually useful when tweaking twig templates to throw errors.</p>
+<dl>
+<dt><strong>Returns</strong></dt>
+<dd><code>bool</code> Whether debug is enabled or not. Usually useful when tweaking twig templates to throw errors.</dd>
+</dl>
 <h3 id="getrules">getRules()<a class="headerlink" href="#getrules" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="nx">getRules</span> <span class="p">(</span>  <span class="p">)</span><span class="o">:</span> <span class="k">array</span>
 </code></pre></div>
-<p>Returns array. Configuration map [Rule Class =&gt; issue Level, &hellip;]</p>
+<dl>
+<dt><strong>Returns</strong></dt>
+<dd><code>array</code> Configuration map [Rule Class =&gt; issue Level, &hellip;]</dd>
+</dl>
 <h3 id="getcachedir">getCacheDir()<a class="headerlink" href="#getcachedir" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="nx">getCacheDir</span> <span class="p">(</span>  <span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
 </code></pre></div>
-<p>Returns string. Path to cache dir. Usually used by the Printer for precompiled templates.
-Default: system tmp directory.</p>
+<dl>
+<dt><strong>Returns</strong></dt>
+<dd><code>string</code> Path to cache dir. Usually used by the Printer for precompiled templates.
+Default: system tmp directory.</dd>
+</dl>
 <h3 id="getenrichers">getEnrichers()<a class="headerlink" href="#getenrichers" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="nx">getEnrichers</span> <span class="p">(</span>  <span class="p">)</span><span class="o">:</span> <span class="k">array</span>
 </code></pre></div>
-<p>Returns array. Generic assoc array [enricherClass =&gt; [key =&gt; value, &hellip;]] per enricher.</p>
+<dl>
+<dt><strong>Returns</strong></dt>
+<dd><code>array</code> Generic assoc array [enricherClass =&gt; [key =&gt; value, &hellip;]] per enricher.</dd>
+</dl>
 <h2 id="implemented-by">Implemented by<a class="headerlink" href="#implemented-by" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="Config.html">\Klitsche\Dog\Config</a></li>
