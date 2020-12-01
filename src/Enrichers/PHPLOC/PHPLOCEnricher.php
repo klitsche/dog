@@ -15,7 +15,7 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class PHPLOCEnricher extends Enricher
 {
-    private array $result;
+    private ?array $result;
 
     public function prepare(): void
     {
