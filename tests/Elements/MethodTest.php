@@ -97,7 +97,6 @@ class MethodTest extends TestCase
         $this->assertFalse($element->isAbstract());
         $this->assertFalse($element->isFinal());
         $this->assertFalse($element->isStatic());
-        $this->assertSame(3, $element->getLocation()->getLineNumber());
     }
 
     public function testGetOwner(): void

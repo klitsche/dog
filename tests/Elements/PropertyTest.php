@@ -113,7 +113,6 @@ class PropertyTest extends TestCase
         $this->assertInstanceOf(String_::class, $element->getType());
         $this->assertFalse($element->isStatic());
         $this->assertNull($element->getVisibility());
-        $this->assertSame(8, $element->getLocation()->getLineNumber());
     }
 
     public function testGetOwner(): void
