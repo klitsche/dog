@@ -72,6 +72,9 @@ jobs:
       - name: Prepare docs
         if: matrix.publish == true && github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
         run: |
+          curl -L https://phar.phpunit.de/phploc.phar > ./phploc;
+          chmod +x ./phploc;
+          ./phploc --log-json=phploc.json src;
           composer prepare-docs
       - name: Setup Python
         if: matrix.publish == true && github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
@@ -85,9 +88,6 @@ jobs:
       - name: Generate & publish docs
         if: matrix.publish == true && github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
         run: |
-          curl -L https://phar.phpunit.de/phploc.phar > ./phploc;
-          chmod +x ./phploc;
-          ./phploc --log-json=phploc.json src;
           mkdocs gh-deploy --force
 
       - name: Draft Release
