@@ -25,7 +25,8 @@ class RulesTest extends TestCase
                             'issueLevel' => Issue::NOTICE,
                         ],
                     ],
-            ], ''
+            ],
+            ''
         );
         $rules = Rules::createFromConfig($config);
 
@@ -44,7 +45,8 @@ class RulesTest extends TestCase
                             'class' => 'Any\Unknown\Class',
                         ],
                     ],
-            ], ''
+            ],
+            ''
         );
 
         $this->expectException(\InvalidArgumentException::class);
@@ -63,7 +65,8 @@ class RulesTest extends TestCase
                             'class' => Config::class,
                         ],
                     ],
-            ], ''
+            ],
+            ''
         );
 
         $this->expectException(\InvalidArgumentException::class);
@@ -83,7 +86,8 @@ class RulesTest extends TestCase
                             'issueLevel' => 'WRONG',
                         ],
                     ],
-            ], ''
+            ],
+            ''
         );
 
         $this->expectException(\InvalidArgumentException::class);
@@ -101,7 +105,8 @@ class RulesTest extends TestCase
                     [
                         'FileDocBlockLinkMissingRule' => 'nope',
                     ],
-            ], ''
+            ],
+            ''
         );
 
         $this->expectException(\InvalidArgumentException::class);
@@ -122,7 +127,8 @@ class RulesTest extends TestCase
                             'match' => 'nope',
                         ],
                     ],
-            ], ''
+            ],
+            ''
         );
 
         $this->expectException(\InvalidArgumentException::class);

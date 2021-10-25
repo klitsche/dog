@@ -62,7 +62,8 @@ class TypeMissingRule extends Rule
             (
                 $element->getReturnType() === null
                 && $element->getName() !== '__construct'
-                && $element->getName() !== '__destruct')
+                && $element->getName() !== '__destruct'
+            )
             || (
                 $element->getDocBlock() !== null
                 && $element->getDocBlock()->hasTag('return') === false
