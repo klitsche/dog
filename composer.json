@@ -57,12 +57,15 @@
         "test-coverage": "vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml",
         "cs": "vendor/bin/ecs check src tests --ansi",
         "cs-fix": "vendor/bin/ecs check src tests --ansi --fix",
-        "build-docs": [
+        "prepare-docs": [
             "echo '---\ntitle: Getting started\n---\n' > docs/index.md",
             "sed 's/docs\\/img/img/g' README.md >> docs/index.md",
             "cp LICENSE.md docs/license.md",
             "rm -fr docs/api/",
-            "bin/dog --ansi",
+            "bin/dog --ansi"
+        ],
+        "build-docs": [
+            "@prepare-docs",
             "docker-compose run --rm mkdocs-material build"
         ],
         "build-phar": [
