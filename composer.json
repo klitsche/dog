@@ -50,7 +50,7 @@
     "require-dev": {
         "phpunit/phpunit": "^9.4",
         "symplify/easy-coding-standard": "^9.4",
-        "humbug/box": "^3.9.1"
+        "humbug/box": "3.13.0"
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
@@ -80,14 +80,14 @@
             "type": "package",
             "package": {
                 "name": "humbug/box",
-                "version": "3.9.1",
+                "version": "3.13.0",
                 "bin": [
                     "box.phar"
                 ],
                 "dist": {
                     "type": "file",
-                    "url": "https://github.com/box-project/box/releases/download/3.9.1/box.phar",
-                    "reference": "3.9.1"
+                    "url": "https://github.com/box-project/box/releases/download/3.13.0/box.phar",
+                    "reference": "3.13.0"
                 }
             }
         }
