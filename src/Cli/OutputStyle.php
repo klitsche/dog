@@ -11,7 +11,7 @@ class OutputStyle extends SymfonyStyle
 {
     protected ProgressBar $currentProgressBar;
 
-    public function createProgressBar(int $max = 0):ProgressBar
+    public function createProgressBar(int $max = 0): ProgressBar
     {
         $this->currentProgressBar = parent::createProgressBar($max);
         $this->currentProgressBar->setRedrawFrequency(0);
