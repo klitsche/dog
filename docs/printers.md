@@ -19,7 +19,7 @@ The dispatcher can be used to emit progress or errors which will be handled by t
 
 !!! Tip
 
-    Use the provided traits `Klitsche\Dog\Events\ErrorEmitterTrait`, `Klitsche\Dog\Events\EventDispatcherAwareTrait, 
+    Use the provided traits `Klitsche\Dog\Events\ErrorEmitterTrait`, `Klitsche\Dog\Events\EventDispatcherAwareTrait` 
     and `Klitsche\Dog\Events\ProgressEmitterTrait` to simplify emitting pogress or errors.
 
 ### 2. Print
