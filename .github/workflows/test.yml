@@ -35,7 +35,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install PHP ${{ matrix.php }}
-        uses: shivammathur/setup-php@v3
+        uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           coverage: pcov
