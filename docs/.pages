@@ -2,6 +2,7 @@ arrange:
   - index.md
   - configuration.md
   - rules.md
+  - printers.md
   - enrichers.md
   - api
   - license.md
