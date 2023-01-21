@@ -12,10 +12,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - php: '8.0'
+          - php: '8.1'
             publish: true
         exclude:
-          - php: '8.0'
+          - php: '8.1'
             publish: false
         php:
           - '8.0'
