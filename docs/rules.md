@@ -4,10 +4,10 @@ Validation rules are based on the proposal for phpdoc tags [PRS-19](https://gith
 
 There are 4 issue levels:
 
-* `error` = issue MUST be fixed
-* `warning` = issue SHOULD be fixed
-* `notice` = issue MAY be fixed
-* `ignore` = issue is ignored
+- `error` = issue MUST be fixed
+- `warning` = issue SHOULD be fixed
+- `notice` = issue MAY be fixed
+- `ignore` = issue is ignored
 
 See [configuration option rules](configuration.md#rules) on how to add your own rules or change the default set. 
 

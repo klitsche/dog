@@ -6,22 +6,26 @@ The file format is [yaml](https://yaml.org/).
 The following options are available:
 
 ## title
-Title for the index page of your project. 
-Type: `string`. 
-Default: `'Api Reference'`. 
 
-Example: 
+Title for the index page of your project.
+Type: `string`.
+Default: `'Api Reference'`.
+
+Example:
 
 ```yaml
 title: 'Overview'
 ```
 
 ## srcPaths
-List of relative or absolute paths to a source directory mapped to a list of matching (true) or not matching (false) patterns (regex or string). 
+
+List of relative or absolute paths to a source directory mapped to a list of matching (true) or not matching (false)
+patterns (regex or string).
 Type: `array`.
 Default: `['src' => ['/.*\.php$/' => true]]`
 
-See [symfony/finder documentation](https://symfony.com/doc/current/components/finder.html#path) for more details about pattern types.
+See [symfony/finder documentation](https://symfony.com/doc/current/components/finder.html#path) for more details about
+pattern types.
 
 Example:
 
@@ -33,24 +37,28 @@ srcPaths:
 ```
 
 ## rules
+
 Add new or change default validation rules.
 Type: `array`.
 Default: [default set of rules](rules.md).
 
 !!! tip "Change a default rule"
+
     You should only set `issueLevel` and `match`.
     Both will override the default values.
     The id must match the id of the default rules.
 
 !!! tip "Disable a default rule"
+    
     Simply set `issueLevel` to `'ignore'`.
     The id must match the id of the default rules.
 
 !!! tip "Add a new rule"
-    The id of the rule has to be unique. 
-    You must set `class` to the full qualified class name of the rule. 
-    Default value for `issueLevel` is `'error'`. 
-    Default value for `match` is `[]`. 
+
+    The id of the rule has to be unique.
+    You must set `class` to the full qualified class name of the rule.
+    Default value for `issueLevel` is `'error'`.
+    Default value for `match` is `[]`.
 
 ```yaml
 rules:
@@ -70,9 +78,10 @@ rules:
 ```
 
 ## enrichers
+
 Configure enrichers to add extra data to project and element items.
 Type: `array`.
-Default: []
+Default: `[]`
 
 See [enrichers](enrichers.md) for more details on how they work and for a list of bundled enrichers.
 
@@ -87,13 +96,15 @@ enrichers:
 ```
 
 ## printerClass
+
 Full qualified class name of the template printer class.
-Type: `string`. 
+Type: `string`.
 Default: `'Klitsche\Dog\Printer\Markdown\Printer'`
 
-!!! note 
-    The printer class must implement `Klitsche\Dog\PrinterInterface`. 
-    
+!!! note
+
+    See [printers](printers.md) for more details on how they work.
+
 Example:
 
 ```yaml
@@ -101,17 +112,21 @@ printerClass: 'Klitsche\Dog\Printer\Markdown\Printer'
 ```
 
 ## printerConfig
-(planned - is currently not used)
+
+Provide assoc array with custom printer configuration matching the configured printer class.
 Type: `array`.
+Default: `[]`
 
 ## outputPath
+
 Relative or absolute path to output directory
-Type: `string`. 
+Type: `string`.
 Default: `'docs/api'`
 
-!!! note 
+!!! note
+
     dog does not purge the output directory before printing. You have to take care of it yourself.
-    
+
 Example:
 
 ```yaml
@@ -119,6 +134,7 @@ outputDir: 'docs/api'
 ```
 
 ## debug
+
 Enable or disable debug mode.
 Type: `bool`.
 Default: `false`.
