@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  mkdocs-material:
+  mkdocs:
     build:
       context: resources/docker/mkdocs-material
     image: dog/mkdocs-material
@@ -10,16 +10,23 @@ services:
     ports:
       - 8000:8000
 
-  php7:
+  php80:
     build:
-      context: resources/docker/php7
-    image: dog/php7
+      context: resources/docker/php80
+    image: dog/php80
     volumes:
       - .:/app
 
-  php8:
+  php81:
     build:
-      context: resources/docker/php8
-    image: dog/php8
+      context: resources/docker/php81
+    image: dog/php81
+    volumes:
+      - .:/app
+
+  php82:
+    build:
+      context: resources/docker/php82
+    image: dog/php82
     volumes:
       - .:/app

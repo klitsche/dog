@@ -1,7 +1,7 @@
-FROM php:7.4-cli-alpine
+FROM php:8.1-cli-alpine
 
 RUN set -eux; \
-	apk add --no-cache --virtual .build-deps $PHPIZE_DEPS ; \
+	apk add --no-cache --virtual .build-deps $PHPIZE_DEPS linux-headers; \
     pecl install xdebug-stable; \
     docker-php-ext-enable xdebug; \
     apk del --no-network .build-deps;
