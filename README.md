@@ -12,22 +12,22 @@ It´s a thin layer around [phpdocumentor/reflection](https://github.com/phpDocum
 
 ## Features
 
-* Easily generates source code documentation
-* Looks into code and phpdoc
-* Helps to optimize code and phpdoc for documentation with customizable rules (based on [proposed PSR-19](https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md))
-* Outputs markdown (e.g. for use with [mkdocs-material](https://github.com/squidfunk/mkdocs-material))
-* Analyzes source code PHP ^5.2
-* Provides support for custom printer logic & easy templating (planned)
-* Provides support for custom enricher logic to add relevant & related data 
+- Easily generates source code documentation
+- Looks into code and phpdoc
+- Helps to optimize code and phpdoc for documentation with customizable rules (based on [proposed PSR-19](https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md))
+- Outputs markdown (e.g. for use with [mkdocs-material](https://github.com/squidfunk/mkdocs-material))
+- Analyzes source code PHP ^5.2
+- Provides support for custom printer logic & easy templating (planned)
+- Provides support for custom enricher logic to add relevant & related data 
 
 ## Runtime Requirements
 
-* PHP ^8.0
+- PHP ^8.0
 
 Suggested:
 
-* json extension to enrich `phploc` data
-* simplexml extension to enrich `clover` coverage data
+- json extension to enrich `phploc` data
+- simplexml extension to enrich `clover` coverage data
 
 ## Quick Start
 
@@ -84,13 +84,14 @@ https://klitsche.github.io/dog/
 
 ## Todos
 
-* [x] Add code style checks
-* [x] Add travis
-* [x] Add cmd interface for dog bin
-* [x] Add validation rules
-* [x] Add documentation (mkdocs, github page)
-* [x] Add tests
-* [ ] Add support for printer config - eg. templatePath
-* [ ] Improve description printing - (inheritDoc, inline tags, ...)
-* [ ] Add direct element interface for [proposed PSR-19 tags](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc-tags.md)
-* [ ] Add phar / phive packaging
+- [x] Add code style checks
+- [x] Add GitHub actions
+- [x] Add cmd interface for dog bin
+- [x] Add validation rules
+- [x] Add documentation (mkdocs, github page)
+- [x] Add tests
+- [x] Add support for printer config - eg. templatePath
+- [x] Add phar packaging
+- [ ] Improve description printing - (inheritDoc, inline tags, ...)
+- [ ] Add direct element interface for [proposed PSR-19 tags](https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc-tags.md)
+- [ ] Add phive packaging
