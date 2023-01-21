@@ -17,17 +17,9 @@ jobs:
         with:
           php-version: 8.0
           coverage: none
-      - name: Get composer cache directory
-        id: composer-cache
-        run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer cache directory
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
       - name: Install dependencies
-        run: composer update --prefer-dist --ignore-platform-reqs
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--ignore-platform-reqs --prefer-dist --prefer-stable"
       - name: Check style
         run: composer cs

@@ -10,6 +10,9 @@ use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Stopwatch\Stopwatch;
 
+// prevent deprecation notifications esp. in phpDocumentor/Reflection
+error_reporting(E_ALL ^ E_DEPRECATED);
+
 // phar only: user space autoload
 if (Phar::running()) {
     $file = getcwd() . '/vendor/autoload.php';

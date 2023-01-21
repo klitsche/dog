@@ -18,9 +18,9 @@ jobs:
           - php: '8.0'
             publish: false
         php:
-          - '7.4'
           - '8.0'
           - '8.1'
+          - '8.2'
         publish:
           - false
     continue-on-error: ${{ matrix.php == '8.1' }}
@@ -30,29 +30,20 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Install PHP ${{ matrix.php }}
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@v3
         with:
           php-version: ${{ matrix.php }}
           coverage: pcov
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer cache directory
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
       - name: Install dependencies
-        run: |
-          composer update --prefer-dist --prefer-stable --no-interaction --ignore-platform-req=php
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--ignore-platform-req=php --prefer-dist --prefer-stable"
 
       - name: Build phar
         if: matrix.publish == true && github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
@@ -65,7 +56,7 @@ jobs:
 
       - name: Publish code coverage to codeclimate
         if: matrix.publish == true && github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
-        uses: paambaati/codeclimate-action@v3.0.0
+        uses: paambaati/codeclimate-action@v3.2.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
@@ -78,7 +69,7 @@ jobs:
           composer prepare-docs
       - name: Setup Python
         if: matrix.publish == true && github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
       - name: Setup mkdocs-material
