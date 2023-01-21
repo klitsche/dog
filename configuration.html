@@ -2726,7 +2726,10 @@ Default value for <code>match</code> is <code>[]</code>.</p>
 <p>Configure enrichers to add extra data to project and element items.
 Type: <code>array</code>.
 Default: <code>[]</code></p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
 <p>See <a href="enrichers.html">enrichers</a> for more details on how they work and for a list of bundled enrichers.</p>
+</div>
 <div class="codehilite"><pre><span></span><code><span class="nt">enrichers</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># id of enricher</span>
 <span class="w">  </span><span class="nt">phploc</span><span class="p">:</span>
@@ -2739,8 +2742,8 @@ Default: <code>[]</code></p>
 <p>Full qualified class name of the template printer class.
 Type: <code>string</code>.
 Default: <code>'Klitsche\Dog\Printer\Markdown\Printer'</code></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
 <p>See <a href="printers.html">printers</a> for more details on how they work.</p>
 </div>
 <p>Example:</p>
@@ -2754,8 +2757,8 @@ Default: <code>[]</code></p>
 <p>Relative or absolute path to output directory
 Type: <code>string</code>.
 Default: <code>'docs/api'</code></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>dog does not purge the output directory before printing. You have to take care of it yourself.</p>
 </div>
 <p>Example:</p>
