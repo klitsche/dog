@@ -83,7 +83,9 @@ Configure enrichers to add extra data to project and element items.
 Type: `array`.
 Default: `[]`
 
-See [enrichers](enrichers.md) for more details on how they work and for a list of bundled enrichers.
+!!! Hint
+
+    See [enrichers](enrichers.md) for more details on how they work and for a list of bundled enrichers.
 
 ```yaml
 enrichers:
@@ -101,7 +103,7 @@ Full qualified class name of the template printer class.
 Type: `string`.
 Default: `'Klitsche\Dog\Printer\Markdown\Printer'`
 
-!!! note
+!!! Hint
 
     See [printers](printers.md) for more details on how they work.
 
@@ -123,7 +125,7 @@ Relative or absolute path to output directory
 Type: `string`.
 Default: `'docs/api'`
 
-!!! note
+!!! Warning
 
     dog does not purge the output directory before printing. You have to take care of it yourself.
 
